@@ -57,3 +57,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.h-translate-1 {
+  @apply transition-all duration-500 hover:-translate-x-1 hover:-translate-y-1;
+}
