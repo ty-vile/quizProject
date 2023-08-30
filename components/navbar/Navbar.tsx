@@ -2,6 +2,7 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import React from "react";
 import Container from "../utility/Container";
 import Link from "next/link";
+import SignInButton from "./SignInButton";
 
 type Props = {};
 
@@ -26,7 +27,9 @@ const Navbar: React.FC<Props> = async () => {
                 Quizify
               </p>
             </Link>
-            <h1>Logo</h1>
+            <div className="flex items-center">
+              <SignInButton text="Sign In" />
+            </div>
           </div>
         </Container>
       </div>
