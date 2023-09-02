@@ -1,6 +1,7 @@
 import Navbar from "@/components/navbar/Navbar";
 import "./globals.css";
 import type { Metadata } from "next";
+import { ThemeProvider } from "@/components/provider/Theme-provider";
 
 export const metadata: Metadata = {
   title: "Quizify Quiz App",
@@ -15,8 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="anitalised min-h-screen ">
-        <Navbar />
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <Navbar />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
