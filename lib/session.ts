@@ -21,10 +21,13 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
+    maxAge: 4 * 60 * 60,
+  },
+  jwt: {
+    maxAge: 4 * 60 * 60,
   },
   callbacks: {
-    jwt: async ({ token }) => {
-      // check for user
+    jwt: async ({ token, user, account }) => {
       const dbUser = await prisma.user.findFirst({
         where: {
           email: token?.email,

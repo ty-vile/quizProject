@@ -3,19 +3,12 @@ import React from "react";
 import Container from "../utility/Container";
 import Link from "next/link";
 import SignInButton from "./SignInButton";
+import UserNavbar from "./User/UserNavbar";
 
 type Props = {};
 
 const Navbar: React.FC<Props> = async () => {
-  // const currentUser = await getCurrentUser();
-
-  // if (currentUser) {
-  //   return (
-  //     <div>
-  //       <h1>{currentUser?.name}</h1>
-  //     </div>
-  //   );
-  // }
+  const currentUser = await getCurrentUser();
 
   return (
     <div className="fixed w-full bg-white z-10 shadow-xl">
@@ -27,9 +20,13 @@ const Navbar: React.FC<Props> = async () => {
                 Quizify
               </p>
             </Link>
-            <div className="flex items-center">
-              <SignInButton text="Sign In" />
-            </div>
+            {!currentUser ? (
+              <div className="flex items-center">
+                <SignInButton text="Sign In" />
+              </div>
+            ) : (
+              <UserNavbar user={currentUser} />
+            )}
           </div>
         </Container>
       </div>
