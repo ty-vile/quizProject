@@ -1,0 +1,3 @@
+https://www.prisma.io/docs/concepts/components/prisma-client/crud
+
+https://mysql.tutorials24x7.com/blog/guide-to-design-database-for-quiz-in-mysql

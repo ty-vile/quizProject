@@ -60,17 +60,25 @@ model Quiz {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   category String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   questions Question[]
+  score Int
   answers Answer[]
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@index([userId])
+}
+
+enum QuestionType {
+  multiple_choice
+  singular
 }
 
 model Question {
   id String @id @default(cuid())
-  quizId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  quizId String
+  question String
+  type QuestionType
   quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
   answers Answer[]
   @@index([quizId])
