@@ -12,7 +12,7 @@ const Navbar: React.FC<Props> = async () => {
   const currentUser = await getCurrentUser();
 
   return (
-    <div className="fixed w-full  z-10 shadow-xl bg-background transition-300">
+    <div className="fixed w-full z-10 shadow-xl bg-background transition-300">
       <div className="py-4 border-b border-1">
         <Container>
           <div className="flex flex-row items-center justify-between gap-2 md:gap-0">

@@ -19,6 +19,9 @@ declare module "next-auth/jwt" {
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
+  pages: {
+    signIn: "/",
+  },
   session: {
     strategy: "jwt",
     maxAge: 4 * 60 * 60,
