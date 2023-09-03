@@ -28,6 +28,7 @@ const CreateQuizModal = ({}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.CREATE);
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [progressBar, setProgressBar] = useState(3);
 
   const [quizData, setQuizData] = useState<QuizData>({
     category: "",
@@ -111,10 +112,15 @@ const CreateQuizModal = ({}) => {
   if (step === STEPS.QUESTIONS) {
     bodyContent = (
       <div className="flex flex-col gap-12 mt-3">
+        <div className="relative h-4 rounded-full overflow-hidden bg-background">
+          <div
+            className={`absolute top-0 bottom-0 left-0 rounded-full bg-gradient-to-r from-primary to-secondary transition-all duration-1000 w-${progressBar}/12`}
+          ></div>
+        </div>
         <Button
           disabled={isLoading}
           onClick={() => {
-            console.log(quizData);
+            setTestNum(6);
           }}
           variant="outline"
           className="p-8"
