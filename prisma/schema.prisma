@@ -86,6 +86,8 @@ model Question {
 
 model Answer {
 id String @id @default(cuid())
+isCorrect Boolean
+answer String
 createdAt DateTime @default(now())
 updatedAt DateTime @updatedAt
 quizId String

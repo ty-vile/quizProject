@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "./Modal";
 import useCreateQuizModal from "@/hooks/useCreateQuizModal";
 import Heading from "../utility/Heading";
-import Input from "../utility/Input";
+import Input from "../utility/Inputs/Input";
+import Select from "../utility/Inputs/Select";
 import { Button } from "../ui/button";
 
 enum STEPS {
@@ -14,8 +15,8 @@ enum STEPS {
 }
 
 type Question = {
-  name: string;
-  answer: string;
+  type: string;
+  question: string;
 };
 
 type QuizData = {
@@ -25,11 +26,17 @@ type QuizData = {
 };
 
 const CreateQuizModal = ({}) => {
+  // form state
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.CREATE);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [progressBar, setProgressBar] = useState(3);
-
+  // progress state
+  const [progressBar, setProgressBar] = useState<number>(3);
+  // data state
+  const [quizQuestionsType, setQuizQuestionsType] = useState<string[]>([]);
+  const [quizQuestionsQuestion, setQuizQuestionsQuestion] = useState<string[]>(
+    []
+  );
   const [quizData, setQuizData] = useState<QuizData>({
     category: "",
     score: 1,
@@ -41,10 +48,30 @@ const CreateQuizModal = ({}) => {
   const handleChange = (event: any) => {
     const { name, value } = event.target;
 
-    setQuizData({
-      ...quizData,
-      [name]: value,
-    });
+    if (name === "category" || name === "score") {
+      return setQuizData({
+        ...quizData,
+        [name]: value,
+      });
+    }
+
+    if (name === "questionType") {
+      let newValue = value;
+      let updatedArray = [...quizQuestionsType];
+
+      updatedArray[currentQuestion] = newValue;
+
+      setQuizQuestionsType(updatedArray);
+    }
+
+    if (name === "question") {
+      let newValue = value;
+      let updatedArray = [...quizQuestionsQuestion];
+
+      updatedArray[currentQuestion] = newValue;
+
+      setQuizQuestionsQuestion(updatedArray);
+    }
   };
 
   const submitCreateQuiz = () => {
@@ -53,19 +80,24 @@ const CreateQuizModal = ({}) => {
     // ADD ERROR MESSAGES TO INPUTS
 
     // CREATE QUESTIONS = MAX NUMBER OF QUESTIONS (EMPTY OBJECTS)
-    const newQuestions = Array(Number(quizData.score)).fill({
+    const newQuizDataQuestions = Array(Number(quizData.score)).fill({
       type: "",
       question: "",
     });
 
+    const newQuizQuestionsType = Array<string>(Number(quizData.score)).fill("");
+    const newQuizQuestionsQuestion = Array<string>(Number(quizData.score)).fill(
+      ""
+    );
+
     // FILL QUIZDATA.QUESTIONS WITH EMPTY OBJECTS CREATED PREVIOUSLY
     setQuizData((prevData) => ({
       ...prevData,
-      questions: [...newQuestions],
+      questions: newQuizDataQuestions,
     }));
 
-    // SET CURRENT QUESTION TO ONE TO TRACK WHICH QUESTION WE ARE UP TOO
-    setCurrentQuestion(1);
+    setQuizQuestionsType(newQuizQuestionsType);
+    setQuizQuestionsQuestion(newQuizQuestionsQuestion);
 
     // CHANGE STEP TO QUESTIONS
     setStep(STEPS.QUESTIONS);
@@ -103,7 +135,7 @@ const CreateQuizModal = ({}) => {
           variant="outline"
           className="p-8"
         >
-          Create Questions
+          Create Quiz
         </Button>
       </div>
     );
@@ -117,16 +149,29 @@ const CreateQuizModal = ({}) => {
             className={`absolute top-0 bottom-0 left-0 rounded-full bg-gradient-to-r from-primary to-secondary transition-all duration-1000 w-${progressBar}/12`}
           ></div>
         </div>
-        <Button
-          disabled={isLoading}
-          onClick={() => {
-            setTestNum(6);
-          }}
-          variant="outline"
-          className="p-8"
+        <Select
+          label="Question Type"
+          id="questionType"
+          value={quizQuestionsType[currentQuestion]}
+          handleChange={handleChange}
         >
-          CLG
-        </Button>
+          <option disabled>Select Type</option>
+          <option>Multiple Choice</option>
+          <option>Single Select</option>
+        </Select>
+        <Input
+          id="question"
+          label="Question"
+          type="text"
+          disabled={isLoading}
+          handleChange={handleChange}
+          value={quizQuestionsQuestion[currentQuestion]}
+        />
+        {quizQuestionsType[currentQuestion] === ""
+          ? ""
+          : quizQuestionsType[currentQuestion] === "Multiple Choice"
+          ? "Multiple Choice"
+          : "Single Select"}
       </div>
     );
   }

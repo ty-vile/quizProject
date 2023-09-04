@@ -1,3 +1,11 @@
+PRISMA CRUD
 https://www.prisma.io/docs/concepts/components/prisma-client/crud
 
+PRISMA RELATIONS
+https://www.prisma.io/docs/concepts/components/prisma-schema/relations
+
+SCHEMA FOR QUIZ
 https://mysql.tutorials24x7.com/blog/guide-to-design-database-for-quiz-in-mysql
+
+TAILWIND COMPONENTS
+https://tailwindflex.com/
