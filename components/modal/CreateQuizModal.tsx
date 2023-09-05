@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Modal from "./Modal";
 import useCreateQuizModal from "@/hooks/useCreateQuizModal";
 import Heading from "../utility/Heading";
 import Input from "../utility/Inputs/Input";
 import Select from "../utility/Inputs/Select";
 import { Button } from "../ui/button";
+import ProgressBar from "../utility/ProgressBar";
+import Textarea from "../utility/Inputs/Textarea";
+import next from "next/types";
 
 enum STEPS {
   CREATE = 0,
@@ -31,7 +34,7 @@ const CreateQuizModal = ({}) => {
   const [step, setStep] = useState(STEPS.CREATE);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   // progress state
-  const [progressBar, setProgressBar] = useState<number>(3);
+  const [percentageProgress, setPercentageProgress] = useState<number>(3);
   // data state
   const [quizQuestionsType, setQuizQuestionsType] = useState<string[]>([]);
   const [quizQuestionsQuestion, setQuizQuestionsQuestion] = useState<string[]>(
@@ -57,6 +60,7 @@ const CreateQuizModal = ({}) => {
 
     if (name === "questionType") {
       let newValue = value;
+      console.log(newValue, "NVL");
       let updatedArray = [...quizQuestionsType];
 
       updatedArray[currentQuestion] = newValue;
@@ -74,7 +78,7 @@ const CreateQuizModal = ({}) => {
     }
   };
 
-  const submitCreateQuiz = () => {
+  const initQuiz = () => {
     // ADD CHECK FOR SCORE >= 1 && <= 10
     // ADD CHECK FOR CATEGORY !== ''
     // ADD ERROR MESSAGES TO INPUTS
@@ -85,7 +89,9 @@ const CreateQuizModal = ({}) => {
       question: "",
     });
 
-    const newQuizQuestionsType = Array<string>(Number(quizData.score)).fill("");
+    const newQuizQuestionsType = Array<string>(Number(quizData.score)).fill(
+      "Single Select"
+    );
     const newQuizQuestionsQuestion = Array<string>(Number(quizData.score)).fill(
       ""
     );
@@ -102,6 +108,24 @@ const CreateQuizModal = ({}) => {
     // CHANGE STEP TO QUESTIONS
     setStep(STEPS.QUESTIONS);
   };
+
+  const nextQuestion = () => {
+    if (currentQuestion === quizData.score - 1) {
+      console.log(quizQuestionsQuestion);
+      console.log(quizQuestionsType);
+      return setStep(STEPS.REVIEW);
+    }
+
+    console.log(quizData);
+    return setCurrentQuestion(currentQuestion + 1);
+  };
+
+  const min = useMemo(() => {
+    return 1;
+  }, []);
+  const max = useMemo(() => {
+    return 10;
+  }, []);
 
   let bodyContent;
 
@@ -124,16 +148,16 @@ const CreateQuizModal = ({}) => {
           type="number"
           disabled={isLoading}
           required={true}
-          minimum={1}
-          maximum={10}
+          minimum={min}
+          maximum={max}
           handleChange={handleChange}
           value={quizData.score}
         />
         <Button
           disabled={isLoading}
-          onClick={submitCreateQuiz}
+          onClick={initQuiz}
           variant="outline"
-          className="p-8"
+          className="p-6"
         >
           Create Quiz
         </Button>
@@ -143,35 +167,81 @@ const CreateQuizModal = ({}) => {
 
   if (step === STEPS.QUESTIONS) {
     bodyContent = (
-      <div className="flex flex-col gap-12 mt-3">
-        <div className="relative h-4 rounded-full overflow-hidden bg-background">
-          <div
-            className={`absolute top-0 bottom-0 left-0 rounded-full bg-gradient-to-r from-primary to-secondary transition-all duration-1000 w-${progressBar}/12`}
-          ></div>
-        </div>
+      <div className="flex flex-col gap-6 mt-3  h-full">
+        {/* <ProgressBar
+          percentage={percentageProgress}
+          current={currentQuestion + 1}
+          max={quizData?.score}
+        /> */}
         <Select
           label="Question Type"
           id="questionType"
-          value={quizQuestionsType[currentQuestion]}
+          value={quizQuestionsType[currentQuestion]} // Set the default value
           handleChange={handleChange}
         >
-          <option disabled>Select Type</option>
-          <option>Multiple Choice</option>
-          <option>Single Select</option>
+          <option value="Single Select">Single Select</option>
+          <option value="Multiple Choice">Multiple Choice</option>
         </Select>
-        <Input
+        <Textarea
           id="question"
           label="Question"
-          type="text"
           disabled={isLoading}
           handleChange={handleChange}
           value={quizQuestionsQuestion[currentQuestion]}
         />
-        {quizQuestionsType[currentQuestion] === ""
-          ? ""
-          : quizQuestionsType[currentQuestion] === "Multiple Choice"
-          ? "Multiple Choice"
-          : "Single Select"}
+        {quizQuestionsType[currentQuestion] === "Multiple Choice" && (
+          <>
+            <h3>Answers</h3>
+            <Input
+              id="answerOne"
+              label="Answer One"
+              type="text"
+              disabled={isLoading}
+              required={true}
+              handleChange={handleChange}
+              // ADD VALUE
+              value=""
+            />
+            <Input
+              id="answerTwo"
+              label="Answer Two"
+              type="text"
+              disabled={isLoading}
+              required={true}
+              handleChange={handleChange}
+              // ADD VALUE
+              value=""
+            />
+            <Input
+              id="answerThree"
+              label="Answer Three"
+              type="text"
+              disabled={isLoading}
+              required={true}
+              handleChange={handleChange}
+              // ADD VALUE
+              value=""
+            />
+            <Input
+              id="answerFour"
+              label="Answer Four"
+              type="text"
+              disabled={isLoading}
+              required={true}
+              handleChange={handleChange}
+              // ADD VALUE
+              value=""
+            />
+          </>
+        )}
+        <div className="flex flex-row items-center gap-4">
+          <Button className="w-full p-6" variant="outline">
+            Back
+          </Button>
+          <Button className="w-full p-6" onClick={nextQuestion}>
+            Next
+          </Button>
+        </div>
       </div>
     );
   }
@@ -183,6 +253,9 @@ const CreateQuizModal = ({}) => {
       onClose={createQuizModal.onClose}
       title="Create New Quiz"
       body={bodyContent}
+      percentage={percentageProgress}
+      current={currentQuestion}
+      max={quizData.score}
     />
   );
 };

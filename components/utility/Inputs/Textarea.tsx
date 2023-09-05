@@ -1,47 +1,36 @@
 "use client";
 
-interface InputProps {
+interface TextareaProps {
   id: string;
   label: string;
   value: string | number;
-  type?: string;
   disabled?: boolean;
   required?: boolean;
-  minimum?: number;
-  maximum?: number;
   handleChange: (e: any) => void;
 }
 
-const Input: React.FC<InputProps> = ({
+const Textarea: React.FC<TextareaProps> = ({
   id,
   label,
-  type,
   disabled,
   value,
   required,
-  minimum,
-  maximum,
   handleChange,
 }) => {
-  console.log(minimum, maximum);
-
   return (
     <div className="w-full relative">
-      <input
+      <textarea
         id={id}
         disabled={disabled}
         value={value}
         onChange={(e) => {
           handleChange(e);
         }}
-        type={type}
-        min={minimum}
-        max={maximum}
         name={id}
         placeholder=""
-        className={`peer w-full p-3 bg-background border-2 border-gray-200 focus:border-primary font-bold focus:border-4 rounded-md outline-none transition disabled:cursor-not-allowed disabled:opacity-70`}
+        className={`peer w-full p-3 bg-background border-2 border-gray-200 focus:border-primary font-bold focus:border-4 rounded-md outline-none transition disabled:cursor-not-allowed disabled:opacity-70 max-h-[150px]`}
         required={required}
-      />
+      ></textarea>
       <label
         htmlFor={id}
         className={`absolute left-4 text-xs duration-150 transform -top-4 z-10 origin-[0] font-bold bg-background p-1 rounded-lg border-2 border-primary
@@ -53,4 +42,4 @@ const Input: React.FC<InputProps> = ({
   );
 };
 
-export default Input;
+export default Textarea;
