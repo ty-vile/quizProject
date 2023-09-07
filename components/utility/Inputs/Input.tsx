@@ -7,8 +7,7 @@ interface InputProps {
   type?: string;
   disabled?: boolean;
   required?: boolean;
-  minimum?: number;
-  maximum?: number;
+
   handleChange: (e: any) => void;
 }
 
@@ -19,12 +18,8 @@ const Input: React.FC<InputProps> = ({
   disabled,
   value,
   required,
-  minimum,
-  maximum,
   handleChange,
 }) => {
-  console.log(minimum, maximum);
-
   return (
     <div className="w-full relative">
       <input
@@ -35,8 +30,8 @@ const Input: React.FC<InputProps> = ({
           handleChange(e);
         }}
         type={type}
-        min={minimum}
-        max={maximum}
+        min={type === "number" ? 1 : ""}
+        max={type === "number" ? 10 : ""}
         name={id}
         placeholder=""
         className={`peer w-full p-3 bg-background border-2 border-gray-200 focus:border-primary font-bold focus:border-4 rounded-md outline-none transition disabled:cursor-not-allowed disabled:opacity-70`}

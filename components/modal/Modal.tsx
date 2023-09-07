@@ -14,7 +14,7 @@ interface ModalProps {
   title?: string;
   body?: React.ReactElement;
   disabled?: boolean;
-  percentage?: number;
+  percentage?: string;
   current?: number;
   max?: number;
 }
@@ -56,12 +56,7 @@ const Modal: React.FC<ModalProps> = ({
       <div className="flex items-center justify-center overflow-x-hidden overflow-y-scroll fixed inset-0 z-50 bg-neutral-500/70 outline-none focus:outline-none ">
         <div className="relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 mx-auto h-full md:h-auto">
           {percentage && (
-            <ProgressBar
-              percentage={percentage}
-              current={current}
-              max={max}
-              showModal={showModal}
-            />
+            <ProgressBar percentage={percentage} showModal={showModal} />
           )}
           {/* CONTENT */}
           <div
@@ -86,7 +81,7 @@ const Modal: React.FC<ModalProps> = ({
                 <div className="text-lg font-semibold">{title}</div>
               </div>
               {/* BODY */}
-              <div className="relative px-6 pt-2 pb-6 flex-auto bg-white">
+              <div className="relative px-6 pt-2 pb-6 flex-auto bg-background">
                 {body}
               </div>
             </div>

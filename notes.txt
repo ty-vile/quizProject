@@ -4,6 +4,9 @@ https://www.prisma.io/docs/concepts/components/prisma-client/crud
 PRISMA RELATIONS
 https://www.prisma.io/docs/concepts/components/prisma-schema/relations
 
+PRISMA NESTED WRITES
+https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries#nested-writes
+
 SCHEMA FOR QUIZ
 https://mysql.tutorials24x7.com/blog/guide-to-design-database-for-quiz-in-mysql
 
