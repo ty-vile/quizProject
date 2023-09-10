@@ -2,6 +2,7 @@
 
 interface InputProps {
   id: string;
+  name: string;
   label: string;
   value: string | number;
   type?: string;
@@ -13,6 +14,7 @@ interface InputProps {
 
 const Input: React.FC<InputProps> = ({
   id,
+  name,
   label,
   type,
   disabled,
@@ -24,15 +26,13 @@ const Input: React.FC<InputProps> = ({
     <div className="w-full relative">
       <input
         id={id}
+        name={name}
         disabled={disabled}
         value={value}
         onChange={(e) => {
           handleChange(e);
         }}
         type={type}
-        min={type === "number" ? 1 : ""}
-        max={type === "number" ? 10 : ""}
-        name={id}
         placeholder=""
         className={`peer w-full p-3 bg-background border-2 border-gray-200 focus:border-primary font-bold focus:border-4 rounded-md outline-none transition disabled:cursor-not-allowed disabled:opacity-70`}
         required={required}

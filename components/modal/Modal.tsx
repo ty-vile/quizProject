@@ -26,8 +26,6 @@ const Modal: React.FC<ModalProps> = ({
   body,
   disabled,
   percentage,
-  current,
-  max,
 }) => {
   const [showModal, setShowModal] = useState(isOpen);
 

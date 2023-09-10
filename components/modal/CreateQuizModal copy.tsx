@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Modal from "./Modal";
 import useCreateQuizModal from "@/hooks/useCreateQuizModal";
 import Heading from "../utility/Heading";
@@ -20,7 +20,6 @@ enum STEPS {
 type Question = {
   type: string;
   question: string;
-  answers: AnswerObject[];
 };
 
 type QuizData = {
@@ -43,6 +42,73 @@ const CreateQuizModal = ({}) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   // progress state
   const [percentageProgress, setPercentageProgress] = useState<string>("1");
+  // quiz data state
+  const [quizQuestionsType, setQuizQuestionsType] = useState<string[]>([]);
+  const [quizQuestionsQuestion, setQuizQuestionsQuestion] = useState<string[]>(
+    []
+  );
+  let [quizQuestionsAnswers, setQuizQuestionsAnswers] = useState<QuizState>([
+    [
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+    ],
+    [
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+    ],
+    [
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+    ],
+    [
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+    ],
+    [
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+    ],
+    [
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+    ],
+    [
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+    ],
+    [
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+    ],
+    [
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+    ],
+    [
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+      { answer: "", isCorrect: false },
+    ],
+  ]);
 
   const [quizData, setQuizData] = useState<QuizData>({
     category: "",
@@ -52,28 +118,9 @@ const CreateQuizModal = ({}) => {
 
   const createQuizModal = useCreateQuizModal();
 
-  const initQuiz = () => {
-    // ADD CHECK FOR SCORE >= 1 && <= 10
-    // ADD CHECK FOR CATEGORY !== ''
-    // ADD ERROR MESSAGES TO INPUTS
-
-    const questionsArray = Array(Number(quizData.score)).fill({
-      type: "Single Select",
-      question: "",
-      answers: [{ answer: "", isCorrect: true }],
-    });
-
-    setQuizData({
-      ...quizData,
-      questions: [...questionsArray],
-    });
-    setStep(STEPS.QUESTIONS);
-  };
-
-  const handleChange = (event: any, index?: number) => {
+  const handleChange = (event: any) => {
     const { name, value } = event.target;
 
-    // handle initial quiz values
     if (name === "category" || name === "score") {
       setQuizData({
         ...quizData,
@@ -81,80 +128,91 @@ const CreateQuizModal = ({}) => {
       });
     }
 
-    // handle changing type of question - multiple choice & single select
     if (name === "questionType") {
-      const duplicateQuestionsArray = quizData.questions.map(
-        (question, index) => {
-          if (index === currentQuestion) {
-            // create a deep copy of the question and update its type - also populate answers according to type - multiple choice
-            if (value === "Multiple Choice") {
-              const answersArray = Array(4).fill({
-                answer: "",
-                isCorrect: false,
-              });
-
-              return {
-                ...question,
-                type: value,
-                answers: answersArray,
-              };
-            }
-            // create a deep copy of the question and update its type - also populate answers according to type - single select
-            if (value === "Single Select") {
-              const answersArray = Array(1).fill({
-                answer: "",
-                isCorrect: true,
-              });
-
-              return {
-                ...question,
-                type: value,
-                answers: answersArray,
-              };
-            }
-          }
-          // for other questions, return them as they are
-          return question;
-        }
-      );
-
-      setQuizData({
-        ...quizData,
-        questions: duplicateQuestionsArray,
-      });
+      let newValue = value;
+      let updatedTypesArray = [...quizQuestionsType];
+      updatedTypesArray[currentQuestion] = newValue;
+      setQuizQuestionsType(updatedTypesArray);
     }
 
-    // handle changing  question - multiple choice & single select
     if (name === "question") {
-      const duplicateQuestionsArray = quizData.questions.map(
-        (question, index) => {
-          if (index === currentQuestion) {
-            // create a deep copy of the question and update its type - also populate answers according to type - single select
-
-            return {
-              ...question,
-              question: value,
-            };
-          }
-          // for other questions, return them as they are
-          return question;
-        }
-      );
-
-      setQuizData({
-        ...quizData,
-        questions: duplicateQuestionsArray,
-      });
+      let newValue = value;
+      let updatedQuestionsArray = [...quizQuestionsQuestion];
+      updatedQuestionsArray[currentQuestion] = newValue;
+      setQuizQuestionsQuestion(updatedQuestionsArray);
     }
 
-    if (name === "answer") {
-      console.log(index);
+    if (name === "answerOne") {
+      let newValue = value;
+      let updatedAnswersArray = [...quizQuestionsAnswers];
+
+      updatedAnswersArray[currentQuestion][0].answer = newValue;
+      setQuizQuestionsAnswers(updatedAnswersArray);
     }
+
+    if (name === "answerTwo") {
+      let newValue = value;
+      let updatedAnswersArray = [...quizQuestionsAnswers];
+
+      updatedAnswersArray[currentQuestion][1].answer = newValue;
+      setQuizQuestionsAnswers(updatedAnswersArray);
+    }
+
+    if (name === "answerThree") {
+      let newValue = value;
+      let updatedAnswersArray = [...quizQuestionsAnswers];
+
+      updatedAnswersArray[currentQuestion][2].answer = newValue;
+      setQuizQuestionsAnswers(updatedAnswersArray);
+    }
+
+    if (name === "answerFour") {
+      let newValue = value;
+      let updatedAnswersArray = [...quizQuestionsAnswers];
+
+      updatedAnswersArray[currentQuestion][3].answer = newValue;
+      setQuizQuestionsAnswers(updatedAnswersArray);
+    }
+  };
+
+  const initQuiz = () => {
+    // ADD CHECK FOR SCORE >= 1 && <= 10
+    // ADD CHECK FOR CATEGORY !== ''
+    // ADD ERROR MESSAGES TO INPUTS
+
+    // create questions object - max number of questions
+    const newQuizDataQuestions = Array(Number(quizData.score)).fill({
+      type: "",
+      question: "",
+    });
+
+    // fill quizData with prefilled empty objects
+    setQuizData((prevData) => ({
+      ...prevData,
+      questions: newQuizDataQuestions,
+    }));
+
+    // create types - prefill with single select
+    const newQuizQuestionsTypes = Array<string>(Number(quizData.score)).fill(
+      "Single Select"
+    );
+
+    // create questions - prefill with empty string
+    const newQuizQuestionsQuestions = Array<string>(
+      Number(quizData.score)
+    ).fill("");
+
+    // prefill state ready to be updated with handlechange
+    setQuizQuestionsType(newQuizQuestionsTypes);
+    setQuizQuestionsQuestion(newQuizQuestionsQuestions);
+
+    // CHANGE STEP TO QUESTIONS
+    setStep(STEPS.QUESTIONS);
   };
 
   const nextQuestion = () => {
     if (currentQuestion === quizData.score - 1) {
-      console.log(quizData);
+      console.log(quizQuestionsAnswers);
       return setStep(STEPS.REVIEW);
     }
 
@@ -169,6 +227,26 @@ const CreateQuizModal = ({}) => {
     return setCurrentQuestion(currentQuestion - 1);
   };
 
+  const modalTitle = useMemo(() => {
+    if (step === STEPS.CREATE) {
+      return "Create Quiz";
+    }
+
+    if (step === STEPS.QUESTIONS) {
+      return (
+        "Question:" +
+        " " +
+        (currentQuestion + 1) +
+        "/" +
+        quizData.score.toString()
+      );
+    }
+
+    if (step === STEPS.REVIEW) {
+      return "Review Quiz Info";
+    }
+  }, [step, currentQuestion, quizData]);
+
   let bodyContent;
 
   if (step === STEPS.CREATE) {
@@ -176,7 +254,6 @@ const CreateQuizModal = ({}) => {
       <div className="flex flex-col gap-12 mt-3">
         <Input
           id="category"
-          name="category"
           label="Category"
           type="text"
           disabled={isLoading}
@@ -188,7 +265,6 @@ const CreateQuizModal = ({}) => {
           id="score"
           label="Total Questions"
           type="number"
-          name="score"
           disabled={isLoading}
           required={true}
           handleChange={handleChange}
@@ -217,8 +293,8 @@ const CreateQuizModal = ({}) => {
         <Select
           label="Question Type"
           id="questionType"
+          value={quizQuestionsType[currentQuestion]} // Set the default value
           handleChange={handleChange}
-          value={quizData.questions[currentQuestion].type}
         >
           <option value="Single Select">Single Select</option>
           <option value="Multiple Choice">Multiple Choice</option>
@@ -228,24 +304,23 @@ const CreateQuizModal = ({}) => {
           label="Question"
           disabled={isLoading}
           handleChange={handleChange}
-          value={quizData.questions[currentQuestion].question}
+          value={quizQuestionsQuestion[currentQuestion]}
         />
-        {/* <h3>
+        <h3>
           Answer
           {quizQuestionsType[currentQuestion] === "Multiple Choice" && "s"}
-        </h3> */}
+        </h3>
         <Input
           id="answerOne"
-          name="answer"
           label="Answer One"
           type="text"
           disabled={isLoading}
           required={true}
-          handleChange={(e) => handleChange(e, 0)}
+          handleChange={handleChange}
           // ADD VALUE
-          value={quizData.questions[currentQuestion].answers[0].answer}
+          value={quizQuestionsAnswers[currentQuestion][0].answer}
         />
-        {/* {quizQuestionsType[currentQuestion] === "Multiple Choice" && (
+        {quizQuestionsType[currentQuestion] === "Multiple Choice" && (
           <>
             <Input
               id="answerTwo"
@@ -278,7 +353,7 @@ const CreateQuizModal = ({}) => {
               value={quizQuestionsAnswers[currentQuestion][3].answer}
             />
           </>
-        )} */}
+        )}
         <div className="flex flex-row items-center gap-4">
           <Button
             className="w-full p-6"
@@ -294,26 +369,6 @@ const CreateQuizModal = ({}) => {
       </div>
     );
   }
-
-  const modalTitle = useMemo(() => {
-    if (step === STEPS.CREATE) {
-      return "Create Quiz";
-    }
-
-    if (step === STEPS.QUESTIONS) {
-      return (
-        "Question:" +
-        " " +
-        (currentQuestion + 1) +
-        "/" +
-        quizData.score.toString()
-      );
-    }
-
-    if (step === STEPS.REVIEW) {
-      return "Review Quiz Info";
-    }
-  }, [step, currentQuestion, quizData]);
 
   return (
     <Modal
