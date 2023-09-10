@@ -83,40 +83,38 @@ const CreateQuizModal = ({}) => {
 
     // handle changing type of question - multiple choice & single select
     if (name === "questionType") {
-      const duplicateQuestionsArray = quizData.questions.map(
-        (question, index) => {
-          if (index === currentQuestion) {
-            // create a deep copy of the question and update its type - also populate answers according to type - multiple choice
-            if (value === "Multiple Choice") {
-              const answersArray = Array(4).fill({
-                answer: "",
-                isCorrect: false,
-              });
+      const duplicateQuestionsArray = quizData.questions.map((question, i) => {
+        if (i === currentQuestion) {
+          // create a deep copy of the question and update its type - also populate answers according to type - multiple choice
+          if (value === "Multiple Choice") {
+            const answersArray = Array(4).fill({
+              answer: "",
+              isCorrect: false,
+            });
 
-              return {
-                ...question,
-                type: value,
-                answers: answersArray,
-              };
-            }
-            // create a deep copy of the question and update its type - also populate answers according to type - single select
-            if (value === "Single Select") {
-              const answersArray = Array(1).fill({
-                answer: "",
-                isCorrect: true,
-              });
-
-              return {
-                ...question,
-                type: value,
-                answers: answersArray,
-              };
-            }
+            return {
+              ...question,
+              type: value,
+              answers: answersArray,
+            };
           }
-          // for other questions, return them as they are
-          return question;
+          // create a deep copy of the question and update its type - also populate answers according to type - single select
+          if (value === "Single Select") {
+            const answersArray = Array(1).fill({
+              answer: "",
+              isCorrect: true,
+            });
+
+            return {
+              ...question,
+              type: value,
+              answers: answersArray,
+            };
+          }
         }
-      );
+        // for other questions, return them as they are
+        return question;
+      });
 
       setQuizData({
         ...quizData,
@@ -126,20 +124,18 @@ const CreateQuizModal = ({}) => {
 
     // handle changing  question - multiple choice & single select
     if (name === "question") {
-      const duplicateQuestionsArray = quizData.questions.map(
-        (question, index) => {
-          if (index === currentQuestion) {
-            // create a deep copy of the question and update its type - also populate answers according to type - single select
+      const duplicateQuestionsArray = quizData.questions.map((question, i) => {
+        if (i === currentQuestion) {
+          // create a deep copy of the question and update its type - also populate answers according to type - single select
 
-            return {
-              ...question,
-              question: value,
-            };
-          }
-          // for other questions, return them as they are
-          return question;
+          return {
+            ...question,
+            question: value,
+          };
         }
-      );
+        // for other questions, return them as they are
+        return question;
+      });
 
       setQuizData({
         ...quizData,
@@ -148,7 +144,34 @@ const CreateQuizModal = ({}) => {
     }
 
     if (name === "answer") {
-      console.log(index);
+      const duplicateQuestionsArray = quizData.questions.map((question, i) => {
+        if (i === currentQuestion) {
+          const updatedAnswers = question.answers.map((answer, j) => {
+            // if j === index of input update answer
+            if (j === index) {
+              return {
+                ...answer,
+                answer: value,
+              };
+            }
+            // for other answers, return them as they are
+            return answer;
+          });
+
+          // if i === current question update values with new answer
+          return {
+            ...question,
+            answers: updatedAnswers,
+          };
+        }
+        // for other questions, return them as they are
+        return question;
+      });
+
+      setQuizData({
+        ...quizData,
+        questions: duplicateQuestionsArray,
+      });
     }
   };
 
@@ -209,11 +232,6 @@ const CreateQuizModal = ({}) => {
   if (step === STEPS.QUESTIONS) {
     bodyContent = (
       <div className="flex flex-col gap-6 mt-3  h-full">
-        {/* <ProgressBar
-          percentage={percentageProgress}
-          current={currentQuestion + 1}
-          max={quizData?.score}
-        /> */}
         <Select
           label="Question Type"
           id="questionType"
@@ -230,10 +248,11 @@ const CreateQuizModal = ({}) => {
           handleChange={handleChange}
           value={quizData.questions[currentQuestion].question}
         />
-        {/* <h3>
+        <h3>
           Answer
-          {quizQuestionsType[currentQuestion] === "Multiple Choice" && "s"}
-        </h3> */}
+          {quizData.questions[currentQuestion].type === "Multiple Choice" &&
+            "s"}
+        </h3>
         <Input
           id="answerOne"
           name="answer"
@@ -242,43 +261,42 @@ const CreateQuizModal = ({}) => {
           disabled={isLoading}
           required={true}
           handleChange={(e) => handleChange(e, 0)}
-          // ADD VALUE
           value={quizData.questions[currentQuestion].answers[0].answer}
         />
-        {/* {quizQuestionsType[currentQuestion] === "Multiple Choice" && (
+        {quizData.questions[currentQuestion].type === "Multiple Choice" && (
           <>
             <Input
               id="answerTwo"
               label="Answer Two"
+              name="answer"
               type="text"
               disabled={isLoading}
               required={true}
-              handleChange={handleChange}
-              // ADD VALUE
-              value={quizQuestionsAnswers[currentQuestion][1].answer}
+              handleChange={(e) => handleChange(e, 1)}
+              value={quizData.questions[currentQuestion].answers[1].answer}
             />
             <Input
               id="answerThree"
               label="Answer Three"
+              name="answer"
               type="text"
               disabled={isLoading}
               required={true}
-              handleChange={handleChange}
-              // ADD VALUE
-              value={quizQuestionsAnswers[currentQuestion][2].answer}
+              handleChange={(e) => handleChange(e, 2)}
+              value={quizData.questions[currentQuestion].answers[2].answer}
             />
             <Input
               id="answerFour"
               label="Answer Four"
+              name="answer"
               type="text"
               disabled={isLoading}
               required={true}
-              handleChange={handleChange}
-              // ADD VALUE
-              value={quizQuestionsAnswers[currentQuestion][3].answer}
+              handleChange={(e) => handleChange(e, 3)}
+              value={quizData.questions[currentQuestion].answers[3].answer}
             />
           </>
-        )} */}
+        )}
         <div className="flex flex-row items-center gap-4">
           <Button
             className="w-full p-6"
