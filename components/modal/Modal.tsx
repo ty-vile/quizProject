@@ -9,12 +9,12 @@ import { Button } from "../ui/button";
 import ProgressBar from "../utility/ProgressBar";
 
 interface ModalProps {
-  isOpen?: boolean;
+  percentage?: string;
   onClose: () => void;
+  isOpen?: boolean;
   title?: string;
   body?: React.ReactElement;
   disabled?: boolean;
-  percentage?: string;
   current?: number;
   max?: number;
 }

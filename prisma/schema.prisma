@@ -62,14 +62,8 @@ model Quiz {
   category String
   questions Question[]
   score Int
-  answers Answer[]
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@index([userId])
-}
-
-enum QuestionType {
-  multiple_choice
-  singular
 }
 
 model Question {
@@ -78,7 +72,7 @@ model Question {
   updatedAt DateTime @updatedAt
   quizId String
   question String
-  type QuestionType
+  type String
   quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
   answers Answer[]
   @@index([quizId])
@@ -92,7 +86,6 @@ createdAt DateTime @default(now())
 updatedAt DateTime @updatedAt
 quizId String
 questionId String
-quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
 question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
  @@index([quizId])
  @@index([questionId])
