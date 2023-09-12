@@ -222,8 +222,20 @@ const CreateQuizModal = ({}) => {
   };
 
   const prevQuestion = () => {
+    // if only one question in quiz and on review step
+    if (currentQuestion === 0 && step === STEPS.REVIEW) {
+      setStep(STEPS.QUESTIONS);
+      return;
+    }
+
+    // if on first question
     if (currentQuestion === 0) {
       return setStep(STEPS.CREATE);
+    }
+
+    // if on review step
+    if (step === STEPS.REVIEW) {
+      return setStep(STEPS.QUESTIONS);
     }
 
     return setCurrentQuestion(currentQuestion - 1);
@@ -304,6 +316,7 @@ const CreateQuizModal = ({}) => {
           disabled={isLoading}
           handleChange={handleChange}
           value={quizData.questions[currentQuestion].question}
+          rows={3}
         />
         <div className="w-full flex items-center justify-between">
           <h3 className="font-bold text-xl">
@@ -317,7 +330,7 @@ const CreateQuizModal = ({}) => {
         </div>
         <div className="flex items-center">
           <Input
-            id="answerOne"
+            id="answer1"
             name="answer"
             label="Answer One"
             type="text"
@@ -329,7 +342,7 @@ const CreateQuizModal = ({}) => {
           {quizData.questions[currentQuestion].type === "Multiple Choice" && (
             <Checkbox
               type="checkbox"
-              id="isCorrectOne"
+              id="isCorrect1"
               name="isCorrect"
               label="Is Correct?"
               disabled={isLoading}
@@ -343,7 +356,7 @@ const CreateQuizModal = ({}) => {
           <>
             <div className="flex items-center">
               <Input
-                id="answerTwo"
+                id="answer2"
                 label="Answer Two"
                 name="answer"
                 type="text"
@@ -354,7 +367,7 @@ const CreateQuizModal = ({}) => {
               />
               <Checkbox
                 type="checkbox"
-                id="isCorrectTwo"
+                id="isCorrect2"
                 name="isCorrect"
                 label="Is Correct?"
                 disabled={isLoading}
@@ -365,7 +378,7 @@ const CreateQuizModal = ({}) => {
             </div>
             <div className="flex items-center">
               <Input
-                id="answerThree"
+                id="answer3"
                 label="Answer Three"
                 name="answer"
                 type="text"
@@ -376,7 +389,7 @@ const CreateQuizModal = ({}) => {
               />
               <Checkbox
                 type="checkbox"
-                id="isCorrectThree"
+                id="isCorrect3"
                 name="isCorrect"
                 label="Is Correct?"
                 disabled={isLoading}
@@ -387,7 +400,7 @@ const CreateQuizModal = ({}) => {
             </div>
             <div className="flex items-center">
               <Input
-                id="answerFour"
+                id="answer4"
                 label="Answer Four"
                 name="answer"
                 type="text"
@@ -398,7 +411,7 @@ const CreateQuizModal = ({}) => {
               />
               <Checkbox
                 type="checkbox"
-                id="isCorrectFour"
+                id="isCorrect4"
                 name="isCorrect"
                 label="Is Correct?"
                 disabled={isLoading}
@@ -409,6 +422,85 @@ const CreateQuizModal = ({}) => {
             </div>
           </>
         )}
+        <div className="flex flex-row items-center gap-4">
+          <Button
+            className="w-full p-6"
+            variant="outline"
+            onClick={prevQuestion}
+          >
+            Back
+          </Button>
+          <Button className="w-full p-6" onClick={nextQuestion}>
+            Next
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === STEPS.REVIEW) {
+    bodyContent = (
+      <div className="flex flex-col gap-6 mt-3  h-full">
+        <div className="flex items-center gap-4 pb-4">
+          <Input
+            disabled={true}
+            value={quizData.category}
+            id="category"
+            name="category"
+            label="Category"
+            handleChange={() => {}}
+          />
+          <Input
+            disabled={true}
+            value={quizData.score}
+            id="score"
+            name="score"
+            label="Score"
+            handleChange={() => {}}
+          />
+        </div>
+        {quizData.questions.map((question, index) => {
+          return (
+            <div key={index} className="flex flex-col md:flex-row gap-4 pb-4 ">
+              <Textarea
+                value={question.question}
+                id={`Question${index + 1}`}
+                label={`Question ${index + 1}`}
+                handleChange={() => {}}
+                rows={1}
+                disabled={true}
+              />
+              {question.type === "Single Select" && (
+                <Textarea
+                  disabled={true}
+                  value={question.answers[0].answer}
+                  id={`Answer${index + 1}`}
+                  label={`Answer ${index + 1}`}
+                  handleChange={() => {}}
+                  rows={1}
+                />
+              )}
+              {question.type === "Multiple Choice" &&
+                question.answers.map((answer, i) => {
+                  if (answer.isCorrect === true) {
+                    return (
+                      <Textarea
+                        key={i}
+                        disabled={true}
+                        value={answer.answer}
+                        id={`Answer${index + 1}`}
+                        label={`Answer ${index + 1}`}
+                        handleChange={() => {}}
+                        rows={1}
+                      />
+                    );
+                  }
+                  return;
+                })}
+            </div>
+          );
+        })}
+
         <div className="flex flex-row items-center gap-4">
           <Button
             className="w-full p-6"

@@ -4,6 +4,7 @@ interface TextareaProps {
   id: string;
   label: string;
   value: string | number;
+  rows: number;
   disabled?: boolean;
   required?: boolean;
   handleChange: (e: any) => void;
@@ -15,6 +16,7 @@ const Textarea: React.FC<TextareaProps> = ({
   disabled,
   value,
   required,
+  rows,
   handleChange,
 }) => {
   return (
@@ -27,8 +29,10 @@ const Textarea: React.FC<TextareaProps> = ({
           handleChange(e);
         }}
         name={id}
+        rows={rows}
         placeholder=""
-        className={`peer w-full p-3 bg-background border-2 border-gray-200 focus:border-primary font-bold focus:border-4 rounded-md outline-none transition disabled:cursor-not-allowed disabled:opacity-70 max-h-[150px]`}
+        className={`peer w-full p-3 bg-background border-2 border-slate-600 dark:border-white focus:border-primary font-bold focus:border-4 rounded-md outline-none transition disabled:cursor-not-allowed disabled:opacity-70 max-h-[120px]
+        `}
         required={required}
       ></textarea>
       <label

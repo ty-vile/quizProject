@@ -34,16 +34,15 @@ const Checkbox: React.FC<InputProps> = ({
         }}
         type="checkbox"
         placeholder=""
-        className={`peer w-full p-3 bg-background border-2 border-gray-200 focus:border-primary font-bold focus:border-4 rounded-md outline-none transition disabled:cursor-not-allowed disabled:opacity-70`}
+        className={`peer opacity-0`}
         required={required}
       />
-      {/* <label
+
+      <label
         htmlFor={id}
-        className={`absolute left-4 text-xs duration-150 transform -top-4 z-10 origin-[0] font-bold bg-background p-1 rounded-lg border-2 border-primary
+        className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs duration-300 transform  z-10 origin-[0] font-bold bg-background p-3 rounded-full border-2 border-primary peer-checked:bg-primary cursor-pointer
       `}
-      >
-        {label}
-      </label> */}
+      ></label>
     </div>
   );
 };

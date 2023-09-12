@@ -52,7 +52,11 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <>
       <div className="flex items-center justify-center overflow-x-hidden overflow-y-scroll fixed inset-0 z-50 bg-neutral-500/70 outline-none focus:outline-none ">
-        <div className="relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 mx-auto h-full md:h-auto">
+        <div
+          className={`relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 mx-auto h-full md:h-auto md:max-h-[80vh] md:overflow-y-auto translate duration-300 
+          ${showModal ? "translate-y-0" : "translate-y-full"}
+          ${showModal ? "opacity-100" : "opacity-0"}`}
+        >
           {percentage && (
             <ProgressBar percentage={percentage} showModal={showModal} />
           )}
@@ -76,7 +80,9 @@ const Modal: React.FC<ModalProps> = ({
                 >
                   <IoMdClose size={32} />
                 </Button>
-                <div className="text-lg font-semibold">{title}</div>
+                <div className="text-lg font-semibold">
+                  <h2>{title}</h2>
+                </div>
               </div>
               {/* BODY */}
               <div className="relative px-6 pt-2 pb-6 flex-auto bg-background">
