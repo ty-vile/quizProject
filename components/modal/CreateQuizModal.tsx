@@ -1,49 +1,48 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+// react
+import { useMemo, useState } from "react";
+// hooks
+import useCreateQuizModal from "@/hooks/useCreateQuizModal";
 // components
 import Modal from "./Modal";
-import useCreateQuizModal from "@/hooks/useCreateQuizModal";
-import Heading from "../utility/Heading";
-
 import Input from "../utility/Inputs/Input";
 import Select from "../utility/Inputs/Select";
 import { Button } from "../ui/button";
-import ProgressBar from "../utility/ProgressBar";
 import Textarea from "../utility/Inputs/Textarea";
-// types
 import Checkbox from "../utility/Inputs/Checkbox";
 
+// types
 enum STEPS {
   CREATE = 0,
   QUESTIONS = 1,
   REVIEW = 2,
 }
 
-type AnswerObject = {
+export type AnswerProps = {
   answer: string;
   isCorrect: boolean;
 };
 
-type Question = {
+export type QuestionProps = {
   type: string;
   question: string;
-  answers: AnswerObject[];
+  answers: AnswerProps[];
 };
 
 type QuizData = {
-  questions: Question[];
+  questions: QuestionProps[];
   category: string;
   score: number;
 };
 
-type QuizState = AnswerObject[][];
+type QuizState = AnswerProps[][];
 
 const CreateQuizModal = ({}) => {
   // form state
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.CREATE);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState<number>(0);
 
   // quiz state
   const [quizData, setQuizData] = useState<QuizData>({
@@ -261,8 +260,30 @@ const CreateQuizModal = ({}) => {
     }
   }, [quizData.score, currentQuestion, step, STEPS]);
 
+  const handleSubmit = async () => {
+    setIsLoading(true);
+
+    fetch("/api/quiz", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(quizData),
+    })
+      .then(() => {
+        createQuizModal.onClose();
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
   let bodyContent;
 
+  // creating quiz
   if (step === STEPS.CREATE) {
     bodyContent = (
       <div className="flex flex-col gap-12 mt-3">
@@ -298,6 +319,7 @@ const CreateQuizModal = ({}) => {
     );
   }
 
+  // creating / editing questions
   if (step === STEPS.QUESTIONS) {
     bodyContent = (
       <div className="flex flex-col gap-6 mt-3  h-full">
@@ -438,6 +460,7 @@ const CreateQuizModal = ({}) => {
     );
   }
 
+  // reviewing quiz
   if (step === STEPS.REVIEW) {
     bodyContent = (
       <div className="flex flex-col gap-6 mt-3  h-full">
@@ -509,7 +532,7 @@ const CreateQuizModal = ({}) => {
           >
             Back
           </Button>
-          <Button className="w-full p-6" onClick={nextQuestion}>
+          <Button className="w-full p-6" onClick={handleSubmit}>
             Next
           </Button>
         </div>

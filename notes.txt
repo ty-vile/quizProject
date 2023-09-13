@@ -10,5 +10,8 @@ https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries#ne
 SCHEMA FOR QUIZ
 https://mysql.tutorials24x7.com/blog/guide-to-design-database-for-quiz-in-mysql
 
+SQL GUI FOR PLANETSCALE
+https://planetscale.com/docs/tutorials/connect-mysql-gui
+
 TAILWIND COMPONENTS
 https://tailwindflex.com/
