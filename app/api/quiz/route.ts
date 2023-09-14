@@ -13,10 +13,13 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
 
-  const { category, score, questions } = body;
+  const { category, score, title, questions } = body;
+
+  console.log(body);
 
   const newQuiz = await prisma.quiz.create({
     data: {
+      title: title,
       userId: currentUser?.id,
       category: category,
       score: Number(score),

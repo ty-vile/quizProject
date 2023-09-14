@@ -16,7 +16,7 @@ const Navbar: React.FC<Props> = async () => {
       <div className="py-4 border-b border-1">
         <Container>
           <div className="flex flex-row items-center justify-between gap-2 md:gap-0">
-            <Link href="">
+            <Link href="/dashboard">
               <p className="rounded-lg shadow-1 h-translate-1 px-2 py-1 text-xl font-bold border-2 border-black dark:border-white md:block">
                 Quizify
               </p>

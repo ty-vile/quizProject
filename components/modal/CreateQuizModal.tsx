@@ -33,6 +33,7 @@ export type QuestionProps = {
 type QuizData = {
   questions: QuestionProps[];
   category: string;
+  title: string;
   score: number;
 };
 
@@ -46,6 +47,7 @@ const CreateQuizModal = ({}) => {
 
   // quiz state
   const [quizData, setQuizData] = useState<QuizData>({
+    title: "",
     category: "",
     score: 1,
     questions: [],
@@ -75,7 +77,7 @@ const CreateQuizModal = ({}) => {
     const { name, value } = event.target;
 
     // handle initial quiz values
-    if (name === "category" || name === "score") {
+    if (name === "category" || name === "score" || name === "title") {
       setQuizData({
         ...quizData,
         [name]: value,
@@ -287,6 +289,16 @@ const CreateQuizModal = ({}) => {
   if (step === STEPS.CREATE) {
     bodyContent = (
       <div className="flex flex-col gap-12 mt-3">
+        <Input
+          id="title"
+          name="title"
+          label="Quiz Title"
+          type="text"
+          disabled={isLoading}
+          required={true}
+          handleChange={handleChange}
+          value={quizData.title}
+        />
         <Input
           id="category"
           name="category"
@@ -556,7 +568,7 @@ const CreateQuizModal = ({}) => {
     }
 
     if (step === STEPS.REVIEW) {
-      return "Review Quiz Info";
+      return `Review Quiz Info: ${quizData.title}`;
     }
   }, [step, currentQuestion, quizData]);
 
