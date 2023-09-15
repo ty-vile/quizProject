@@ -19,15 +19,18 @@ const UserQuiz = async () => {
       >
         MY QUIZZES
       </h1>
-      <div className="w-full grid grid-cols-1 gap-20">
+      <div className="w-full grid grid-cols-1 gap-8">
         {userQuizzes?.map((quiz, i) => {
+          const { title, createdAt, updatedAt, category, score, id } = quiz;
+
           return (
             <QuizCard
-              key={quiz.id}
-              id={quiz.id}
-              title={quiz.title}
-              category={quiz.category}
-              score={quiz.score}
+              key={id}
+              id={id}
+              title={title}
+              category={category}
+              score={score}
+              createdAt={createdAt}
             />
           );
         })}

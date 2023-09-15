@@ -4,6 +4,7 @@
 import { useMemo, useState } from "react";
 // hooks
 import useCreateQuizModal from "@/hooks/useCreateQuizModal";
+import { useRouter } from "next/navigation";
 // components
 import Modal from "./Modal";
 import Input from "../utility/Inputs/Input";
@@ -54,6 +55,7 @@ const CreateQuizModal = ({}) => {
   });
 
   const createQuizModal = useCreateQuizModal();
+  const router = useRouter();
 
   const initQuiz = () => {
     // ADD CHECK FOR SCORE >= 1 && <= 10
@@ -281,6 +283,15 @@ const CreateQuizModal = ({}) => {
       .finally(() => {
         setIsLoading(false);
       });
+
+    setQuizData({
+      title: "",
+      category: "",
+      score: 1,
+      questions: [],
+    });
+
+    return router.refresh();
   };
 
   let bodyContent;

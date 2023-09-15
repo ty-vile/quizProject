@@ -7,7 +7,7 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="min-h-screen min-w-screen pt-40 bg-background duration-300 ">
+    <main className="min-h-screen min-w-screen pt-40 bg-background duration-300">
       <Container>{children}</Container>
     </main>
   );
