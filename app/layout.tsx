@@ -2,7 +2,7 @@ import Navbar from "@/components/navbar/Navbar";
 import "./globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/app/provider/Theme-provider";
-import { Bungee } from "next/font/google";
+import { Bungee, Josefin_Sans } from "next/font/google";
 import CreateQuizModal from "@/components/modal/CreateQuizModal";
 export const metadata: Metadata = {
   title: "Quizify Quiz App",
@@ -14,6 +14,15 @@ export const bungee = Bungee({
   style: ["normal"],
   subsets: ["latin"],
   display: "swap",
+  variable: "--font-bungee",
+});
+
+export const josefin = Josefin_Sans({
+  weight: ["400"],
+  style: ["normal"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-josefin",
 });
 
 export default function RootLayout({
@@ -23,7 +32,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`anitalised min-h-screen relative`}>
+      <body
+        className={`${bungee.variable} ${josefin.variable} anitalised min-h-screen relative`}
+      >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <Navbar />
           <CreateQuizModal />

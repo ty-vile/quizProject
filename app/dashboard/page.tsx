@@ -1,22 +1,16 @@
 // components
-import useCreateQuizModal from "@/hooks/useCreateQuizModal";
 import DashboardCard from "./components/DashboardCard";
-// fonts
-import { bungee } from "@/app/layout";
-import { useRouter } from "next/navigation";
+
 // seo
 export const metadata = {
   title: "Dashboard | Quizify",
 };
 
 const Dashboard = async () => {
-  // const router = useRouter();
-  // const createQuizModal = useCreateQuizModal();
-
   return (
     <>
       <h1
-        className={`mb-8 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent text-4xl w-full ${bungee.className}`}
+        className={`mb-8 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent text-4xl w-full font-bungee`}
       >
         DASHBOARD
       </h1>

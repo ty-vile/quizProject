@@ -51,6 +51,10 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      fontFamily: {
+        bungee: ["var(--font-bungee)"],
+        josefin: ["var(--font-josefin)"],
+      },
       boxShadow: {
         1: "0.3rem 0.3rem 0 hsl(var(--primary))",
       },

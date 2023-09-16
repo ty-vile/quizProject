@@ -31,7 +31,7 @@ export type QuestionProps = {
   answers: AnswerProps[];
 };
 
-type QuizData = {
+export type QuizData = {
   questions: QuestionProps[];
   category: string;
   title: string;
