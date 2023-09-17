@@ -14,7 +14,7 @@ export default async function getQuiz(id: string) {
       },
     });
 
-    const answers = await Promise.all(
+    const allAnswers = await Promise.all(
       questions.map(async (question) => {
         const answer = await prisma.answer.findMany({
           where: {
@@ -24,6 +24,8 @@ export default async function getQuiz(id: string) {
         return answer;
       })
     );
+
+    const answers = allAnswers.flat();
 
     return { quiz, questions, answers };
   } catch (error) {

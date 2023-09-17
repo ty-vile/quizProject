@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-const SingleUserQuiz = (props: Props) => {
+const SingleUserQuiz = () => {
   return <div>SinglueUserQuiz</div>;
 };
 

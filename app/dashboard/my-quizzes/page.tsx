@@ -3,8 +3,6 @@ import getUserQuizzes from "@/app/actions/getCurrentUserQuizzes";
 // components
 import QuizGrid from "../components/QuizGrid";
 // fonts
-import { bungee } from "@/app/layout";
-import getCurrentUser from "@/app/actions/getCurrentUser";
 import PageHeading from "@/components/utility/PageHeading";
 
 // seo

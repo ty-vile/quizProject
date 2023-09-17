@@ -1,6 +1,9 @@
 import getQuiz from "@/app/actions/getQuiz";
 import getUser from "@/app/actions/getUser";
+import { Button } from "@/components/ui/button";
 import PageHeading from "@/components/utility/PageHeading";
+import SingleQuizHeading from "../../components/single-quiz/SingleQuizHeading";
+import TakeQuizTable from "./components/TakeQuizTable";
 
 // seo
 export const metadata = {
@@ -13,9 +16,20 @@ const TakeSingleUserQuiz = async ({ params }: any) => {
 
   return (
     <>
-      <PageHeading heading={quiz!.quiz!.title} />
-      <div>ABC</div>
-      <div>CDE</div>
+      <div className="mb-16">
+        <SingleQuizHeading
+          title={quiz?.quiz?.title!}
+          user={user}
+          category={quiz?.quiz?.category!}
+          createdAt={quiz?.quiz?.createdAt!}
+        />
+      </div>
+      <TakeQuizTable
+        quiz={quiz!.quiz}
+        questions={quiz!.questions}
+        answers={quiz!.answers}
+        user={user!}
+      />
     </>
   );
 };
