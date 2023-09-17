@@ -5,9 +5,12 @@ import QuizCard from "./QuizCard";
 import CategoryFilter from "@/components/filter/CategoryFilter";
 import { useMemo, useState } from "react";
 
-type Props = { quizzes: Quiz[] | null };
+type Props = {
+  quizzes: Quiz[] | null;
+  path: string;
+};
 
-const QuizGrid: React.FC<Props> = ({ quizzes }) => {
+const QuizGrid: React.FC<Props> = ({ quizzes, path }) => {
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
 
   // creates array of categories removing any duplicates
@@ -40,16 +43,18 @@ const QuizGrid: React.FC<Props> = ({ quizzes }) => {
         {/* Search Input */}
       </div>
       {displayQuizzes?.map((quiz, i) => {
-        const { title, createdAt, category, score, id } = quiz;
+        const { title, createdAt, category, score, id, userId } = quiz;
 
         return (
           <QuizCard
+            userId={userId}
             key={id}
             id={id}
             title={title}
             category={category}
             score={score}
             createdAt={createdAt}
+            path={path}
           />
         );
       })}

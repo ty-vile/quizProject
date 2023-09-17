@@ -2,8 +2,6 @@
 
 // next
 import Link from "next/link";
-// fonts
-import { bungee } from "@/app/layout";
 // functions
 import { formatDate } from "@/lib/utils";
 
@@ -13,6 +11,8 @@ type Props = {
   category: string;
   id: string;
   createdAt: Date;
+  userId: string;
+  path: string;
 };
 
 const QuizCard: React.FC<Props> = ({
@@ -21,10 +21,11 @@ const QuizCard: React.FC<Props> = ({
   category,
   id,
   createdAt,
+  path,
 }) => {
   return (
     <Link
-      href={`/dashboard/my-quizzes/${id}`}
+      href={`/dashboard/${path}/${id}`}
       className={`flex flex-col gap-2  rounded-lg shadow-1 h-translate-1 p-4 text-xl font-bold border-2 border-black dark:border-white font-bungee`}
     >
       <div className="w-full flex items-center flex-wrap justify-between">
@@ -33,7 +34,6 @@ const QuizCard: React.FC<Props> = ({
         </h5>
         <h5 className="text-sm font-josefin">{formatDate(createdAt)}</h5>
       </div>
-
       <h2 className="text-2xl text-primary dark:text-white mt-2">{title}</h2>
       <h5 className="font-light text-sm font-josefin">{`Questions: ${score}`}</h5>
     </Link>

@@ -1,7 +1,7 @@
 import prisma from "@/lib/prismadb";
 import getCurrentUser from "./getCurrentUser";
 
-export default async function getUserQuizzes() {
+export default async function getNonCurrentUserQuizzes() {
   try {
     const currentUser = await getCurrentUser();
 
@@ -11,7 +11,7 @@ export default async function getUserQuizzes() {
 
     const userQuizzes = await prisma.quiz.findMany({
       where: {
-        userId: currentUser.id,
+        userId: { not: currentUser.id },
       },
     });
 

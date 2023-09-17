@@ -15,8 +15,6 @@ export async function POST(req: NextRequest) {
 
   const { category, score, title, questions } = body;
 
-  console.log(body);
-
   const newQuiz = await prisma.quiz.create({
     data: {
       title: title,

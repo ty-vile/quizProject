@@ -18,7 +18,7 @@ type Props = {
 
 const UserNavbar: React.FC<Props> = ({ user }) => {
   return (
-    <>
+    <div className="bg-background">
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Image
@@ -42,7 +42,7 @@ const UserNavbar: React.FC<Props> = ({ user }) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </>
+    </div>
   );
 };
 

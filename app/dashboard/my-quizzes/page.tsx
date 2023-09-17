@@ -1,9 +1,11 @@
 // actions
-import getUserQuizzes from "@/app/actions/getUserQuizzes";
+import getUserQuizzes from "@/app/actions/getCurrentUserQuizzes";
 // components
 import QuizGrid from "../components/QuizGrid";
 // fonts
 import { bungee } from "@/app/layout";
+import getCurrentUser from "@/app/actions/getCurrentUser";
+import PageHeading from "@/components/utility/PageHeading";
 
 // seo
 export const metadata = {
@@ -15,13 +17,9 @@ const UserQuiz = async () => {
 
   return (
     <>
-      <h1
-        className={`mb-8 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent text-4xl w-full font-bungee`}
-      >
-        MY QUIZZES
-      </h1>
+      <PageHeading heading="View your quizzes" />
       <div className="w-full grid grid-cols-1 gap-8">
-        <QuizGrid quizzes={userQuizzes} />
+        <QuizGrid quizzes={userQuizzes} path="/my-quizzes" />
       </div>
     </>
   );

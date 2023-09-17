@@ -1,4 +1,5 @@
 // components
+import PageHeading from "@/components/utility/PageHeading";
 import DashboardCard from "./components/DashboardCard";
 
 // seo
@@ -9,11 +10,7 @@ export const metadata = {
 const Dashboard = async () => {
   return (
     <>
-      <h1
-        className={`mb-8 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent text-4xl w-full font-bungee`}
-      >
-        DASHBOARD
-      </h1>
+      <PageHeading heading="Dashboard" />
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         <DashboardCard
           title="Create New Quiz"
@@ -22,6 +19,10 @@ const Dashboard = async () => {
         <DashboardCard
           title="View My Quizzes"
           description="View your quizzes, edit them and see data about who has taken your quizzes, and what scores they have"
+        />
+        <DashboardCard
+          title="Take A Quiz"
+          description="Take a quiz and test yourself and your knowledge with our various user related quizzes"
         />
       </section>
     </>
