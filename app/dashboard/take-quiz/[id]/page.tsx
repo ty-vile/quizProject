@@ -12,7 +12,7 @@ export const metadata = {
 
 const TakeSingleUserQuiz = async ({ params }: any) => {
   const quiz = await getQuiz(params.id);
-  const user = await getUser(quiz!.quiz!.userId);
+  const user = await getUser(quiz?.quiz?.userId!);
 
   return (
     <>
@@ -25,9 +25,9 @@ const TakeSingleUserQuiz = async ({ params }: any) => {
         />
       </div>
       <TakeQuizTable
-        quiz={quiz!.quiz}
-        questions={quiz!.questions}
-        answers={quiz!.answers}
+        quiz={quiz?.quiz!}
+        questions={quiz?.questions!}
+        answers={quiz?.answers!}
         user={user!}
       />
     </>

@@ -27,6 +27,9 @@ export default async function getQuiz(id: string) {
 
     const answers = allAnswers.flat();
 
+    // CREATE EMPTY ARRAY THEN SORT ANSWERS THAT HAVE MATCHING QUESTION ID INTO OBJECTS
+    // RETURN THAT
+
     return { quiz, questions, answers };
   } catch (error) {
     return null;
