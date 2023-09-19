@@ -49,26 +49,33 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
   });
 
   const initQuiz = () => {
-    // const correctAnswers = answers.filter(
-    //   (answer) => answer.isCorrect === true
-    // );
-    // questions?.map((question) => {
-    //   correctAnswers.map((answer) => {
-    //     if (answer.questionId === question.id) {
-    //       const newQuizObject = {
-    //         question: question.question,
-    //         correctAnswer: answer.answer,
-    //         answer: "",
-    //       };
-    //       setQuizData((prevQuizData) => ({
-    //         questions: [...prevQuizData.questions, newQuizObject],
-    //       }));
-    //     }
-    //   });
-    //   return null; // Mapping doesn't return anything
-    // });
-    // console.log(quizData);
-    // setStep(STEPS.QUESTIONS);
+    const correctAnswers: Answer[] = [];
+
+    answers.map((answerSet: any) => {
+      answerSet.map((answer: Answer) => {
+        if (answer.isCorrect) {
+          correctAnswers.push(answer);
+        }
+      });
+    });
+
+    questions?.map((question) => {
+      correctAnswers.map((answer) => {
+        if (answer.questionId === question.id) {
+          const newQuizObject = {
+            question: question.question,
+            correctAnswer: answer.answer,
+            answer: "",
+          };
+          setQuizData((prevQuizData) => ({
+            questions: [...prevQuizData.questions, newQuizObject],
+          }));
+        }
+      });
+      return null; // Mapping doesn't return anything
+    });
+
+    setStep(STEPS.QUESTIONS);
   };
 
   const nextQuestion = () => {
