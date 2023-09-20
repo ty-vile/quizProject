@@ -73,6 +73,7 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
       return null; // Mapping doesn't return anything
     });
 
+    // CREATE TAKE QUIZ HERE - /acitions/createTakeQuiz.ts
     setStep(STEPS.QUESTIONS);
   };
 
