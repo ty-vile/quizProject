@@ -1,8 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import Checkbox from "@/components/utility/Inputs/Checkbox";
-import Input from "@/components/utility/Inputs/Input";
 import SquareCheckbox from "@/components/utility/Inputs/SquareCheckbox";
 import Textarea from "@/components/utility/Inputs/Textarea";
 import { formatDate } from "@/lib/utils";
@@ -21,7 +19,7 @@ enum STEPS {
 type Props = {
   quiz: Quiz | null;
   questions: Question[] | null;
-  answers: Answer[];
+  answers: Answer[][];
   user: User;
 };
 
@@ -76,6 +74,47 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
     });
 
     setStep(STEPS.QUESTIONS);
+  };
+
+  const handleChange = (event: any, index?: number) => {
+    let { name, value, id } = event.target;
+
+    if (name === "answer") {
+      const duplicateQuestionsArray = quizData.questions.map((question, i) => {
+        if (i === currentQuestion) {
+          return {
+            ...question,
+            answer: value,
+          };
+        }
+        // for other questions, return them as they are
+        return question;
+      });
+
+      setQuizData({
+        questions: duplicateQuestionsArray,
+      });
+    }
+
+    if (name === "checkboxAnswer") {
+      const duplicateQuestionsArray = quizData.questions.map((question, i) => {
+        if (i === currentQuestion) {
+          return {
+            ...question,
+            answer: id,
+          };
+        }
+        // for other questions, return them as they are
+        return question;
+      });
+
+      console.log(quizData?.questions[currentQuestion]?.answer);
+      console.log(quizData?.questions[currentQuestion]?.correctAnswer);
+
+      setQuizData({
+        questions: duplicateQuestionsArray,
+      });
+    }
   };
 
   const nextQuestion = () => {
@@ -146,15 +185,13 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
         {questions?.[currentQuestion].type === "Single Select" ? (
           <div className="mt-8 lg:mt-16">
             <Textarea
-              id="answer1"
+              id="answer"
               label="Answer"
               disabled={isLoading}
               required={true}
-              handleChange={() => {}}
-              value=""
+              handleChange={handleChange}
+              value={quizData.questions[currentQuestion].answer}
               rows={8}
-              // handleChange={(e) => handleChange(e, 0)}
-              // value={quizData.questions[currentQuestion].answers[0].answer}
             />
           </div>
         ) : (
@@ -162,51 +199,55 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
               <SquareCheckbox
                 type="checkbox"
-                id="isCorrect4"
-                name="isCorrect"
+                id={answers?.[currentQuestion]?.[0]?.answer}
+                name="checkboxAnswer"
                 label="Answer One"
                 disabled={isLoading}
                 required={true}
-                handleChange={() => {}}
-                value={false}
-                // handleChange={(e) => handleChange(e, 3)}
-                // value={quizData.questions[currentQuestion].answers[3].isCorrect}
+                handleChange={(e) => handleChange(e, 0)}
+                value={
+                  quizData?.questions[currentQuestion]?.answer ==
+                  answers?.[currentQuestion]?.[0]?.answer
+                }
               />
               <SquareCheckbox
                 type="checkbox"
-                id="isCorrect3"
-                name="isCorrect"
+                id={answers?.[currentQuestion]?.[1]?.answer}
+                name="checkboxAnswer"
                 label="Answer Two"
                 disabled={isLoading}
                 required={true}
-                handleChange={() => {}}
-                value={false}
-                // handleChange={(e) => handleChange(e, 3)}
-                // value={quizData.questions[currentQuestion].answers[3].isCorrect}
+                handleChange={handleChange}
+                value={
+                  quizData?.questions[currentQuestion]?.answer ==
+                  answers?.[currentQuestion]?.[1]?.answer
+                }
               />
               <SquareCheckbox
                 type="checkbox"
-                id="isCorrect2"
-                name="isCorrect"
+                id={answers?.[currentQuestion]?.[2]?.answer}
+                name="checkboxAnswer"
                 label="Answer Three"
                 disabled={isLoading}
                 required={true}
-                handleChange={() => {}}
-                value={false}
-                // handleChange={(e) => handleChange(e, 3)}
-                // value={quizData.questions[currentQuestion].answers[3].isCorrect}
+                handleChange={handleChange}
+                value={
+                  quizData?.questions[currentQuestion]?.answer ==
+                  answers?.[currentQuestion]?.[2]?.answer
+                }
               />
               <SquareCheckbox
                 type="checkbox"
-                id="isCorrect2"
-                name="isCorrect"
+                id={answers?.[currentQuestion]?.[3]?.answer}
+                name="checkboxAnswer"
                 label="Answer Four"
                 disabled={isLoading}
                 required={true}
-                handleChange={() => {}}
-                value={false}
-                // handleChange={(e) => handleChange(e, 3)}
-                // value={quizData.questions[currentQuestion].answers[3].isCorrect}
+                handleChange={handleChange}
+                value={
+                  quizData?.questions[currentQuestion]?.answer ==
+                  answers?.[currentQuestion]?.[3]?.answer
+                }
               />
             </div>
           </div>
