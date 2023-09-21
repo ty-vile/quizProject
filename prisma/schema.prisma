@@ -77,6 +77,7 @@ model Question {
   type String
   quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
   answers Answer[]
+  takeAnswers TakeAnswer[]
   @@index([quizId])
 }
 
@@ -88,9 +89,27 @@ createdAt DateTime @default(now())
 updatedAt DateTime @updatedAt
 quizId String
 questionId String
+takeAnswers TakeAnswer[]
 question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
  @@index([quizId])
  @@index([questionId])
+}
+
+
+model TakeAnswer {
+  id String @id @default(cuid())
+  takeId String
+  questionId String
+  answerId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  answer String
+  correctAnswer Answer @relation(fields: [answerId], references: [id], onDelete: Cascade)
+  take Take @relation(fields: [takeId], references: [id], onDelete: Cascade)
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  @@index([takeId])
+  @@index([questionId])
+  @@index([answerId])
 }
 
 model Take {
@@ -101,6 +120,7 @@ model Take {
   score Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  takeAnswers TakeAnswer[]
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
   @@index([quizId])
