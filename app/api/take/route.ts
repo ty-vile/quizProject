@@ -12,5 +12,16 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
 
-  return NextResponse;
+  const { quizId, userId, status, score } = body;
+
+  const newTake = await prisma.take.create({
+    data: {
+      quizId,
+      userId,
+      status,
+      score,
+    },
+  });
+
+  return NextResponse.json(newTake);
 }

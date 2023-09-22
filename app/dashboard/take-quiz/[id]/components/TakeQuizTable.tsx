@@ -74,6 +74,7 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
     });
 
     // CREATE TAKE QUIZ HERE - /acitions/createTakeQuiz.ts
+    handleSubmitTake();
     setStep(STEPS.QUESTIONS);
   };
 
@@ -145,6 +146,32 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
     }
 
     return setCurrentQuestion(currentQuestion - 1);
+  };
+
+  const handleSubmitTake = () => {
+    setIsLoading(true);
+
+    const takeData = {
+      userId: user.id,
+      quizId: quiz?.id,
+      status: "In Progress",
+      score: 0,
+    };
+
+    fetch("/api/take", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(takeData),
+    })
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   let bodyContent;

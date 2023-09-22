@@ -47,5 +47,5 @@ export async function POST(req: NextRequest) {
     });
   });
 
-  return NextResponse;
+  return NextResponse.json(questions);
 }
