@@ -8,6 +8,8 @@ import { formatDate } from "@/lib/utils";
 import { Answer, Question, Quiz, User } from "@prisma/client";
 // react
 import { useState } from "react";
+// icons
+import { MdPublishedWithChanges } from "react-icons/md";
 
 // types
 enum STEPS {
@@ -29,6 +31,7 @@ export type AnswerProps = {
 };
 
 export type QuestionProps = {
+  questionId: string;
   question: string;
   correctAnswer: string;
   answer: string;
@@ -42,6 +45,7 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.INTRO);
+  const [takeId, setTakeId] = useState<String>("");
   const [quizData, setQuizData] = useState<QuizData>({
     questions: [],
   });
@@ -61,8 +65,10 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
       correctAnswers.map((answer) => {
         if (answer.questionId === question.id) {
           const newQuizObject = {
+            questionId: question.id,
             question: question.question,
             correctAnswer: answer.answer,
+            answerId: answer.id,
             answer: "",
           };
           setQuizData((prevQuizData) => ({
@@ -75,6 +81,40 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
 
     // CREATE TAKE QUIZ HERE - /acitions/createTakeQuiz.ts
     handleSubmitTake();
+    setStep(STEPS.QUESTIONS);
+  };
+
+  const nextQuestion = () => {
+    if (currentQuestion === quiz?.score! - 1) {
+      return setStep(STEPS.REVIEW);
+    }
+
+    return setCurrentQuestion(currentQuestion + 1);
+  };
+
+  const prevQuestion = () => {
+    // if only one question in quiz and on review step
+    if (currentQuestion === 0 && step === STEPS.REVIEW) {
+      setStep(STEPS.QUESTIONS);
+      return;
+    }
+
+    // if on first question
+    if (currentQuestion === 0) {
+      return setStep(STEPS.INTRO);
+      // DELETE TAKE & SETSTEPS(STEP.INTRO)
+    }
+
+    // if on review step
+    if (step === STEPS.REVIEW) {
+      return setStep(STEPS.QUESTIONS);
+    }
+
+    return setCurrentQuestion(currentQuestion - 1);
+  };
+
+  const editQuestion = (index: number) => {
+    setCurrentQuestion(index);
     setStep(STEPS.QUESTIONS);
   };
 
@@ -110,42 +150,10 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
         return question;
       });
 
-      console.log(quizData?.questions[currentQuestion]?.answer);
-      console.log(quizData?.questions[currentQuestion]?.correctAnswer);
-
       setQuizData({
         questions: duplicateQuestionsArray,
       });
     }
-  };
-
-  const nextQuestion = () => {
-    if (currentQuestion === quiz?.score! - 1) {
-      return setStep(STEPS.REVIEW);
-    }
-
-    return setCurrentQuestion(currentQuestion + 1);
-  };
-
-  const prevQuestion = () => {
-    // if only one question in quiz and on review step
-    if (currentQuestion === 0 && step === STEPS.REVIEW) {
-      setStep(STEPS.QUESTIONS);
-      return;
-    }
-
-    // if on first question
-    if (currentQuestion === 0) {
-      return setStep(STEPS.INTRO);
-      // DELETE TAKE & SETSTEPS(STEP.INTRO)
-    }
-
-    // if on review step
-    if (step === STEPS.REVIEW) {
-      return setStep(STEPS.QUESTIONS);
-    }
-
-    return setCurrentQuestion(currentQuestion - 1);
   };
 
   const handleSubmitTake = () => {
@@ -164,6 +172,28 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(takeData),
+    })
+      .then(async (res) => {
+        const response = await res.json();
+        setTakeId(response.id);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const handleSubmitQuiz = () => {
+    setIsLoading(true);
+
+    fetch("/api/takeanswer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ takeId, quizData }),
     })
       .then(() => {})
       .catch((error) => {
@@ -292,6 +322,70 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
             Next
           </Button>
         </div>
+      </div>
+    );
+  }
+
+  if (step === STEPS.REVIEW) {
+    bodyContent = (
+      <div className="w-full flex flex-col items-center">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 pb-10">
+          {quizData.questions?.map((question, index) => {
+            return (
+              <>
+                <div>
+                  <Textarea
+                    value={question.question}
+                    id={`Question${index + 1}`}
+                    label={`Question ${index + 1}`}
+                    handleChange={() => {}}
+                    rows={1}
+                    disabled={true}
+                  />
+                </div>
+                {/* HIDDEN ON MOBILE */}
+                <div className="hidden lg:flex items-center justify-center gap-4">
+                  <Textarea
+                    value={question.answer}
+                    id={`Answer${index + 1}`}
+                    label={`Answer ${index + 1}`}
+                    handleChange={() => {}}
+                    rows={1}
+                    disabled={true}
+                  />
+                  <div
+                    className="peer bg-red-500 p-2 -mt-2 cursor-pointer hover:scale-95 transition-300"
+                    onClick={() => editQuestion(index)}
+                  >
+                    <MdPublishedWithChanges className="text-3xl peer-hover:rotate-180" />
+                  </div>
+                </div>
+                {/* HIDDEN ON DESKTOP */}
+                <div className="lg:hidden">
+                  <Textarea
+                    value={question.answer}
+                    id={`Answer${index + 1}`}
+                    label={`Answer ${index + 1}`}
+                    handleChange={() => {}}
+                    rows={1}
+                    disabled={true}
+                  />
+                  <div
+                    className="w-full bg-red-500 rounded-md p-1 flex items-center justify-center gap-2 cursor-pointer mt-2 hover:scale-95 transition-300 lg:hidden"
+                    onClick={() => editQuestion(index)}
+                  >
+                    <h5 className="font-josefin">Edit Answer</h5>
+                    <MdPublishedWithChanges className="text-3xl cursor-pointer hover:scale-95 transition-300" />
+                  </div>
+                </div>
+                {/* HIDDEN ON DESKTOP */}
+              </>
+            );
+          })}
+        </div>
+        <Button className="w-[300px]" onClick={handleSubmitQuiz}>
+          Submit Quiz
+        </Button>
       </div>
     );
   }

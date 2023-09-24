@@ -37,11 +37,9 @@ export default async function getQuiz(id: string) {
         if (!questionIdMap[questionId]) {
           // If the questionId is not in the map, create a new array for it
           questionIdMap[questionId] = [answer];
-          console.log("QIDM", questionIdMap);
         } else {
           // If the questionId is already in the map, push the answer to its array
           questionIdMap[questionId].push(answer);
-          console.log("QIDMP", questionIdMap);
         }
       });
     });

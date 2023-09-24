@@ -37,7 +37,7 @@ const Textarea: React.FC<TextareaProps> = ({
       ></textarea>
       <label
         htmlFor={id}
-        className={`absolute left-4 text-xs duration-150 transform -top-4 z-10 origin-[0] font-bold bg-background p-1 rounded-lg border-2 border-primary
+        className={`absolute left-4 text-xs duration-150 transform -top-4 z-10 origin-[0] font-bold bg-background p-1 rounded-lg border-2 border-primary font-josefin
       `}
       >
         {label}

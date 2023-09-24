@@ -43,7 +43,7 @@ const SquareCheckbox: React.FC<InputProps> = ({
       </div>
       <label
         htmlFor={id}
-        className="flex flex-col p-8 peer-checked:bg-primary peer-checked:text-white hover:bg-primary hover:text-white hover:shadow-xl border-2 border-black dark:border-white cursor-pointer rounded-lg"
+        className="flex flex-col p-8 peer-checked:bg-primary peer-checked:text-white hover:bg-primary hover:text-white hover:shadow-xl border-2 border-black dark:border-white cursor-pointer rounded-lg font-josefin"
       >
         {id}
       </label>
