@@ -23,7 +23,7 @@ const Checkbox: React.FC<InputProps> = ({
   handleChange,
 }) => {
   return (
-    <div className="w-2/12 relative">
+    <div className="w-fit pl-20 relative">
       <input
         id={id}
         name={name}

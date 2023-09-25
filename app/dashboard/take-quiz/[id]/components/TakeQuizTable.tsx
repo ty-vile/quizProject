@@ -241,7 +241,7 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
           </h2>
         </div>
         {questions?.[currentQuestion].type === "Single Select" ? (
-          <div className="mt-8 lg:mt-16">
+          <div className="mt-8 lg:mt-10">
             <Textarea
               id="answer"
               label="Answer"
@@ -253,8 +253,8 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
             />
           </div>
         ) : (
-          <div className="mt-8 lg:mt-16">
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
+          <div className="mt-8 lg:mt-10">
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 ">
               <SquareCheckbox
                 type="checkbox"
                 id={answers?.[currentQuestion]?.[0]?.answer}
@@ -310,15 +310,18 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
             </div>
           </div>
         )}
-        <div className="mt-8 lg:mt-16 flex flex-row items-center justify-center gap-4">
+        <div className="mt-8 lg:mt-10 mb-8 lg:mb-10 flex flex-row items-center justify-center gap-8">
           <Button
-            className="w-full p-6 max-w-[300px]"
+            className="w-full p-6 lg:max-w-[300px]"
             variant="outline"
             onClick={prevQuestion}
           >
             Back
           </Button>
-          <Button className="w-full p-6 max-w-[300px]" onClick={nextQuestion}>
+          <Button
+            className="w-full p-6 lg:max-w-[300px]"
+            onClick={nextQuestion}
+          >
             Next
           </Button>
         </div>
@@ -329,7 +332,7 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
   if (step === STEPS.REVIEW) {
     bodyContent = (
       <div className="w-full flex flex-col items-center">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 pb-10">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 ">
           {quizData.questions?.map((question, index) => {
             return (
               <>
@@ -383,9 +386,14 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
             );
           })}
         </div>
-        <Button className="w-[300px]" onClick={handleSubmitQuiz}>
-          Submit Quiz
-        </Button>
+        <div className="mb-8 lg:mb-10 mt-8 lg:mt-10 w-full">
+          <Button
+            className="w-full p-6 lg:max-w-[300px]"
+            onClick={handleSubmitQuiz}
+          >
+            Submit Quiz
+          </Button>
+        </div>
       </div>
     );
   }

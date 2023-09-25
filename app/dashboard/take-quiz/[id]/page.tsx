@@ -16,7 +16,7 @@ const TakeSingleUserQuiz = async ({ params }: any) => {
 
   return (
     <>
-      <div className="mb-16">
+      <div className="mb-8 lg:mb-12">
         <SingleQuizHeading
           title={quiz?.quiz?.title!}
           user={user}

@@ -292,12 +292,13 @@ const CreateQuizModal = ({}) => {
       questions: [],
     });
 
-    return router.refresh();
+    router.push("/dashboard");
+    router.refresh();
   };
 
   const modalTitle = useMemo(() => {
     if (step === STEPS.CREATE) {
-      return "Create Quiz";
+      return "Enter Quiz Info";
     }
 
     if (step === STEPS.QUESTIONS) {
@@ -320,193 +321,56 @@ const CreateQuizModal = ({}) => {
   // creating quiz
   if (step === STEPS.CREATE) {
     bodyContent = (
-      <div className="flex flex-col gap-12 mt-3">
+      <div className="w-full flex flex-col">
         <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl">
           {modalTitle}
         </h2>
-        <Input
-          id="title"
-          name="title"
-          label="Quiz Title"
-          type="text"
-          disabled={isLoading}
-          required={true}
-          handleChange={handleChange}
-          value={quizData.title}
-        />
-        <Input
-          id="category"
-          name="category"
-          label="Category"
-          type="text"
-          disabled={isLoading}
-          required={true}
-          handleChange={handleChange}
-          value={quizData.category}
-        />
-        <Input
-          id="score"
-          label="Total Questions"
-          type="number"
-          name="score"
-          disabled={isLoading}
-          required={true}
-          handleChange={handleChange}
-          value={quizData.score}
-        />
-        <Button
-          disabled={isLoading}
-          onClick={initQuiz}
-          variant="outline"
-          className="p-6"
-        >
-          Create Quiz
-        </Button>
+        <div className="mt-8 lg:mt-10">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 ">
+            <Input
+              id="title"
+              name="title"
+              label="Quiz Title"
+              type="text"
+              disabled={isLoading}
+              required={true}
+              handleChange={handleChange}
+              value={quizData.title}
+            />
+            <Input
+              id="category"
+              name="category"
+              label="Category"
+              type="text"
+              disabled={isLoading}
+              required={true}
+              handleChange={handleChange}
+              value={quizData.category}
+            />
+            <Input
+              id="score"
+              label="Total Questions"
+              type="number"
+              name="score"
+              disabled={isLoading}
+              required={true}
+              handleChange={handleChange}
+              value={quizData.score}
+            />
+          </div>
+          <div className="mt-8 lg:mt-10 flex flex-row items-center justify-center gap-4">
+            <Button
+              className="p-6 w-full lg:max-w-[300px]"
+              disabled={isLoading}
+              onClick={initQuiz}
+            >
+              Create Quiz
+            </Button>
+          </div>
+        </div>
       </div>
     );
   }
-
-  // creating / editing questions
-  // if (step === STEPS.QUESTIONS) {
-
-  //   bodyContent = (
-  //     <div className="flex flex-col gap-6 mt-3  h-full">
-  //       <Select
-  //         label="Question Type"
-  //         id="questionType"
-  //         handleChange={handleChange}
-  //         value={quizData.questions[currentQuestion].type}
-  //       >
-  //         <option value="Single Select">Single Select</option>
-  //         <option value="Multiple Choice">Multiple Choice</option>
-  //       </Select>
-  //       <Textarea
-  //         id="question"
-  //         label="Question"
-  //         disabled={isLoading}
-  //         handleChange={handleChange}
-  //         value={quizData.questions[currentQuestion].question}
-  //         rows={3}
-  //       />
-  //       <div className="w-full flex items-center justify-between">
-  //         <h3 className="font-bold text-xl">
-  //           Answer
-  //           {quizData.questions[currentQuestion].type === "Multiple Choice" &&
-  //             "s"}
-  //         </h3>
-  //         {quizData.questions[currentQuestion].type === "Multiple Choice" && (
-  //           <h3 className="font-bold text-xl">Is Correct?</h3>
-  //         )}
-  //       </div>
-  //       <div className="flex items-center">
-  //         <Input
-  //           id="answer1"
-  //           name="answer"
-  //           label="Answer One"
-  //           type="text"
-  //           disabled={isLoading}
-  //           required={true}
-  //           handleChange={(e) => handleChange(e, 0)}
-  //           value={quizData.questions[currentQuestion].answers[0].answer}
-  //         />
-  //         {quizData.questions[currentQuestion].type === "Multiple Choice" && (
-  //           <Checkbox
-  //             type="checkbox"
-  //             id="isCorrect1"
-  //             name="isCorrect"
-  //             label="Is Correct?"
-  //             disabled={isLoading}
-  //             required={true}
-  //             handleChange={(e) => handleChange(e, 0)}
-  //             value={quizData.questions[currentQuestion].answers[0].isCorrect}
-  //           />
-  //         )}
-  //       </div>
-  //       {quizData.questions[currentQuestion].type === "Multiple Choice" && (
-  //         <>
-  //           <div className="flex items-center">
-  //             <Input
-  //               id="answer2"
-  //               label="Answer Two"
-  //               name="answer"
-  //               type="text"
-  //               disabled={isLoading}
-  //               required={true}
-  //               handleChange={(e) => handleChange(e, 1)}
-  //               value={quizData.questions[currentQuestion].answers[1].answer}
-  //             />
-  //             <Checkbox
-  //               type="checkbox"
-  //               id="isCorrect2"
-  //               name="isCorrect"
-  //               label="Is Correct?"
-  //               disabled={isLoading}
-  //               required={true}
-  //               handleChange={(e) => handleChange(e, 1)}
-  //               value={quizData.questions[currentQuestion].answers[1].isCorrect}
-  //             />
-  //           </div>
-  //           <div className="flex items-center">
-  //             <Input
-  //               id="answer3"
-  //               label="Answer Three"
-  //               name="answer"
-  //               type="text"
-  //               disabled={isLoading}
-  //               required={true}
-  //               handleChange={(e) => handleChange(e, 2)}
-  //               value={quizData.questions[currentQuestion].answers[2].answer}
-  //             />
-  //             <Checkbox
-  //               type="checkbox"
-  //               id="isCorrect3"
-  //               name="isCorrect"
-  //               label="Is Correct?"
-  //               disabled={isLoading}
-  //               required={true}
-  //               handleChange={(e) => handleChange(e, 2)}
-  //               value={quizData.questions[currentQuestion].answers[2].isCorrect}
-  //             />
-  //           </div>
-  //           <div className="flex items-center">
-  //             <Input
-  //               id="answer4"
-  //               label="Answer Four"
-  //               name="answer"
-  //               type="text"
-  //               disabled={isLoading}
-  //               required={true}
-  //               handleChange={(e) => handleChange(e, 3)}
-  //               value={quizData.questions[currentQuestion].answers[3].answer}
-  //             />
-  //             <Checkbox
-  //               type="checkbox"
-  //               id="isCorrect4"
-  //               name="isCorrect"
-  //               label="Is Correct?"
-  //               disabled={isLoading}
-  //               required={true}
-  //               handleChange={(e) => handleChange(e, 3)}
-  //               value={quizData.questions[currentQuestion].answers[3].isCorrect}
-  //             />
-  //           </div>
-  //         </>
-  //       )}
-  //       <div className="flex flex-row items-center gap-4">
-  //         <Button
-  //           className="w-full p-6"
-  //           variant="outline"
-  //           onClick={prevQuestion}
-  //         >
-  //           Back
-  //         </Button>
-  //         <Button className="w-full p-6" onClick={nextQuestion}>
-  //           Next
-  //         </Button>
-  //       </div>
-  //     </div>
-  //   );
-  // }
 
   if (step === STEPS.QUESTIONS) {
     bodyContent = (
@@ -516,7 +380,7 @@ const CreateQuizModal = ({}) => {
             {modalTitle}
           </h2>
         </div>
-        <div className="mt-8 lg:mt-16">
+        <div className="mt-8 lg:mt-10 flex flex-col gap-8">
           <Select
             label="Question Type"
             id="questionType"
@@ -526,120 +390,131 @@ const CreateQuizModal = ({}) => {
             <option value="Single Select">Single Select</option>
             <option value="Multiple Choice">Multiple Choice</option>
           </Select>
+
+          <Textarea
+            id="question"
+            label="Question"
+            disabled={isLoading}
+            handleChange={handleChange}
+            value={quizData.questions[currentQuestion].question}
+            rows={3}
+          />
         </div>
-        <Textarea
-          id="question"
-          label="Question"
-          disabled={isLoading}
-          handleChange={handleChange}
-          value={quizData.questions[currentQuestion].question}
-          rows={3}
-        />
-        <div className="w-full flex items-center justify-between">
-          <h3 className="font-bold text-xl">
+        <div className="mt-8 lg:mt-10 pb-8 w-full flex items-center justify-between">
+          <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl">
             Answer
             {quizData.questions[currentQuestion].type === "Multiple Choice" &&
               "s"}
-          </h3>
+          </h2>
           {quizData.questions[currentQuestion].type === "Multiple Choice" && (
-            <h3 className="font-bold text-xl">Is Correct?</h3>
+            <h5 className="bg-primary text-white w-fit font-josefin p-4 text-sm md:text-md lg:text-lg">
+              Select Correct Answer
+            </h5>
           )}
         </div>
-        <div className="flex items-center">
-          <Input
-            id="answer1"
-            name="answer"
-            label="Answer One"
-            type="text"
-            disabled={isLoading}
-            required={true}
-            handleChange={(e) => handleChange(e, 0)}
-            value={quizData.questions[currentQuestion].answers[0].answer}
-          />
-          {quizData.questions[currentQuestion].type === "Multiple Choice" && (
-            <Checkbox
-              type="checkbox"
-              id="isCorrect1"
-              name="isCorrect"
-              label="Is Correct?"
+        <div className="flex flex-col gap-8">
+          <div className="flex items-center">
+            <Input
+              id="answer1"
+              name="answer"
+              label="Answer One"
+              type="text"
               disabled={isLoading}
               required={true}
               handleChange={(e) => handleChange(e, 0)}
-              value={quizData.questions[currentQuestion].answers[0].isCorrect}
+              value={quizData.questions[currentQuestion].answers[0].answer}
             />
+            {quizData.questions[currentQuestion].type === "Multiple Choice" && (
+              <Checkbox
+                type="checkbox"
+                id="isCorrect1"
+                name="isCorrect"
+                label="Is Correct?"
+                disabled={isLoading}
+                required={true}
+                handleChange={(e) => handleChange(e, 0)}
+                value={quizData.questions[currentQuestion].answers[0].isCorrect}
+              />
+            )}
+          </div>
+          {quizData.questions[currentQuestion].type === "Multiple Choice" && (
+            <>
+              <div className="flex items-center">
+                <Input
+                  id="answer2"
+                  label="Answer Two"
+                  name="answer"
+                  type="text"
+                  disabled={isLoading}
+                  required={true}
+                  handleChange={(e) => handleChange(e, 1)}
+                  value={quizData.questions[currentQuestion].answers[1].answer}
+                />
+                <Checkbox
+                  type="checkbox"
+                  id="isCorrect2"
+                  name="isCorrect"
+                  label="Is Correct?"
+                  disabled={isLoading}
+                  required={true}
+                  handleChange={(e) => handleChange(e, 1)}
+                  value={
+                    quizData.questions[currentQuestion].answers[1].isCorrect
+                  }
+                />
+              </div>
+              <div className="flex items-center">
+                <Input
+                  id="answer3"
+                  label="Answer Three"
+                  name="answer"
+                  type="text"
+                  disabled={isLoading}
+                  required={true}
+                  handleChange={(e) => handleChange(e, 2)}
+                  value={quizData.questions[currentQuestion].answers[2].answer}
+                />
+                <Checkbox
+                  type="checkbox"
+                  id="isCorrect3"
+                  name="isCorrect"
+                  label="Is Correct?"
+                  disabled={isLoading}
+                  required={true}
+                  handleChange={(e) => handleChange(e, 2)}
+                  value={
+                    quizData.questions[currentQuestion].answers[2].isCorrect
+                  }
+                />
+              </div>
+              <div className="flex items-center">
+                <Input
+                  id="answer4"
+                  label="Answer Four"
+                  name="answer"
+                  type="text"
+                  disabled={isLoading}
+                  required={true}
+                  handleChange={(e) => handleChange(e, 3)}
+                  value={quizData.questions[currentQuestion].answers[3].answer}
+                />
+                <Checkbox
+                  type="checkbox"
+                  id="isCorrect4"
+                  name="isCorrect"
+                  label="Is Correct?"
+                  disabled={isLoading}
+                  required={true}
+                  handleChange={(e) => handleChange(e, 3)}
+                  value={
+                    quizData.questions[currentQuestion].answers[3].isCorrect
+                  }
+                />
+              </div>
+            </>
           )}
         </div>
-        {quizData.questions[currentQuestion].type === "Multiple Choice" && (
-          <>
-            <div className="flex items-center">
-              <Input
-                id="answer2"
-                label="Answer Two"
-                name="answer"
-                type="text"
-                disabled={isLoading}
-                required={true}
-                handleChange={(e) => handleChange(e, 1)}
-                value={quizData.questions[currentQuestion].answers[1].answer}
-              />
-              <Checkbox
-                type="checkbox"
-                id="isCorrect2"
-                name="isCorrect"
-                label="Is Correct?"
-                disabled={isLoading}
-                required={true}
-                handleChange={(e) => handleChange(e, 1)}
-                value={quizData.questions[currentQuestion].answers[1].isCorrect}
-              />
-            </div>
-            <div className="flex items-center">
-              <Input
-                id="answer3"
-                label="Answer Three"
-                name="answer"
-                type="text"
-                disabled={isLoading}
-                required={true}
-                handleChange={(e) => handleChange(e, 2)}
-                value={quizData.questions[currentQuestion].answers[2].answer}
-              />
-              <Checkbox
-                type="checkbox"
-                id="isCorrect3"
-                name="isCorrect"
-                label="Is Correct?"
-                disabled={isLoading}
-                required={true}
-                handleChange={(e) => handleChange(e, 2)}
-                value={quizData.questions[currentQuestion].answers[2].isCorrect}
-              />
-            </div>
-            <div className="flex items-center">
-              <Input
-                id="answer4"
-                label="Answer Four"
-                name="answer"
-                type="text"
-                disabled={isLoading}
-                required={true}
-                handleChange={(e) => handleChange(e, 3)}
-                value={quizData.questions[currentQuestion].answers[3].answer}
-              />
-              <Checkbox
-                type="checkbox"
-                id="isCorrect4"
-                name="isCorrect"
-                label="Is Correct?"
-                disabled={isLoading}
-                required={true}
-                handleChange={(e) => handleChange(e, 3)}
-                value={quizData.questions[currentQuestion].answers[3].isCorrect}
-              />
-            </div>
-          </>
-        )}
-        <div className="mt-8 lg:mt-16 flex flex-row items-center justify-center gap-4">
+        <div className="mt-8 lg:mt-10 mb-8 lg:mb-10 flex flex-row items-center justify-center gap-8">
           <Button
             className="w-full p-6 max-w-[300px]"
             variant="outline"
@@ -659,7 +534,7 @@ const CreateQuizModal = ({}) => {
   if (step === STEPS.REVIEW) {
     bodyContent = (
       <div className="flex flex-col gap-6 mt-3  h-full">
-        <div className="flex items-center gap-4 pb-4">
+        <div className="flex items-center gap-4 ">
           <Input
             disabled={true}
             value={quizData.category}
@@ -677,9 +552,10 @@ const CreateQuizModal = ({}) => {
             handleChange={() => {}}
           />
         </div>
+        <div className="h-1 border-2 border-primary mb-4" />
         {quizData.questions.map((question, index) => {
           return (
-            <div key={index} className="flex flex-col md:flex-row gap-4 pb-4 ">
+            <div key={index} className="flex flex-col md:flex-row gap-4 pb-2">
               <Textarea
                 value={question.question}
                 id={`Question${index + 1}`}
@@ -715,19 +591,24 @@ const CreateQuizModal = ({}) => {
                   }
                   return;
                 })}
+              <div className="h-1 border-2 border-primary" />
             </div>
           );
         })}
 
-        <div className="flex flex-row items-center gap-4">
+        <div className=" mb-8 lg:mb-10 flex flex-row items-center justify-center gap-8">
           <Button
-            className="w-full p-6"
+            className="w-full p-6 lg:max-w-[300px]"
             variant="outline"
             onClick={prevQuestion}
           >
             Back
           </Button>
-          <Button className="w-full p-6" onClick={handleSubmit}>
+
+          <Button
+            className="w-full p-6 lg:max-w-[300px]"
+            onClick={handleSubmit}
+          >
             Next
           </Button>
         </div>
@@ -737,7 +618,7 @@ const CreateQuizModal = ({}) => {
 
   return (
     <>
-      <div className="mb-16">
+      <div className="mb-8 lg:mb-12">
         <SingleQuizHeading title="Create Quiz" />
       </div>
       {bodyContent}
