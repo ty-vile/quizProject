@@ -19,7 +19,8 @@ const DashboardCard: React.FC<Props> = ({ title, description }) => {
   const genIcon = (title: String) => {
     if (title === "Create New Quiz") {
       handleClick = function () {
-        createQuizModal.onOpen();
+        router.push("/dashboard/create-quiz");
+        // createQuizModal.onOpen();
       };
       return <HiViewGridAdd className="h-8 w-8 text-white" />;
     }
