@@ -29,7 +29,7 @@ const Textarea: React.FC<TextareaProps> = ({
           handleChange(e);
         }}
         name={id}
-        rows={rows}
+        rows={6}
         placeholder=""
         className={`peer w-full p-3 bg-background border-2 border-slate-600 dark:border-white focus:border-primary font-bold focus:border-4 rounded-md outline-none transition disabled:cursor-not-allowed disabled:opacity-70 max-h-[120px]
         `}

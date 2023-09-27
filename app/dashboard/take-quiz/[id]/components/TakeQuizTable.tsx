@@ -9,7 +9,7 @@ import { Answer, Question, Quiz, User } from "@prisma/client";
 // react
 import { useState } from "react";
 // icons
-import { MdPublishedWithChanges } from "react-icons/md";
+import { MdEdit, MdPublishedWithChanges } from "react-icons/md";
 
 // types
 enum STEPS {
@@ -249,7 +249,7 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
               required={true}
               handleChange={handleChange}
               value={quizData.questions[currentQuestion].answer}
-              rows={8}
+              rows={6}
             />
           </div>
         ) : (
@@ -331,62 +331,55 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
 
   if (step === STEPS.REVIEW) {
     bodyContent = (
-      <div className="w-full flex flex-col items-center">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 ">
-          {quizData.questions?.map((question, index) => {
-            return (
-              <>
-                <div>
+      <div className="flex flex-col gap-6 mt-3  h-full">
+        <div className="flex items-center gap-4 ">
+          <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl">
+            Review Answers
+          </h2>
+        </div>
+        {quizData.questions.map((question, index) => {
+          return (
+            <div className="flex flex-col gap-4 mt-10 mb-10">
+              <div>
+                <div className="flex flex-col lg:flex-row lg:items-center gap-4 cursor-pointer z-50 ">
                   <Textarea
                     value={question.question}
                     id={`Question${index + 1}`}
                     label={`Question ${index + 1}`}
                     handleChange={() => {}}
-                    rows={1}
+                    rows={6}
                     disabled={true}
                   />
-                </div>
-                {/* HIDDEN ON MOBILE */}
-                <div className="hidden lg:flex items-center justify-center gap-4">
                   <Textarea
                     value={question.answer}
                     id={`Answer${index + 1}`}
                     label={`Answer ${index + 1}`}
                     handleChange={() => {}}
-                    rows={1}
+                    rows={6}
                     disabled={true}
                   />
                   <div
-                    className="peer bg-red-500 p-2 -mt-2 cursor-pointer hover:scale-95 transition-300"
+                    className="p-2 rounded-full bg-red-100 transition-300 hover:bg-red-200 hover:scale-95 flex items-center justify-center gap-2 cursor-pointer"
                     onClick={() => editQuestion(index)}
                   >
-                    <MdPublishedWithChanges className="text-3xl peer-hover:rotate-180" />
+                    <h4 className="block md:hidden font-josefin">
+                      Edit Answer
+                    </h4>
+                    <MdEdit className="text-2xl" />
                   </div>
                 </div>
-                {/* HIDDEN ON DESKTOP */}
-                <div className="lg:hidden">
-                  <Textarea
-                    value={question.answer}
-                    id={`Answer${index + 1}`}
-                    label={`Answer ${index + 1}`}
-                    handleChange={() => {}}
-                    rows={1}
-                    disabled={true}
-                  />
-                  <div
-                    className="w-full bg-red-500 rounded-md p-1 flex items-center justify-center gap-2 cursor-pointer mt-2 hover:scale-95 transition-300 lg:hidden"
-                    onClick={() => editQuestion(index)}
-                  >
-                    <h5 className="font-josefin">Edit Answer</h5>
-                    <MdPublishedWithChanges className="text-3xl cursor-pointer hover:scale-95 transition-300" />
-                  </div>
-                </div>
-                {/* HIDDEN ON DESKTOP */}
-              </>
-            );
-          })}
-        </div>
-        <div className="mb-8 lg:mb-10 mt-8 lg:mt-10 w-full">
+              </div>
+            </div>
+          );
+        })}
+        <div className="-mt-8 mb-8 lg:mb-10 flex flex-row items-center justify-center gap-4 lg:pr-14">
+          <Button
+            className="w-full p-6 max-w-[300px]"
+            variant="outline"
+            onClick={prevQuestion}
+          >
+            Back
+          </Button>
           <Button
             className="w-full p-6 lg:max-w-[300px]"
             onClick={handleSubmitQuiz}

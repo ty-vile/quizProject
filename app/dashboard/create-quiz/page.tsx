@@ -13,6 +13,7 @@ import { Button } from "../../../components/ui/button";
 import Textarea from "../../../components/utility/Inputs/Textarea";
 import Checkbox from "../../../components/utility/Inputs/Checkbox";
 import SingleQuizHeading from "../components/single-quiz/SingleQuizHeading";
+import { MdEdit } from "react-icons/md";
 
 // types
 enum STEPS {
@@ -245,6 +246,11 @@ const CreateQuizModal = ({}) => {
     return setCurrentQuestion(currentQuestion - 1);
   };
 
+  const editQuestion = (index: number) => {
+    setCurrentQuestion(index);
+    setStep(STEPS.QUESTIONS);
+  };
+
   function calcStepPercentage(num1: number, num2: number) {
     const ratio = num2 / num1;
     const closestDivisibleBy12 = Math.round(ratio * 100); // Divide by 12 to convert to a percentage
@@ -276,7 +282,12 @@ const CreateQuizModal = ({}) => {
       body: JSON.stringify(quizData),
     })
       .then(() => {
-        createQuizModal.onClose();
+        setQuizData({
+          title: "",
+          category: "",
+          score: 1,
+          questions: [],
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -285,15 +296,8 @@ const CreateQuizModal = ({}) => {
         setIsLoading(false);
       });
 
-    setQuizData({
-      title: "",
-      category: "",
-      score: 1,
-      questions: [],
-    });
-
-    router.push("/dashboard");
     router.refresh();
+    router.push("/dashboard");
   };
 
   const modalTitle = useMemo(() => {
@@ -326,7 +330,7 @@ const CreateQuizModal = ({}) => {
           {modalTitle}
         </h2>
         <div className="mt-8 lg:mt-10">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 ">
+          <div className="grid grid-cols-1 gap-x-4 gap-y-8 lg:grid-cols-2 ">
             <Input
               id="title"
               name="title"
@@ -364,7 +368,7 @@ const CreateQuizModal = ({}) => {
               disabled={isLoading}
               onClick={initQuiz}
             >
-              Create Quiz
+              Start Creating Quiz
             </Button>
           </div>
         </div>
@@ -397,7 +401,7 @@ const CreateQuizModal = ({}) => {
             disabled={isLoading}
             handleChange={handleChange}
             value={quizData.questions[currentQuestion].question}
-            rows={3}
+            rows={6}
           />
         </div>
         <div className="mt-8 lg:mt-10 pb-8 w-full flex items-center justify-between">
@@ -514,7 +518,7 @@ const CreateQuizModal = ({}) => {
             </>
           )}
         </div>
-        <div className="mt-8 lg:mt-10 mb-8 lg:mb-10 flex flex-row items-center justify-center gap-8">
+        <div className="mt-8 lg:mt-10 mb-8 lg:mb-10 flex flex-row items-center justify-center gap-4">
           <Button
             className="w-full p-6 max-w-[300px]"
             variant="outline"
@@ -532,9 +536,18 @@ const CreateQuizModal = ({}) => {
 
   // reviewing quiz
   if (step === STEPS.REVIEW) {
+    if (isLoading) {
+      bodyContent = <h1>LOADING</h1>;
+    }
+
     bodyContent = (
       <div className="flex flex-col gap-6 mt-3  h-full">
-        <div className="flex items-center gap-4 ">
+        <div className="flex items-center gap-4 pb-2">
+          <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl">
+            {modalTitle}
+          </h2>
+        </div>
+        <div className="flex flex-col lg:flex-row items-center gap-x-4 gap-y-6">
           <Input
             disabled={true}
             value={quizData.category}
@@ -551,17 +564,27 @@ const CreateQuizModal = ({}) => {
             label="Score"
             handleChange={() => {}}
           />
+          <div
+            className="w-full md:w-fit p-2 rounded-full bg-red-100 transition-300 hover:bg-red-200 hover:scale-95 flex items-center justify-center cursor-pointer"
+            onClick={() => setStep(STEPS.CREATE)}
+          >
+            <h4 className="block md:hidden font-josefin">Edit Answer</h4>
+            <MdEdit className="text-2xl" />
+          </div>
         </div>
-        <div className="h-1 border-2 border-primary mb-4" />
+        <div className="h-[2px] border-2 border-primary block mb-2" />
         {quizData.questions.map((question, index) => {
           return (
-            <div key={index} className="flex flex-col md:flex-row gap-4 pb-2">
+            <div
+              key={index}
+              className="flex flex-col md:flex-row items-center gap-4 pb-2 mb-10"
+            >
               <Textarea
                 value={question.question}
                 id={`Question${index + 1}`}
                 label={`Question ${index + 1}`}
                 handleChange={() => {}}
-                rows={1}
+                rows={6}
                 disabled={true}
               />
               {question.type === "Single Select" && (
@@ -571,7 +594,7 @@ const CreateQuizModal = ({}) => {
                   id={`Answer${index + 1}`}
                   label={`Answer ${index + 1}`}
                   handleChange={() => {}}
-                  rows={1}
+                  rows={6}
                 />
               )}
               {question.type === "Multiple Choice" &&
@@ -585,18 +608,24 @@ const CreateQuizModal = ({}) => {
                         id={`Answer${index + 1}`}
                         label={`Answer ${index + 1}`}
                         handleChange={() => {}}
-                        rows={1}
+                        rows={6}
                       />
                     );
                   }
                   return;
                 })}
-              <div className="h-1 border-2 border-primary" />
+              <div
+                className="w-full md:w-fit p-2 rounded-full bg-red-100 transition-300 hover:bg-red-200 hover:scale-95 flex items-center justify-center cursor-pointer"
+                onClick={() => editQuestion(index)}
+              >
+                <h4 className="block md:hidden font-josefin">Edit Answer</h4>
+                <MdEdit className="text-2xl" />
+              </div>
             </div>
           );
         })}
 
-        <div className=" mb-8 lg:mb-10 flex flex-row items-center justify-center gap-8">
+        <div className="-mt-8 mb-8 lg:mb-10 flex flex-row items-center justify-center gap-4 lg:pr-14">
           <Button
             className="w-full p-6 lg:max-w-[300px]"
             variant="outline"
@@ -609,7 +638,7 @@ const CreateQuizModal = ({}) => {
             className="w-full p-6 lg:max-w-[300px]"
             onClick={handleSubmit}
           >
-            Next
+            Create Quiz
           </Button>
         </div>
       </div>

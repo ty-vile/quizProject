@@ -361,7 +361,7 @@ const CreateQuizModal = ({}) => {
           disabled={isLoading}
           handleChange={handleChange}
           value={quizData.questions[currentQuestion].question}
-          rows={3}
+          rows={6}
         />
         <div className="w-full flex items-center justify-between">
           <h3 className="font-bold text-xl">
@@ -513,7 +513,7 @@ const CreateQuizModal = ({}) => {
                 id={`Question${index + 1}`}
                 label={`Question ${index + 1}`}
                 handleChange={() => {}}
-                rows={1}
+                rows={6}
                 disabled={true}
               />
               {question.type === "Single Select" && (
@@ -523,7 +523,7 @@ const CreateQuizModal = ({}) => {
                   id={`Answer${index + 1}`}
                   label={`Answer ${index + 1}`}
                   handleChange={() => {}}
-                  rows={1}
+                  rows={6}
                 />
               )}
               {question.type === "Multiple Choice" &&
@@ -537,7 +537,7 @@ const CreateQuizModal = ({}) => {
                         id={`Answer${index + 1}`}
                         label={`Answer ${index + 1}`}
                         handleChange={() => {}}
-                        rows={1}
+                        rows={6}
                       />
                     );
                   }
