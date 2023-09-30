@@ -14,6 +14,7 @@ import Textarea from "../../../components/utility/Inputs/Textarea";
 import Checkbox from "../../../components/utility/Inputs/Checkbox";
 import SingleQuizHeading from "../components/single-quiz/SingleQuizHeading";
 import { MdEdit } from "react-icons/md";
+import { toast } from "react-toastify";
 
 // types
 enum STEPS {
@@ -288,9 +289,12 @@ const CreateQuizModal = ({}) => {
           score: 1,
           questions: [],
         });
+
+        toast.success("Quiz Created");
       })
       .catch((error) => {
         console.log(error);
+        toast.success("Error Creating Quiz");
       })
       .finally(() => {
         setIsLoading(false);

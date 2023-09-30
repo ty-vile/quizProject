@@ -10,6 +10,7 @@ import { Answer, Question, Quiz, User } from "@prisma/client";
 import { useState } from "react";
 // icons
 import { MdEdit, MdPublishedWithChanges } from "react-icons/md";
+import { toast } from "react-toastify";
 
 // types
 enum STEPS {
@@ -195,9 +196,12 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
       },
       body: JSON.stringify({ takeId, quizData }),
     })
-      .then(() => {})
+      .then(() => {
+        toast.success("Quiz Submitted");
+      })
       .catch((error) => {
         console.log(error);
+        toast.error("Error submitting quiz");
       })
       .finally(() => {
         setIsLoading(false);

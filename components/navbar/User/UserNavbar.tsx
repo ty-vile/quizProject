@@ -1,5 +1,7 @@
 "use client";
+// prisma
 import { User } from "@prisma/client";
+// react
 import Image from "next/image";
 // dropdown menu
 import {
@@ -11,12 +13,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "next-auth/react";
+// toast
+import { toast } from "react-toastify";
 
 type Props = {
   user: User;
 };
 
 const UserNavbar: React.FC<Props> = ({ user }) => {
+  const handleSignOut = () => {
+    signOut();
+    toast.success("Signed out");
+  };
+
   return (
     <div className="bg-background">
       <DropdownMenu>
@@ -37,7 +46,7 @@ const UserNavbar: React.FC<Props> = ({ user }) => {
           <DropdownMenuSeparator />
           <DropdownMenuItem className="">Profile</DropdownMenuItem>
 
-          <DropdownMenuItem onClick={() => signOut()} className="">
+          <DropdownMenuItem onClick={() => handleSignOut()} className="">
             Sign Out
           </DropdownMenuItem>
         </DropdownMenuContent>
