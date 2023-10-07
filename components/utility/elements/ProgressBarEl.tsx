@@ -5,7 +5,7 @@ type Props = {
   showModal: boolean | undefined;
 };
 
-const ProgressBar: React.FC<Props> = ({ percentage, showModal }) => {
+const ProgressBarEl: React.FC<Props> = ({ percentage, showModal }) => {
   return (
     <div
       className={`w-full translate duration-300 -z-1
@@ -22,4 +22,4 @@ const ProgressBar: React.FC<Props> = ({ percentage, showModal }) => {
   );
 };
 
-export default ProgressBar;
+export default ProgressBarEl;

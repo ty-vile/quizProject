@@ -8,11 +8,12 @@ import { Bungee, Josefin_Sans } from "next/font/google";
 
 // components
 import Navbar from "@/components/navbar/Navbar";
-import CreateQuizModal from "@/components/modal/CreateQuizModal";
 
 // toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ConfirmQuizModal from "./create-quiz/components/confirmQuizModal";
+import getCurrentUser from "./actions/getCurrentUser";
 
 // metadata
 export const metadata: Metadata = {
@@ -36,11 +37,13 @@ export const josefin = Josefin_Sans({
   variable: "--font-josefin",
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const currentUser = await getCurrentUser();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -58,7 +61,7 @@ export default function RootLayout({
         />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <Navbar />
-          {/* <CreateQuizModal /> */}
+          <ConfirmQuizModal user={currentUser!} />
           {children}
         </ThemeProvider>
       </body>

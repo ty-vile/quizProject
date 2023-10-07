@@ -3,18 +3,19 @@
 // react
 import { useMemo, useState } from "react";
 // hooks
-import useCreateQuizModal from "@/hooks/useCreateQuizModal";
 import { useRouter } from "next/navigation";
 // components
-
-import Input from "../../../components/utility/Inputs/Input";
-import Select from "../../../components/utility/Inputs/Select";
-import { Button } from "../../../components/ui/button";
-import Textarea from "../../../components/utility/Inputs/Textarea";
-import Checkbox from "../../../components/utility/Inputs/Checkbox";
-import SingleQuizHeading from "../components/single-quiz/SingleQuizHeading";
+import Input from "../../components/utility/inputs/Input";
+import Select from "../../components/utility/inputs/Select";
+import { Button } from "../../components/ui/button";
+import Textarea from "../../components/utility/inputs/Textarea";
+import Checkbox from "../../components/utility/inputs/Checkbox";
 import { MdEdit } from "react-icons/md";
 import { toast } from "react-toastify";
+import PageHeading from "@/components/utility/text/PageHeading";
+import AccordionEl from "@/components/utility/elements/AccordionEl";
+import { Answer, Question } from "@prisma/client";
+import useConfirmQuizModal from "@/hooks/useConfirmQuizModal";
 
 // types
 enum STEPS {
@@ -23,27 +24,18 @@ enum STEPS {
   REVIEW = 2,
 }
 
-export type AnswerProps = {
-  answer: string;
-  isCorrect: boolean;
-};
-
-export type QuestionProps = {
-  type: string;
-  question: string;
-  answers: AnswerProps[];
+type ExtendedQuestion = Question & {
+  answers: Answer[];
 };
 
 export type QuizData = {
-  questions: QuestionProps[];
+  questions: ExtendedQuestion[];
   category: string;
   title: string;
   score: number;
 };
 
-type QuizState = AnswerProps[][];
-
-const CreateQuizModal = ({}) => {
+const CreateQuiz = ({}) => {
   // form state
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.CREATE);
@@ -57,8 +49,8 @@ const CreateQuizModal = ({}) => {
     questions: [],
   });
 
-  const createQuizModal = useCreateQuizModal();
   const router = useRouter();
+  const confirmQuizModal = useConfirmQuizModal();
 
   const initQuiz = () => {
     // ADD CHECK FOR SCORE >= 1 && <= 10
@@ -283,25 +275,21 @@ const CreateQuizModal = ({}) => {
       body: JSON.stringify(quizData),
     })
       .then(() => {
+        confirmQuizModal.onOpen();
         setQuizData({
           title: "",
           category: "",
           score: 1,
           questions: [],
         });
-
-        toast.success("Quiz Created");
       })
       .catch((error) => {
         console.log(error);
-        toast.success("Error Creating Quiz");
+        toast.error("Error Creating Quiz");
       })
       .finally(() => {
         setIsLoading(false);
       });
-
-    router.refresh();
-    router.push("/dashboard");
   };
 
   const modalTitle = useMemo(() => {
@@ -330,11 +318,11 @@ const CreateQuizModal = ({}) => {
   if (step === STEPS.CREATE) {
     bodyContent = (
       <div className="w-full flex flex-col">
-        <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl">
+        <h2 className="bg-primary text-white w-full rounded-tl-lg rounded-tr-lg font-josefin p-4 text-md md:text-xl lg:text-4xl">
           {modalTitle}
         </h2>
-        <div className="mt-8 lg:mt-10">
-          <div className="grid grid-cols-1 gap-x-4 gap-y-8 lg:grid-cols-2 ">
+        <div className="p-4">
+          <div className="grid grid-cols-1  gap-4 lg:grid-cols-2 ">
             <Input
               id="title"
               name="title"
@@ -366,9 +354,9 @@ const CreateQuizModal = ({}) => {
               value={quizData.score}
             />
           </div>
-          <div className="mt-8 lg:mt-10 flex flex-row items-center justify-center gap-4">
+          <div className="mt-4 flex flex-row items-center justify-center gap-4">
             <Button
-              className="p-6 w-full lg:max-w-[300px]"
+              className="w-full lg:max-w-[300px]"
               disabled={isLoading}
               onClick={initQuiz}
             >
@@ -384,11 +372,11 @@ const CreateQuizModal = ({}) => {
     bodyContent = (
       <div className="w-full flex flex-col">
         <div className="flex items-center gap-4">
-          <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl">
+          <h2 className="bg-primary text-white w-full rounded-tl-lg rounded-tr-lg font-josefin p-4 text-md md:text-xl lg:text-4xl">
             {modalTitle}
           </h2>
         </div>
-        <div className="mt-8 lg:mt-10 flex flex-col gap-8">
+        <div className="flex flex-col gap-4 p-4">
           <Select
             label="Question Type"
             id="questionType"
@@ -408,19 +396,20 @@ const CreateQuizModal = ({}) => {
             rows={6}
           />
         </div>
-        <div className="mt-8 lg:mt-10 pb-8 w-full flex items-center justify-between">
-          <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl">
-            Answer
-            {quizData.questions[currentQuestion].type === "Multiple Choice" &&
-              "s"}
-          </h2>
-          {quizData.questions[currentQuestion].type === "Multiple Choice" && (
-            <h5 className="bg-primary text-white w-fit font-josefin p-4 text-sm md:text-md lg:text-lg">
-              Select Correct Answer
-            </h5>
-          )}
-        </div>
-        <div className="flex flex-col gap-8">
+
+        <div className="flex flex-col gap-4 p-4 pt-8">
+          <div className="w-full flex items-center justify-between">
+            <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl">
+              Answer
+              {quizData.questions[currentQuestion].type === "Multiple Choice" &&
+                "s"}
+            </h2>
+            {quizData.questions[currentQuestion].type === "Multiple Choice" && (
+              <h5 className="bg-primary text-white w-fit font-josefin p-4 text-sm md:text-md lg:text-lg">
+                Select Correct Answer
+              </h5>
+            )}
+          </div>
           <div className="flex items-center">
             <Input
               id="answer1"
@@ -522,15 +511,15 @@ const CreateQuizModal = ({}) => {
             </>
           )}
         </div>
-        <div className="mt-8 lg:mt-10 mb-8 lg:mb-10 flex flex-row items-center justify-center gap-4">
+        <div className="flex flex-row items-center justify-center gap-4 p-4">
           <Button
-            className="w-full p-6 max-w-[300px]"
+            className="w-full  lg:max-w-[300px]"
             variant="outline"
             onClick={prevQuestion}
           >
             Back
           </Button>
-          <Button className="w-full p-6 max-w-[300px]" onClick={nextQuestion}>
+          <Button className="w-full  lg:max-w-[300px]" onClick={nextQuestion}>
             Next
           </Button>
         </div>
@@ -540,18 +529,14 @@ const CreateQuizModal = ({}) => {
 
   // reviewing quiz
   if (step === STEPS.REVIEW) {
-    if (isLoading) {
-      bodyContent = <h1>LOADING</h1>;
-    }
-
     bodyContent = (
-      <div className="flex flex-col gap-6 mt-3  h-full">
-        <div className="flex items-center gap-4 pb-2">
-          <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl">
+      <div className="flex flex-col h-full">
+        <div className="flex items-center ">
+          <h2 className="bg-primary text-white w-full rounded-tl-lg rounded-tr-lg font-josefin p-4 text-md md:text-xl lg:text-4xl">
             {modalTitle}
           </h2>
         </div>
-        <div className="flex flex-col lg:flex-row items-center gap-x-4 gap-y-6">
+        <div className="flex flex-col lg:flex-row items-center gap-x-4 gap-y-6 p-4">
           <Input
             disabled={true}
             value={quizData.category}
@@ -568,80 +553,30 @@ const CreateQuizModal = ({}) => {
             label="Score"
             handleChange={() => {}}
           />
-          <div
-            className="w-full md:w-fit p-2 rounded-full bg-red-100 transition-300 hover:bg-red-200 hover:scale-95 flex items-center justify-center cursor-pointer"
-            onClick={() => setStep(STEPS.CREATE)}
-          >
-            <h4 className="block md:hidden font-josefin">Edit Answer</h4>
-            <MdEdit className="text-2xl" />
-          </div>
         </div>
-        <div className="h-[2px] border-2 border-primary block mb-2" />
-        {quizData.questions.map((question, index) => {
-          return (
-            <div
-              key={index}
-              className="flex flex-col md:flex-row items-center gap-4 pb-2 mb-10"
-            >
-              <Textarea
-                value={question.question}
-                id={`Question${index + 1}`}
-                label={`Question ${index + 1}`}
-                handleChange={() => {}}
-                rows={6}
-                disabled={true}
-              />
-              {question.type === "Single Select" && (
-                <Textarea
-                  disabled={true}
-                  value={question.answers[0].answer}
-                  id={`Answer${index + 1}`}
-                  label={`Answer ${index + 1}`}
-                  handleChange={() => {}}
-                  rows={6}
-                />
-              )}
-              {question.type === "Multiple Choice" &&
-                question.answers.map((answer, i) => {
-                  if (answer.isCorrect === true) {
-                    return (
-                      <Textarea
-                        key={i}
-                        disabled={true}
-                        value={answer.answer}
-                        id={`Answer${index + 1}`}
-                        label={`Answer ${index + 1}`}
-                        handleChange={() => {}}
-                        rows={6}
-                      />
-                    );
-                  }
-                  return;
-                })}
-              <div
-                className="w-full md:w-fit p-2 rounded-full bg-red-100 transition-300 hover:bg-red-200 hover:scale-95 flex items-center justify-center cursor-pointer"
-                onClick={() => editQuestion(index)}
-              >
-                <h4 className="block md:hidden font-josefin">Edit Answer</h4>
-                <MdEdit className="text-2xl" />
-              </div>
-            </div>
-          );
-        })}
+        <div className="p-4 mb-4">
+          <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl mb-4">
+            Questions
+          </h2>
+          {quizData.questions.map((question, index) => {
+            return (
+              <>
+                <AccordionEl index={index} question={question} />
+              </>
+            );
+          })}
+        </div>
 
-        <div className="-mt-8 mb-8 lg:mb-10 flex flex-row items-center justify-center gap-4 lg:pr-14">
+        <div className="-mt-8 flex flex-row items-center justify-center gap-4 lg:pr-14 p-4">
           <Button
-            className="w-full p-6 lg:max-w-[300px]"
+            className="w-full lg:max-w-[300px]"
             variant="outline"
             onClick={prevQuestion}
           >
             Back
           </Button>
 
-          <Button
-            className="w-full p-6 lg:max-w-[300px]"
-            onClick={handleSubmit}
-          >
+          <Button className="w-full lg:max-w-[300px]" onClick={handleSubmit}>
             Create Quiz
           </Button>
         </div>
@@ -651,12 +586,14 @@ const CreateQuizModal = ({}) => {
 
   return (
     <>
-      <div className="mb-8 lg:mb-12">
-        <SingleQuizHeading title="Create Quiz" />
+      <div className="pb-10">
+        <PageHeading heading={"Create Quiz"} />
       </div>
-      {bodyContent}
+      <div className="flex flex-col gap-8 ring-2 ring-gray-200 dark:ring-white/20 rounded-lg ">
+        {bodyContent}
+      </div>
     </>
   );
 };
 
-export default CreateQuizModal;
+export default CreateQuiz;

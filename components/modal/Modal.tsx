@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 // components
 import { Button } from "../ui/button";
-import ProgressBar from "../utility/ProgressBar";
+import ProgressBar from "../utility/elements/ProgressBarEl";
 
 interface ModalProps {
   percentage?: string;
@@ -17,6 +17,7 @@ interface ModalProps {
   disabled?: boolean;
   current?: number;
   max?: number;
+  canClose?: boolean;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -26,6 +27,7 @@ const Modal: React.FC<ModalProps> = ({
   body,
   disabled,
   percentage,
+  canClose,
 }) => {
   const [showModal, setShowModal] = useState(isOpen);
 
@@ -73,13 +75,15 @@ const Modal: React.FC<ModalProps> = ({
             <div className="translate h-full md:h-auto border-0 rounded-b-lg shadow-lg relative flex flex-col w-full bg-background outline-none focus:outline-none">
               {/* HEADER */}
               <div className="flex items-center p-4  justify-center relative">
-                <Button
-                  variant="ghost"
-                  className="p-1 border-0 absolute right-8 hover:shadow-lg rounded-full"
-                  onClick={handleClose}
-                >
-                  <IoMdClose size={32} />
-                </Button>
+                {canClose && (
+                  <Button
+                    variant="ghost"
+                    className="p-1 border-0 absolute right-8 hover:shadow-lg rounded-full"
+                    onClick={handleClose}
+                  >
+                    <IoMdClose size={32} />
+                  </Button>
+                )}
                 <div className="text-lg font-semibold">
                   <h2>{title}</h2>
                 </div>

@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import SquareCheckbox from "@/components/utility/Inputs/SquareCheckbox";
-import Textarea from "@/components/utility/Inputs/Textarea";
+import SquareCheckbox from "@/components/utility/inputs/SquareCheckbox";
+import Textarea from "@/components/utility/inputs/Textarea";
 import { formatDate } from "@/lib/utils";
 // types
 import { Answer, Question, Quiz, User } from "@prisma/client";

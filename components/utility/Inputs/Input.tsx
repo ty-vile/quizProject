@@ -24,6 +24,13 @@ const Input: React.FC<InputProps> = ({
 }) => {
   return (
     <div className="w-full relative">
+      <label
+        htmlFor={id}
+        className={`font-josefin text-sm
+      `}
+      >
+        {label}
+      </label>
       <input
         id={id}
         name={name}
@@ -34,16 +41,9 @@ const Input: React.FC<InputProps> = ({
         }}
         type={type}
         placeholder=""
-        className={`peer w-full p-3 bg-background border-2 border-slate-600 dark:border-white  focus:border-primary font-bold focus:border-4 rounded-md outline-none transition disabled:cursor-not-allowed disabled:opacity-70`}
+        className={`peer w-full p-3 bg-background border-2 border-gray-300 dark:border-white/20 dark:focus:border-primary  focus:border-primary font-bold rounded-md outline-none transition disabled:cursor-not-allowed disabled:opacity-70 relative`}
         required={required}
       />
-      <label
-        htmlFor={id}
-        className={`absolute left-4 text-xs duration-150 transform -top-4 z-10 origin-[0] font-bold bg-background p-1 rounded-lg border-2 border-primary font-josefin
-      `}
-      >
-        {label}
-      </label>
     </div>
   );
 };

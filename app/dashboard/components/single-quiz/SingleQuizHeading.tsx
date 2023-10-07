@@ -1,7 +1,7 @@
 "use client";
 
 // components
-import PageHeading from "@/components/utility/PageHeading";
+import PageHeading from "@/components/utility/text/PageHeading";
 import { User } from "@prisma/client";
 
 type Props = {

@@ -1,7 +1,7 @@
 import getQuiz from "@/app/actions/getQuiz";
 import getUser from "@/app/actions/getUser";
 import { Button } from "@/components/ui/button";
-import PageHeading from "@/components/utility/PageHeading";
+import PageHeading from "@/components/utility/text/PageHeading";
 import SingleQuizHeading from "../../components/single-quiz/SingleQuizHeading";
 import TakeQuizTable from "./components/TakeQuizTable";
 

@@ -1,5 +1,5 @@
 // components
-import PageHeading from "@/components/utility/PageHeading";
+import PageHeading from "@/components/utility/text/PageHeading";
 import QuizGrid from "../components/QuizGrid";
 import getNonUserQuizzes from "@/app/actions/getNonCurrentUserQuizzes";
 

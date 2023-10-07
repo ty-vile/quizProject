@@ -40,7 +40,7 @@ const Checkbox: React.FC<InputProps> = ({
 
       <label
         htmlFor={id}
-        className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs duration-300 transform  z-10 origin-[0] font-bold bg-background p-3 rounded-full border-2 border-primary peer-checked:bg-primary cursor-pointer font-josefin
+        className={`absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-2/2 text-xs duration-300 transform  z-10 origin-[0] font-bold bg-background p-3 rounded-full border-2 border-primary peer-checked:bg-primary cursor-pointer font-josefin
       `}
       ></label>
     </div>
