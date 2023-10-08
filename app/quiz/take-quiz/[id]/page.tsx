@@ -1,8 +1,5 @@
 import getQuiz from "@/app/actions/getQuiz";
 import getUser from "@/app/actions/getUser";
-import { Button } from "@/components/ui/button";
-import PageHeading from "@/components/utility/text/PageHeading";
-import SingleQuizHeading from "../../components/single-quiz/SingleQuizHeading";
 import TakeQuizTable from "./components/TakeQuizTable";
 
 // seo
@@ -17,12 +14,12 @@ const TakeSingleUserQuiz = async ({ params }: any) => {
   return (
     <>
       <div className="mb-8 lg:mb-12">
-        <SingleQuizHeading
+        {/* <SingleQuizHeading
           title={quiz?.quiz?.title!}
           user={user}
           category={quiz?.quiz?.category!}
           createdAt={quiz?.quiz?.createdAt!}
-        />
+        /> */}
       </div>
       <TakeQuizTable
         quiz={quiz?.quiz!}

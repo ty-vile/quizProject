@@ -6,7 +6,7 @@ export default async function CreateQuizLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="min-h-screen min-w-screen flex flex-col pt-32 pb-[50px] bg-background duration-300">
+    <main className="min-h-screen min-w-screen flex flex-col pt-8 pb-[50px] bg-background duration-300">
       <Container>{children}</Container>
     </main>
   );

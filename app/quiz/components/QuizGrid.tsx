@@ -33,32 +33,37 @@ const QuizGrid: React.FC<Props> = ({ quizzes, path }) => {
   }, [selectedCategory]);
 
   return (
-    <>
-      <div className="w-full flex items-center justify-between">
+    <div className="flex flex-col flex-wrap w-full relative md:flex-row md:gap-x-8">
+      <div className="flex flex-col gap-4 w-full md:w-1/5 md:sticky md:top-24 h-fit max-h-[70vh]">
+        <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl">
+          Filters
+        </h2>
         <CategoryFilter
           uniqueCategories={categoriesSet}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
         />
-        {/* Search Input */}
       </div>
-      {displayQuizzes?.map((quiz, i) => {
-        const { title, createdAt, category, score, id, userId } = quiz;
 
-        return (
-          <QuizCard
-            userId={userId}
-            key={id}
-            id={id}
-            title={title}
-            category={category}
-            score={score}
-            createdAt={createdAt}
-            path={path}
-          />
-        );
-      })}
-    </>
+      <div className="flex grow w-full md:w-9/12 flex-wrap justify-end gap-4">
+        {displayQuizzes?.map((quiz, i) => {
+          const { title, createdAt, category, score, id, userId } = quiz;
+
+          return (
+            <QuizCard
+              userId={userId}
+              key={id}
+              id={id}
+              title={title}
+              category={category}
+              score={score}
+              createdAt={createdAt}
+              path={path}
+            />
+          );
+        })}
+      </div>
+    </div>
   );
 };
 

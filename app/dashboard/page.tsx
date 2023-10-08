@@ -10,7 +10,7 @@ export const metadata = {
 
 const Dashboard = async () => {
   return (
-    <div className="flex flex-col h-[80vh]">
+    <div className="flex flex-col min-h-[80vh]">
       <DashboardHead />
       <DashboardSummaryCards />
       <DashboardTables />

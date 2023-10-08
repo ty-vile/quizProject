@@ -12,8 +12,9 @@ import Navbar from "@/components/navbar/Navbar";
 // toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ConfirmQuizModal from "./create-quiz/components/confirmQuizModal";
+
 import getCurrentUser from "./actions/getCurrentUser";
+import ConfirmQuizModal from "./quiz/create-quiz/components/confirmQuizModal";
 
 // metadata
 export const metadata: Metadata = {

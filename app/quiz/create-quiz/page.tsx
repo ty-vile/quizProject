@@ -5,17 +5,17 @@ import { useMemo, useState } from "react";
 // hooks
 import { useRouter } from "next/navigation";
 // components
-import Input from "../../components/utility/inputs/Input";
-import Select from "../../components/utility/inputs/Select";
-import { Button } from "../../components/ui/button";
-import Textarea from "../../components/utility/inputs/Textarea";
-import Checkbox from "../../components/utility/inputs/Checkbox";
-import { MdEdit } from "react-icons/md";
+
 import { toast } from "react-toastify";
 import PageHeading from "@/components/utility/text/PageHeading";
 import AccordionEl from "@/components/utility/elements/AccordionEl";
 import { Answer, Question } from "@prisma/client";
 import useConfirmQuizModal from "@/hooks/useConfirmQuizModal";
+import Input from "@/components/utility/inputs/Input";
+import { Button } from "@/components/ui/button";
+import Select from "@/components/utility/inputs/Select";
+import Textarea from "@/components/utility/inputs/Textarea";
+import Checkbox from "@/components/utility/inputs/Checkbox";
 
 // types
 enum STEPS {
@@ -318,7 +318,7 @@ const CreateQuiz = ({}) => {
   if (step === STEPS.CREATE) {
     bodyContent = (
       <div className="w-full flex flex-col">
-        <h2 className="bg-primary text-white w-full rounded-tl-lg rounded-tr-lg font-josefin p-4 text-md md:text-xl lg:text-4xl">
+        <h2 className="bg-primary text-white w-full  font-josefin p-4 text-md md:text-xl lg:text-4xl">
           {modalTitle}
         </h2>
         <div className="p-4">
@@ -589,7 +589,7 @@ const CreateQuiz = ({}) => {
       <div className="pb-10">
         <PageHeading heading={"Create Quiz"} />
       </div>
-      <div className="flex flex-col gap-8 ring-2 ring-gray-200 dark:ring-white/20 rounded-lg ">
+      <div className="flex flex-col gap-8 border-2 border-gray-600 dark:border-gray-300 rounded-lg shadow-1">
         {bodyContent}
       </div>
     </>

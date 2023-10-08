@@ -1,7 +1,7 @@
 // actions
 import getUserQuizzes from "@/app/actions/getCurrentUserQuizzes";
 // components
-import QuizGrid from "../components/QuizGrid";
+import QuizGrid from "../../quiz/components/QuizGrid";
 // fonts
 import PageHeading from "@/components/utility/text/PageHeading";
 
