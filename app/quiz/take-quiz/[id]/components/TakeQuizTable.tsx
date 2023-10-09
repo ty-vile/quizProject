@@ -1,11 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import AccordionEl from "@/components/utility/elements/AccordionEl";
 import SquareCheckbox from "@/components/utility/inputs/SquareCheckbox";
 import Textarea from "@/components/utility/inputs/Textarea";
+import PageHeading from "@/components/utility/text/PageHeading";
 import { formatDate } from "@/lib/utils";
 // types
 import { Answer, Question, Quiz, User } from "@prisma/client";
+import Image from "next/image";
 // react
 import { useState } from "react";
 // icons
@@ -80,7 +83,7 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
       return null; // Mapping doesn't return anything
     });
 
-    // CREATE TAKE QUIZ HERE - /acitions/createTakeQuiz.ts
+    // CREATE TAKE QUIZ HERE - /actions/createTakeQuiz.ts
     handleSubmitTake();
     setStep(STEPS.QUESTIONS);
   };
@@ -212,23 +215,23 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
 
   if (step === STEPS.INTRO) {
     bodyContent = (
-      <div className="w-full h-[60vh] flex items-center justify-center">
-        <div className="group w-full lg:w-4/12 flex flex-col items-center justify-center gap-10 py-20 border-2 border-primary hover:bg-primary duration-1000">
-          <div className="flex flex-col items-center gap-2 dark:text-white group-hover:text-white">
-            <h4 className="font-bungee text-xl">Quiz By: {user?.name}</h4>
-            <h5 className="font-josefin">{formatDate(quiz?.createdAt!)}</h5>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <h3 className="dark:text-white group-hover:text-white font-josefin">
-              Are you ready to take this quiz?
-            </h3>
-            <Button
-              size="lg"
-              className="group-hover:bg-white group-hover:text-primary"
-              onClick={initQuiz}
-            >
-              START QUIZ
-            </Button>
+      <div className="w-full flex flex-col">
+        <div className="flex items-center justify-between p-4 bg-primary text-white font-josefin">
+          <h2 className="text-md md:text-xl lg:text-4xl">{quiz?.title}</h2>
+          <h4 className="">{quiz?.category}</h4>
+        </div>
+        <div className="p-4">
+          <div className="flex flex-col gap-4">
+            <h4>Total Questions: {quiz?.score}</h4>
+            <div className="w-full flex items-center justify-center">
+              <Button
+                className="w-full lg:max-w-[300px]"
+                disabled={isLoading}
+                onClick={initQuiz}
+              >
+                Take Quiz
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -238,14 +241,12 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
   if (step === STEPS.QUESTIONS) {
     bodyContent = (
       <div className="w-full flex flex-col">
-        <div className="flex items-center gap-4">
-          <h2 className="text-primary font-bungee text-3xl  lg:text-5xl">Q:</h2>
-          <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl">
-            {questions?.[currentQuestion].question}
-          </h2>
-        </div>
+        <h2 className="bg-primary text-white w-full font-josefin p-4 text-md md:text-xl lg:text-4xl">
+          {questions?.[currentQuestion].question}
+        </h2>
+
         {questions?.[currentQuestion].type === "Single Select" ? (
-          <div className="mt-8 lg:mt-10">
+          <div className="p-4 ">
             <Textarea
               id="answer"
               label="Answer"
@@ -257,64 +258,62 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
             />
           </div>
         ) : (
-          <div className="mt-8 lg:mt-10">
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 ">
-              <SquareCheckbox
-                type="checkbox"
-                id={answers?.[currentQuestion]?.[0]?.answer}
-                name="checkboxAnswer"
-                label="Answer One"
-                disabled={isLoading}
-                required={true}
-                handleChange={(e) => handleChange(e, 0)}
-                value={
-                  quizData?.questions[currentQuestion]?.answer ==
-                  answers?.[currentQuestion]?.[0]?.answer
-                }
-              />
-              <SquareCheckbox
-                type="checkbox"
-                id={answers?.[currentQuestion]?.[1]?.answer}
-                name="checkboxAnswer"
-                label="Answer Two"
-                disabled={isLoading}
-                required={true}
-                handleChange={handleChange}
-                value={
-                  quizData?.questions[currentQuestion]?.answer ==
-                  answers?.[currentQuestion]?.[1]?.answer
-                }
-              />
-              <SquareCheckbox
-                type="checkbox"
-                id={answers?.[currentQuestion]?.[2]?.answer}
-                name="checkboxAnswer"
-                label="Answer Three"
-                disabled={isLoading}
-                required={true}
-                handleChange={handleChange}
-                value={
-                  quizData?.questions[currentQuestion]?.answer ==
-                  answers?.[currentQuestion]?.[2]?.answer
-                }
-              />
-              <SquareCheckbox
-                type="checkbox"
-                id={answers?.[currentQuestion]?.[3]?.answer}
-                name="checkboxAnswer"
-                label="Answer Four"
-                disabled={isLoading}
-                required={true}
-                handleChange={handleChange}
-                value={
-                  quizData?.questions[currentQuestion]?.answer ==
-                  answers?.[currentQuestion]?.[3]?.answer
-                }
-              />
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2  gap-4 p-4">
+            <SquareCheckbox
+              type="checkbox"
+              id={answers?.[currentQuestion]?.[0]?.answer}
+              name="checkboxAnswer"
+              label="Answer One"
+              disabled={isLoading}
+              required={true}
+              handleChange={(e) => handleChange(e, 0)}
+              value={
+                quizData?.questions[currentQuestion]?.answer ==
+                answers?.[currentQuestion]?.[0]?.answer
+              }
+            />
+            <SquareCheckbox
+              type="checkbox"
+              id={answers?.[currentQuestion]?.[1]?.answer}
+              name="checkboxAnswer"
+              label="Answer Two"
+              disabled={isLoading}
+              required={true}
+              handleChange={handleChange}
+              value={
+                quizData?.questions[currentQuestion]?.answer ==
+                answers?.[currentQuestion]?.[1]?.answer
+              }
+            />
+            <SquareCheckbox
+              type="checkbox"
+              id={answers?.[currentQuestion]?.[2]?.answer}
+              name="checkboxAnswer"
+              label="Answer Three"
+              disabled={isLoading}
+              required={true}
+              handleChange={handleChange}
+              value={
+                quizData?.questions[currentQuestion]?.answer ==
+                answers?.[currentQuestion]?.[2]?.answer
+              }
+            />
+            <SquareCheckbox
+              type="checkbox"
+              id={answers?.[currentQuestion]?.[3]?.answer}
+              name="checkboxAnswer"
+              label="Answer Four"
+              disabled={isLoading}
+              required={true}
+              handleChange={handleChange}
+              value={
+                quizData?.questions[currentQuestion]?.answer ==
+                answers?.[currentQuestion]?.[3]?.answer
+              }
+            />
           </div>
         )}
-        <div className="mt-8 lg:mt-10 mb-8 lg:mb-10 flex flex-row items-center justify-center gap-8">
+        <div className="p-4 flex flex-row items-center justify-center gap-8">
           <Button
             className="w-full p-6 lg:max-w-[300px]"
             variant="outline"
@@ -335,57 +334,40 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
 
   if (step === STEPS.REVIEW) {
     bodyContent = (
-      <div className="flex flex-col gap-6 mt-3  h-full">
-        <div className="flex items-center gap-4 ">
-          <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl">
-            Review Answers
+      <div className="flex flex-col h-full">
+        <h2 className="bg-primary text-white w-full font-josefin p-4 text-md md:text-xl lg:text-4xl">
+          Review Your Answers
+        </h2>
+        <div className="p-4 mb-4">
+          <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl mb-4">
+            Questions
           </h2>
+          {quizData.questions.map((question, index) => {
+            console.log(question);
+            return (
+              <>
+                {
+                  <AccordionEl
+                    index={index}
+                    /* @ts-ignore - ignore extended types in AccordionEl */
+                    question={question}
+                    takeQuiz={true}
+                  />
+                }
+              </>
+            );
+          })}
         </div>
-        {quizData.questions.map((question, index) => {
-          return (
-            <div className="flex flex-col gap-4 mt-10 mb-10">
-              <div>
-                <div className="flex flex-col lg:flex-row lg:items-center gap-4 cursor-pointer z-50 ">
-                  <Textarea
-                    value={question.question}
-                    id={`Question${index + 1}`}
-                    label={`Question ${index + 1}`}
-                    handleChange={() => {}}
-                    rows={6}
-                    disabled={true}
-                  />
-                  <Textarea
-                    value={question.answer}
-                    id={`Answer${index + 1}`}
-                    label={`Answer ${index + 1}`}
-                    handleChange={() => {}}
-                    rows={6}
-                    disabled={true}
-                  />
-                  <div
-                    className="p-2 rounded-full bg-red-100 transition-300 hover:bg-red-200 hover:scale-95 flex items-center justify-center gap-2 cursor-pointer"
-                    onClick={() => editQuestion(index)}
-                  >
-                    <h4 className="block md:hidden font-josefin">
-                      Edit Answer
-                    </h4>
-                    <MdEdit className="text-2xl" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-        <div className="-mt-8 mb-8 lg:mb-10 flex flex-row items-center justify-center gap-4 lg:pr-14">
+        <div className="-mt-8 p-4 flex flex-row items-center justify-center gap-4 ">
           <Button
-            className="w-full p-6 max-w-[300px]"
+            className="w-full max-w-[300px]"
             variant="outline"
             onClick={prevQuestion}
           >
             Back
           </Button>
           <Button
-            className="w-full p-6 lg:max-w-[300px]"
+            className="w-full lg:max-w-[300px]"
             onClick={handleSubmitQuiz}
           >
             Submit Quiz
@@ -395,7 +377,23 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
     );
   }
 
-  return <>{bodyContent}</>;
+  return (
+    <>
+      <div className="flex flex-col md:flex-row md:items-center gap-6 pb-10">
+        <Image
+          src={user?.image!}
+          height={60}
+          width={60}
+          className="rounded-full"
+          alt="User Image"
+        />
+        <PageHeading heading={`Created by: ${user?.name}`} />
+      </div>
+      <div className="flex flex-col gap-8 border-2 border-gray-600 dark:border-gray-300 rounded-lg shadow-1">
+        {bodyContent}
+      </div>
+    </>
+  );
 };
 
 export default TakeQuizTable;

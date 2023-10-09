@@ -38,7 +38,7 @@ const Textarea: React.FC<TextareaProps> = ({
         name={id}
         rows={6}
         placeholder=""
-        className={`peer w-full p-3 bg-background border-2 border-gray-300 dark:border-white/20 dark:focus:border-primary  focus:border-primary font-bold rounded-md outline-none transition disabled:cursor-not-allowed disabled:opacity-70 relative`}
+        className={`peer w-full p-3 bg-background border-2 border-gray-600 dark:border-gray-300 dark:focus:border-primary  focus:border-primary font-bold rounded-md outline-none transition disabled:cursor-not-allowed disabled:opacity-70 relative`}
         required={required}
       ></textarea>
     </div>

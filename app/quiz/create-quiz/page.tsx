@@ -561,7 +561,11 @@ const CreateQuiz = ({}) => {
           {quizData.questions.map((question, index) => {
             return (
               <>
-                <AccordionEl index={index} question={question} />
+                <AccordionEl
+                  index={index}
+                  question={question}
+                  createQuiz={true}
+                />
               </>
             );
           })}
