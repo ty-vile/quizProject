@@ -565,6 +565,7 @@ const CreateQuiz = ({}) => {
                   index={index}
                   question={question}
                   createQuiz={true}
+                  key={index}
                 />
               </>
             );

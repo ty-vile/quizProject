@@ -105,8 +105,19 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
 
     // if on first question
     if (currentQuestion === 0) {
+      setIsLoading(true);
+
+      fetch("/api/take", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ takeId }),
+      });
+
+      setIsLoading(false);
+
       return setStep(STEPS.INTRO);
-      // DELETE TAKE & SETSTEPS(STEP.INTRO)
     }
 
     // if on review step
@@ -115,11 +126,6 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
     }
 
     return setCurrentQuestion(currentQuestion - 1);
-  };
-
-  const editQuestion = (index: number) => {
-    setCurrentQuestion(index);
-    setStep(STEPS.QUESTIONS);
   };
 
   const handleChange = (event: any, index?: number) => {
@@ -192,23 +198,39 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
   const handleSubmitQuiz = () => {
     setIsLoading(true);
 
-    fetch("/api/takeanswer", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ takeId, quizData }),
-    })
-      .then(() => {
-        toast.success("Quiz Submitted");
-      })
-      .catch((error) => {
+    try {
+      setIsLoading(true);
+
+      fetch("/api/takeanswer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ takeId, quizData }),
+      }).catch((error) => {
         console.log(error);
         toast.error("Error submitting quiz");
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
+
+      fetch("/api/take", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ takeId, quizData }),
+      }).catch((error) => {
+        console.log(error);
+        toast.error("Error submitting quiz");
+      });
+
+      setIsLoading(false);
+      toast.success("Quiz submitted succesfully");
+
+      // add modal like create quiz
+    } catch (error) {
+      toast.error("Error submitting Quiz");
+      console.log(error);
+    }
   };
 
   let bodyContent;
@@ -352,6 +374,7 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
                     /* @ts-ignore - ignore extended types in AccordionEl */
                     question={question}
                     takeQuiz={true}
+                    key={index}
                   />
                 }
               </>
