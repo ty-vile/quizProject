@@ -264,7 +264,7 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
     bodyContent = (
       <div className="w-full flex flex-col">
         <h2 className="bg-primary text-white w-full font-josefin p-4 text-md md:text-xl lg:text-4xl">
-          {questions?.[currentQuestion].question}
+          {questions?.[currentQuestion]?.question}
         </h2>
 
         {questions?.[currentQuestion].type === "Single Select" ? (

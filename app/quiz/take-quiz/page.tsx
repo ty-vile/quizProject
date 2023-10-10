@@ -3,6 +3,7 @@ import PageHeading from "@/components/utility/text/PageHeading";
 
 import getNonUserQuizzes from "@/app/actions/getNonCurrentUserQuizzes";
 import QuizGrid from "@/app/quiz/components/QuizGrid";
+import { useSession } from "next-auth/react";
 
 // seo
 export const metadata = {

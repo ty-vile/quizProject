@@ -52,6 +52,16 @@ model User {
   sessions Session[]
   quizs Quiz[]
   takes Take[]
+  followers UserFollow[]
+}
+
+model UserFollow {
+  id String @id @default(cuid())
+  userId String
+  followingId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+  @@index([followingId])
 }
 
 model Quiz {

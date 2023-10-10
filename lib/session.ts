@@ -24,13 +24,10 @@ export const authOptions: NextAuthOptions = {
   },
   session: {
     strategy: "jwt",
-    maxAge: 4 * 60 * 60,
   },
-  jwt: {
-    maxAge: 4 * 60 * 60,
-  },
+
   callbacks: {
-    jwt: async ({ token, user, account }) => {
+    jwt: async ({ token }) => {
       const dbUser = await prisma.user.findFirst({
         where: {
           email: token?.email,
@@ -50,6 +47,7 @@ export const authOptions: NextAuthOptions = {
         session.user.email = token.email;
         session.user.image = token.picture;
       }
+
       return session;
     },
   },
