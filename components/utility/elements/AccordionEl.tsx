@@ -38,7 +38,7 @@ const AccordionEl: React.FC<Props> = ({
             </div>
           </AccordionTrigger>
           <AccordionContent>
-            {/* IF ACCORDION IS CALLED FROM /create-quiz */}
+            {/* IF ACCORDION IS CALLED FROM /create */}
             {createQuiz === true && (
               <>
                 {question.type === "Single Select" ? (
@@ -68,7 +68,7 @@ const AccordionEl: React.FC<Props> = ({
                 )}
               </>
             )}
-            {/* IF ACCORDION IS CALLED FROM /take-quiz/[id] */}
+            {/* IF ACCORDION IS CALLED FROM /take/[id] */}
             {takeQuiz === true && (
               <>
                 <div className="flex items-center gap-2 text-sm md:text-md lg:text-lg xl:text-xl text-left font-josefin  pt-1">

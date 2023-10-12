@@ -1,10 +1,9 @@
 import prisma from "@/lib/prismadb";
 import getCurrentUser from "./getCurrentUser";
-import getCurrentUserTakenQuizzes from "./getCurrentUserTakenQuizzes";
 
-// gets all quizzes that were created by current user
+// gets list of all quizzes that have been taken by current user
 
-export default async function getCurrentUserQuizzes() {
+export default async function getCurrentUserTakenQuizzes() {
   try {
     const currentUser = await getCurrentUser();
 
@@ -12,16 +11,17 @@ export default async function getCurrentUserQuizzes() {
       return null;
     }
 
-    const userQuizzes = await prisma.quiz.findMany({
+    const userTakenQuizzes = await prisma.take.findMany({
       where: {
         userId: currentUser.id,
       },
       include: {
+        quiz: true,
         user: true,
       },
     });
 
-    return userQuizzes.sort(
+    return userTakenQuizzes.sort(
       (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
     );
   } catch (error) {

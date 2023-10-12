@@ -25,7 +25,7 @@ const DashboardTakeQuizTableRow: React.FC<Props> = ({
   return (
     <div
       className="flex items-start justify-between p-2 cursor-pointer rounded-lg hover:bg-gray-100 hover:text-black transition-300"
-      onClick={() => router.push(`/dashboard/take-quiz/${id}`)}
+      onClick={() => router.push(`/dashboard/take/${id}`)}
     >
       <div className="flex items-start gap-4">
         <Image

@@ -2,6 +2,7 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import { Button } from "@/components/ui/button";
 import PageHeading from "@/components/utility/text/PageHeading";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const DashboardHead = async () => {
@@ -19,9 +20,15 @@ const DashboardHead = async () => {
         />
         <PageHeading heading={`Welcome ${currentUser?.name as string}`} />
       </div>
-      <div className="flex w-full basis-12/12 lg:basis-6/12 xl:basis-3/12 items-center justify-start lg:justify-end gap-8">
-        <Button className="flex-1">Create Quiz</Button>
-        <Button className="flex-1">View Results</Button>
+      <div className="flex w-full basis-12/12 lg:basis-6/12 xl:basis-3/12 items-center justify-start lg:justify-end gap-2">
+        <Link href={"/quiz/create"} className="grow">
+          <Button className="grow w-full">Create Quiz</Button>
+        </Link>
+        <Link href={""} className="grow">
+          <Button variant="outline" className="grow w-full">
+            My Profile
+          </Button>
+        </Link>
       </div>
     </div>
   );

@@ -1,9 +1,8 @@
 // components
 import PageHeading from "@/components/utility/text/PageHeading";
-
-import getNonUserQuizzes from "@/app/actions/getNonCurrentUserQuizzes";
 import QuizGrid from "@/app/quiz/components/QuizGrid";
-import { useSession } from "next-auth/react";
+// actions
+import getNonCurrentUserQuizzes from "@/app/actions/getNonCurrentUserQuizzes";
 
 // seo
 export const metadata = {
@@ -11,14 +10,14 @@ export const metadata = {
 };
 
 const TakeQuiz = async () => {
-  const nonUserQuizzes = await getNonUserQuizzes();
+  const nonUserQuizzes = await getNonCurrentUserQuizzes();
 
   return (
     <>
       <div className="pb-10">
         <PageHeading heading={"Take Quiz"} />
       </div>
-      <QuizGrid quizzes={nonUserQuizzes} path="/quiz/take-quiz" />
+      <QuizGrid quizzes={nonUserQuizzes} path="/quiz/take" />
     </>
   );
 };

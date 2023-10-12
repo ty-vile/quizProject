@@ -1,12 +1,23 @@
 "use client";
 
-import { Quiz } from "@prisma/client";
+import { Quiz, User } from "@prisma/client";
 import QuizCard from "./QuizCard";
 import CategoryFilter from "@/components/filter/CategoryFilter";
 import { useMemo, useState } from "react";
 
+type ExtendedQuiz = {
+  id: string;
+  title: string;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  category: string;
+  score: number;
+  user: User;
+}[];
+
 type Props = {
-  quizzes: Quiz[] | null;
+  quizzes: ExtendedQuiz | null;
   path: string;
 };
 
@@ -47,7 +58,9 @@ const QuizGrid: React.FC<Props> = ({ quizzes, path }) => {
 
       <div className="flex grow w-full md:w-9/12 flex-wrap justify-end gap-4">
         {displayQuizzes?.map((quiz, i) => {
-          const { title, createdAt, category, score, id, userId } = quiz;
+          console.log("QUIZGRID", quiz);
+
+          const { title, createdAt, category, score, id, userId, user } = quiz;
 
           return (
             <QuizCard
@@ -59,6 +72,7 @@ const QuizGrid: React.FC<Props> = ({ quizzes, path }) => {
               score={score}
               createdAt={createdAt}
               path={path}
+              user={user}
             />
           );
         })}

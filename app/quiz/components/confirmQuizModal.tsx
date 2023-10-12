@@ -17,7 +17,7 @@ const ConfirmQuizModal = () => {
   let bodyContent;
 
   // CREATE QUIZ
-  if (getPathname[2] === "create-quiz") {
+  if (getPathname[2] === "create") {
     bodyContent = (
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 items-center justify-center w-full ">
@@ -53,7 +53,7 @@ const ConfirmQuizModal = () => {
     );
   }
 
-  if (getPathname[2] === "take-quiz") {
+  if (getPathname[2] === "take") {
     bodyContent = (
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 items-center justify-center w-full ">
@@ -61,7 +61,7 @@ const ConfirmQuizModal = () => {
             <LuPartyPopper className="text-5xl text-white w-fit" />
           </div>
           <h3 className="text-xl font-josefin">
-            Congratulations on taking the quiz!
+            Congratulations on completing the quiz!
           </h3>
         </div>
         <div className="flex items-center w-full gap-4">

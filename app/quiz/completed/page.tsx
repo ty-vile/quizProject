@@ -5,20 +5,22 @@ import getCurrentUserQuizzes from "@/app/actions/getCurrentUserQuizzes";
 
 // seo
 export const metadata = {
-  title: "My Quizzes | Quizify",
+  title: "In Progress | Quizify",
+  description:
+    "List of Quizzes that are currently in progress for user to complete",
 };
 
-const MyQuizzes = async () => {
-  const nonUserQuizzes = await getCurrentUserQuizzes();
+const Compelted = async () => {
+  // add action which gets current user quizzes from take where status = 'complete'
 
   return (
     <>
       <div className="pb-10">
         <PageHeading heading={"My Quizzes"} />
       </div>
-      <QuizGrid quizzes={nonUserQuizzes} path="/take" />
+      {/* <QuizGrid quizzes={nonUserQuizzes} path="/take-quiz" /> */}
     </>
   );
 };
 
-export default MyQuizzes;
+export default Compelted;

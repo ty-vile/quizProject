@@ -49,7 +49,6 @@ const CreateQuiz = ({}) => {
     questions: [],
   });
 
-  const router = useRouter();
   const confirmQuizModal = useConfirmQuizModal();
 
   const initQuiz = () => {
@@ -239,11 +238,6 @@ const CreateQuiz = ({}) => {
     return setCurrentQuestion(currentQuestion - 1);
   };
 
-  const editQuestion = (index: number) => {
-    setCurrentQuestion(index);
-    setStep(STEPS.QUESTIONS);
-  };
-
   function calcStepPercentage(num1: number, num2: number) {
     const ratio = num2 / num1;
     const closestDivisibleBy12 = Math.round(ratio * 100); // Divide by 12 to convert to a percentage
@@ -267,29 +261,33 @@ const CreateQuiz = ({}) => {
   const handleSubmit = async () => {
     setIsLoading(true);
 
-    fetch("/api/quiz", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(quizData),
-    })
-      .then(() => {
-        confirmQuizModal.onOpen();
-        setQuizData({
-          title: "",
-          category: "",
-          score: 1,
-          questions: [],
+    try {
+      fetch("/api/quiz", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(quizData),
+      })
+        .then(() => {
+          confirmQuizModal.onOpen();
+          setQuizData({
+            title: "",
+            category: "",
+            score: 1,
+            questions: [],
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("Error creating quiz");
         });
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Error Creating Quiz");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+
+      setIsLoading(false);
+    } catch (error) {
+      toast.error("Error creating quiz");
+      console.log(error);
+    }
   };
 
   const modalTitle = useMemo(() => {

@@ -1,4 +1,4 @@
-import getUser from "@/app/actions/getUser";
+import getSingleUser from "@/app/actions/getSingleUser";
 
 import { Quiz } from "@prisma/client";
 import DashboardTakeQuizTableRow from "./DashboardTakeQuizTableRow";
@@ -10,7 +10,7 @@ type Props = {
 const DashboardTakeQuizTableRowWrapper: React.FC<Props> = async ({ quiz }) => {
   const { title, createdAt, category, id, userId } = quiz;
 
-  const user = await getUser(userId);
+  const user = await getSingleUser(userId);
 
   return (
     <>

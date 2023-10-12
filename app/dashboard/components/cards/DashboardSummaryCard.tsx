@@ -3,6 +3,8 @@ import React from "react";
 import { useRouter } from "next/navigation";
 // icons
 import { HiViewGridAdd, HiUserCircle } from "react-icons/hi";
+import { TbProgressBolt } from "react-icons/tb";
+import { BiSolidMessageSquareCheck } from "react-icons/bi";
 // props
 type Props = {
   title: String;
@@ -13,23 +15,31 @@ const DashboardSummaryCard: React.FC<Props> = ({ title }) => {
   const router = useRouter();
 
   const genIcon = (title: String) => {
-    if (title === "Create New Quiz") {
+    if (title === "Take Quiz") {
       handleClick = function () {
-        router.push("/quiz/create-quiz");
+        router.push("/quiz/take");
       };
       return <HiViewGridAdd className="h-6 w-6 lg:h-8 lg:w-8 text-white" />;
     }
-    if (title === "View My Quizzes") {
+    if (title === "My Quizzes") {
       handleClick = function () {
         router.push("/quiz/my-quizzes");
       };
       return <HiUserCircle className="h-8 w-8 text-white" />;
     }
-    if (title === "Take A Quiz") {
+    if (title === "In Progress") {
       handleClick = function () {
-        router.push("/quiz/take-quiz");
+        // add in progress route
+        router.push("");
       };
-      return <HiUserCircle className="h-8 w-8 text-white" />;
+      return <TbProgressBolt className="h-8 w-8 text-white" />;
+    }
+    if (title === "Completed Quizzes") {
+      handleClick = function () {
+        // add complete routes
+        router.push("");
+      };
+      return <BiSolidMessageSquareCheck className="h-8 w-8 text-white" />;
     }
   };
 

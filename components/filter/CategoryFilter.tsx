@@ -30,7 +30,7 @@ const CategoryFilter: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-wrap gap-2 lg:gap-4">
+    <div className="flex flex-wrap mb-4 lg:mb-0 gap-2 lg:gap-4">
       {categories?.map((category, i) => {
         return (
           <CategoryFilterBadge

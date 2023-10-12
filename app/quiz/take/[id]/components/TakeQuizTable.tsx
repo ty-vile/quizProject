@@ -1,10 +1,13 @@
 "use client";
 
+// components
 import { Button } from "@/components/ui/button";
 import AccordionEl from "@/components/utility/elements/AccordionEl";
 import SquareCheckbox from "@/components/utility/inputs/SquareCheckbox";
 import Textarea from "@/components/utility/inputs/Textarea";
 import PageHeading from "@/components/utility/text/PageHeading";
+import useConfirmQuizModal from "@/hooks/useConfirmQuizModal";
+// utility functions
 import { formatDate } from "@/lib/utils";
 // types
 import { Answer, Question, Quiz, User } from "@prisma/client";
@@ -13,6 +16,7 @@ import Image from "next/image";
 import { useState } from "react";
 // icons
 import { MdEdit, MdPublishedWithChanges } from "react-icons/md";
+// toast notifications
 import { toast } from "react-toastify";
 
 // types
@@ -27,6 +31,7 @@ type Props = {
   questions: Question[] | null;
   answers: Answer[][];
   user: User;
+  currentUser: User;
 };
 
 export type AnswerProps = {
@@ -45,7 +50,13 @@ type QuizData = {
   questions: QuestionProps[];
 };
 
-const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
+const TakeQuizTable: React.FC<Props> = ({
+  quiz,
+  questions,
+  answers,
+  user,
+  currentUser,
+}) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.INTRO);
@@ -53,6 +64,8 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
   const [quizData, setQuizData] = useState<QuizData>({
     questions: [],
   });
+
+  const confirmQuizModal = useConfirmQuizModal();
 
   const initQuiz = () => {
     const correctAnswers: Answer[] = [];
@@ -170,7 +183,7 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
     setIsLoading(true);
 
     const takeData = {
-      userId: user.id,
+      userId: currentUser?.id,
       quizId: quiz?.id,
       status: "In Progress",
       score: 0,
@@ -199,8 +212,6 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
     setIsLoading(true);
 
     try {
-      setIsLoading(true);
-
       fetch("/api/takeanswer", {
         method: "POST",
         headers: {
@@ -218,17 +229,18 @@ const TakeQuizTable: React.FC<Props> = ({ quiz, questions, answers, user }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ takeId, quizData }),
-      }).catch((error) => {
-        console.log(error);
-        toast.error("Error submitting quiz");
-      });
+      })
+        .then(() => {
+          confirmQuizModal.onOpen();
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("Error submitting quiz");
+        });
 
       setIsLoading(false);
-      toast.success("Quiz submitted succesfully");
-
-      // add modal like create quiz
     } catch (error) {
-      toast.error("Error submitting Quiz");
+      toast.error("Error submitting quiz");
       console.log(error);
     }
   };

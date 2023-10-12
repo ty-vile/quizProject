@@ -1,6 +1,8 @@
 import prisma from "@/lib/prismadb";
 
-export default async function getQuiz(id: string) {
+// gets single quiz based on id passed as param and returns quiz, questions and answers for singular quiz
+
+export default async function getSingleQuiz(id: string) {
   try {
     const quiz = await prisma.quiz.findUnique({
       where: {
