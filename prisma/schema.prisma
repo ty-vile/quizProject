@@ -59,9 +59,10 @@ model UserFollow {
   id String @id @default(cuid())
   userId String
   followingId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@index([userId])
-  @@index([followingId])
 }
 
 model Quiz {
@@ -105,7 +106,6 @@ question Question @relation(fields: [questionId], references: [id], onDelete: Ca
  @@index([questionId])
 }
 
-
 model TakeAnswer {
   id String @id @default(cuid())
   takeId String
@@ -128,6 +128,7 @@ model Take {
   quizId String
   status String
   score Int
+  maxScore Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   takeAnswers TakeAnswer[]

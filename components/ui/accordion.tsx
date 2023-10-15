@@ -52,9 +52,7 @@ const AccordionContent = React.forwardRef<
     )}
     {...props}
   >
-    <div className="p-2 lg:p-4 bg-background border-2  border-gray-200 dark:border-white/20">
-      {children}
-    </div>
+    <div className="bg-background ">{children}</div>
   </AccordionPrimitive.Content>
 ));
 AccordionContent.displayName = AccordionPrimitive.Content.displayName;

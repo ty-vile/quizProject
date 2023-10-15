@@ -1,14 +1,16 @@
-import React from "react";
-
 type Props = {
   heading: string;
+  createdBy?: boolean;
 };
 
-const PageHeading: React.FC<Props> = ({ heading }) => {
+const PageHeading: React.FC<Props> = ({ heading, createdBy }) => {
   return (
     <h1
-      className={`bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent text-4xl w-full font-bungee`}
+      className={`flex bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent text-4xl grow font-bungee ${
+        createdBy && "flex-col xl:flex-row lg:gap-2"
+      }`}
     >
+      {createdBy && <>{`Created By: `}</>}
       {heading}
     </h1>
   );

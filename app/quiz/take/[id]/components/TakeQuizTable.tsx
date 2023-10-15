@@ -1,25 +1,23 @@
 "use client";
 
 // components
-import { Button } from "@/components/ui/button";
 import AccordionEl from "@/components/utility/elements/AccordionEl";
+import { Button } from "@/components/ui/button";
+import PageHeadFollowUser from "@/app/quiz/components/PageHeadFollowUser";
 import SquareCheckbox from "@/components/utility/inputs/SquareCheckbox";
 import Textarea from "@/components/utility/inputs/Textarea";
-import PageHeading from "@/components/utility/text/PageHeading";
+// hooks
 import useConfirmQuizModal from "@/hooks/useConfirmQuizModal";
-// utility functions
+// utils
 import { formatDate } from "@/lib/utils";
 // types
 import { Answer, Question, Quiz, User } from "@prisma/client";
-import Image from "next/image";
 // react
 import { useState } from "react";
-// icons
-import { MdEdit, MdPublishedWithChanges } from "react-icons/md";
 // toast notifications
 import { toast } from "react-toastify";
 
-// types
+// enum
 enum STEPS {
   INTRO = 0,
   QUESTIONS = 1,
@@ -32,6 +30,7 @@ type Props = {
   answers: Answer[][];
   user: User;
   currentUser: User;
+  isFollowing: Boolean;
 };
 
 export type AnswerProps = {
@@ -56,6 +55,7 @@ const TakeQuizTable: React.FC<Props> = ({
   answers,
   user,
   currentUser,
+  isFollowing,
 }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -96,7 +96,6 @@ const TakeQuizTable: React.FC<Props> = ({
       return null; // Mapping doesn't return anything
     });
 
-    // CREATE TAKE QUIZ HERE - /actions/createTakeQuiz.ts
     handleSubmitTake();
     setStep(STEPS.QUESTIONS);
   };
@@ -187,6 +186,7 @@ const TakeQuizTable: React.FC<Props> = ({
       quizId: quiz?.id,
       status: "In Progress",
       score: 0,
+      maxScore: quiz?.score,
     };
 
     fetch("/api/take", {
@@ -256,7 +256,17 @@ const TakeQuizTable: React.FC<Props> = ({
         </div>
         <div className="p-4">
           <div className="flex flex-col gap-4">
-            <h4>Total Questions: {quiz?.score}</h4>
+            <h5 className="text-2xl font-bold">
+              Created On:
+              <span className="text-lg font-normal">
+                {" "}
+                {formatDate(quiz?.createdAt!)}
+              </span>
+            </h5>
+            <h5 className="text-2xl font-bold">
+              Total Questions:
+              <span className="text-lg font-normal"> {quiz?.score}</span>
+            </h5>
             <div className="w-full flex items-center justify-center">
               <Button
                 className="w-full lg:max-w-[300px]"
@@ -377,7 +387,6 @@ const TakeQuizTable: React.FC<Props> = ({
             Questions
           </h2>
           {quizData.questions.map((question, index) => {
-            console.log(question);
             return (
               <>
                 {
@@ -395,7 +404,7 @@ const TakeQuizTable: React.FC<Props> = ({
         </div>
         <div className="-mt-8 p-4 flex flex-row items-center justify-center gap-4 ">
           <Button
-            className="w-full max-w-[300px]"
+            className="w-full lg:max-w-[300px]"
             variant="outline"
             onClick={prevQuestion}
           >
@@ -414,16 +423,11 @@ const TakeQuizTable: React.FC<Props> = ({
 
   return (
     <>
-      <div className="flex flex-col md:flex-row md:items-center gap-6 pb-10">
-        <Image
-          src={user?.image!}
-          height={60}
-          width={60}
-          className="rounded-full"
-          alt="User Image"
-        />
-        <PageHeading heading={`Created by: ${user?.name}`} />
-      </div>
+      <PageHeadFollowUser
+        user={user!}
+        currentUser={currentUser!}
+        isFollowing={isFollowing}
+      />
       <div className="flex flex-col gap-8 border-2 border-gray-600 dark:border-gray-300 rounded-lg shadow-1">
         {bodyContent}
       </div>

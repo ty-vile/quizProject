@@ -2,6 +2,8 @@
 import PageHeading from "@/components/utility/text/PageHeading";
 import QuizGrid from "@/app/quiz/components/QuizGrid";
 import getCurrentUserQuizzes from "@/app/actions/getCurrentUserQuizzes";
+import getCurrentUserInProgressQuizzes from "@/app/actions/getCurrentUserInProgressQuizzes";
+import getNonCurrentUserQuizzes from "@/app/actions/getNonCurrentUserQuizzes";
 
 // seo
 export const metadata = {
@@ -11,14 +13,22 @@ export const metadata = {
 };
 
 const InProgress = async () => {
-  // add action which gets current user quizzes from take where status = 'in progress'
+  const inProgressQuizzes = await getCurrentUserInProgressQuizzes();
+  const nonUserQuizzes = await getNonCurrentUserQuizzes();
+
+  // filters all quizzes NOT by currentUser and returns all completed ones
+  const filteredUserInProgressQuizzes = nonUserQuizzes?.filter((userQuiz) => {
+    return inProgressQuizzes?.some(
+      (inProgressQuiz) => inProgressQuiz.quizId === userQuiz.id
+    );
+  });
 
   return (
     <>
       <div className="pb-10">
-        <PageHeading heading={"My Quizzes"} />
+        <PageHeading heading={"Completed Quizzes"} />
       </div>
-      {/* <QuizGrid quizzes={nonUserQuizzes} path="/take-quiz" /> */}
+      <QuizGrid quizzes={filteredUserInProgressQuizzes!} path="/take" />
     </>
   );
 };

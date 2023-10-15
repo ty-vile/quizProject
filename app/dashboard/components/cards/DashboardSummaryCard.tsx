@@ -37,7 +37,7 @@ const DashboardSummaryCard: React.FC<Props> = ({ title }) => {
     if (title === "Completed Quizzes") {
       handleClick = function () {
         // add complete routes
-        router.push("");
+        router.push("/quiz/completed");
       };
       return <BiSolidMessageSquareCheck className="h-8 w-8 text-white" />;
     }

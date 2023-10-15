@@ -58,8 +58,6 @@ const QuizGrid: React.FC<Props> = ({ quizzes, path }) => {
 
       <div className="flex grow w-full md:w-9/12 flex-wrap justify-end gap-4">
         {displayQuizzes?.map((quiz, i) => {
-          console.log("QUIZGRID", quiz);
-
           const { title, createdAt, category, score, id, userId, user } = quiz;
 
           return (

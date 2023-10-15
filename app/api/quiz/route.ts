@@ -2,7 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/lib/prismadb";
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import { AnswerProps, QuestionProps } from "@/components/modal/CreateQuizModal";
+import { Answer, Question } from "@prisma/client";
+
+type QuestionProps = Question & {
+  answers: Answer[];
+};
 
 export async function POST(req: NextRequest) {
   const currentUser = await getCurrentUser();
@@ -35,7 +39,7 @@ export async function POST(req: NextRequest) {
     });
 
     // type props from - create quiz modal
-    question.answers.map(async (answer: AnswerProps) => {
+    question.answers.map(async (answer: Answer) => {
       await prisma.answer.create({
         data: {
           quizId: newQuiz.id,

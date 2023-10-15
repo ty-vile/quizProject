@@ -24,7 +24,7 @@ const DashboardHead = async () => {
         <Link href={"/quiz/create"} className="grow">
           <Button className="grow w-full">Create Quiz</Button>
         </Link>
-        <Link href={""} className="grow">
+        <Link href={"/profile"} className="grow">
           <Button variant="outline" className="grow w-full">
             My Profile
           </Button>

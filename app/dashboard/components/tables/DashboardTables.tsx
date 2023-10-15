@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 const DashboardTables = () => {
   return (
-    <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
       {/* QUIZZES - BY NON CURRENT USER */}
       <div className="flex flex-col gap-2">
         <div className="w-full flex items-center justify-between grow">

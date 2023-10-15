@@ -3,7 +3,7 @@ import getCurrentUser from "./getCurrentUser";
 
 // gets list of all quizzes that have been taken by current user
 
-export default async function getCurrentUserTakenQuizzes() {
+export default async function getCurrentUserInProgressQuizzes() {
   try {
     const currentUser = await getCurrentUser();
 
@@ -11,9 +11,11 @@ export default async function getCurrentUserTakenQuizzes() {
       return null;
     }
 
-    const userTakenQuizzes = await prisma.take.findMany({
+    // get all quizzes that have been taken and completed by current user
+    const userInProgress = await prisma.take.findMany({
       where: {
         userId: currentUser.id,
+        status: "In Progress",
       },
       include: {
         quiz: true,
@@ -21,8 +23,8 @@ export default async function getCurrentUserTakenQuizzes() {
       },
     });
 
-    return userTakenQuizzes!.sort(
-      (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+    return userInProgress!.sort(
+      (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime()
     );
   } catch (error) {
     return null;

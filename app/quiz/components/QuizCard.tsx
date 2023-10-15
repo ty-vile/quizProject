@@ -42,7 +42,7 @@ const QuizCard: React.FC<Props> = ({
           </h2>
           <h5 className="font-light text-sm font-josefin">{`Questions: ${score}`}</h5>
         </div>
-        <div className="flex flex-col items-center gap-2">
+        <div className=" hidden lg:flex flex-col items-center gap-2 mt-4">
           <Image
             src={user.image!}
             height={40}
@@ -55,17 +55,6 @@ const QuizCard: React.FC<Props> = ({
           </h5>
         </div>
       </div>
-      {/* <div className="w-full flex items-center flex-wrap justify-between">
-        <h5 className="text-sm border-2 border-primary rounded-lg px-4 py-2 pt-3 w-fit font-light font-josefin ">
-          {category}
-        </h5>
-        <div className="flex flex-col gap-2">
-          <Image src={user.image!} height={40} width={40} alt="User Profile" />
-          <h5 className="text-sm font-josefin">{formatDate(createdAt)}</h5>
-        </div>
-      </div>
-      <h2 className="text-2xl text-primary dark:text-white mt-2">{title}</h2>
-      <h5 className="font-light text-sm font-josefin">{`Questions: ${score}`}</h5> */}
     </Link>
   );
 };

@@ -1,11 +1,14 @@
 "use client";
 
+// components
 import Modal from "@/components/modal/Modal";
 import { Button } from "@/components/ui/button";
+// hooks
 import useConfirmQuizModal from "@/hooks/useConfirmQuizModal";
-import { useRouter } from "next/navigation";
-import { LuPartyPopper } from "react-icons/lu";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+// icons
+import { LuPartyPopper } from "react-icons/lu";
 
 const ConfirmQuizModal = () => {
   const pathname = usePathname();
@@ -67,8 +70,7 @@ const ConfirmQuizModal = () => {
         <div className="flex items-center w-full gap-4">
           <Button
             onClick={() => {
-              // PUSH TO RESULTS PAGE - CAN ACCESS THE ID - getPathname[3] to go to page.
-              router.push("");
+              router.push(`/quiz/completed/${getPathname[3]}`);
               confirmQuizModal.onClose();
             }}
             className="flex flex-1"

@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
 
-  const { quizId, userId, status, score } = body;
+  const { quizId, userId, status, score, maxScore } = body;
 
   const newTake = await prisma.take.create({
     data: {
@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
       userId,
       status,
       score,
+      maxScore,
     },
   });
 
@@ -45,7 +46,6 @@ export async function PUT(req: NextRequest) {
         question.correctAnswer.toLowerCase() === question.answer.toLowerCase()
       ) {
         score += 1;
-        console.log(score);
       }
     }
   );

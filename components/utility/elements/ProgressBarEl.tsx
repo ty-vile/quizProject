@@ -1,22 +1,22 @@
 import React from "react";
 
 type Props = {
-  percentage: string | undefined;
-  showModal: boolean | undefined;
+  percentage: number | undefined;
 };
 
-const ProgressBarEl: React.FC<Props> = ({ percentage, showModal }) => {
+const ProgressBarEl: React.FC<Props> = ({ percentage }) => {
   return (
-    <div
-      className={`w-full translate duration-300 -z-1
-      ${showModal ? "translate-y-0" : "translate-y-[150px]"}
-      ${showModal ? "opacity-100" : "opacity-0"}`}
-    >
-      <div className=" h-2 w-full  bg-background">
+    <div className={`w-full translate duration-300 -z-1`}>
+      <div className=" h-2 w-full bg-background">
         <div
-          className="h-2 bg-gradient-to-r from-primary to-secondary transition-all duration-1000"
-          style={{ width: percentage + "%" }}
-        ></div>
+          className="relative h-2 bg-gradient-to-r from-primary to-secondary transition-all duration-1000"
+          style={{ width: 100 + "%" }}
+        >
+          <div
+            className="absolute h-8 w-2 bg-primary top-1/2 -translate-y-1/2"
+            style={{ left: percentage + "%" }}
+          ></div>
+        </div>
       </div>
     </div>
   );

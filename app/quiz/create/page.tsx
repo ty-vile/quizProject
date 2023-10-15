@@ -35,7 +35,7 @@ export type QuizData = {
   score: number;
 };
 
-const CreateQuiz = ({}) => {
+const CreateQuiz = () => {
   // form state
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.CREATE);
@@ -556,6 +556,7 @@ const CreateQuiz = ({}) => {
           <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl mb-4">
             Questions
           </h2>
+
           {quizData.questions.map((question, index) => {
             return (
               <>
@@ -569,7 +570,6 @@ const CreateQuiz = ({}) => {
             );
           })}
         </div>
-
         <div className="-mt-8 flex flex-row items-center justify-center gap-4 lg:pr-14 p-4">
           <Button
             className="w-full lg:max-w-[300px]"
