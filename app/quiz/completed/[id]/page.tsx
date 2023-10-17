@@ -1,14 +1,15 @@
 // components
-import getCurrentUser from "@/app/actions/getCurrentUser";
+import getCurrentUser from "@/app/actions/getUser/getCurrentUser";
 import CompletedQuizTable from "./components/CompletedQuizTable";
 // actions
-import getSingleQuiz from "@/app/actions/getSingleQuiz";
-import getSingleUser from "@/app/actions/getSingleUser";
-import getSingleQuizTake from "@/app/actions/getSingleQuizTake";
-import getSingleQuizAnswersTake from "@/app/actions/getSingleQuizAnswersTake";
-import getCurrentUserFollowing from "@/app/actions/getCurrentUserFollowing";
+import getSingleQuiz from "@/app/actions/getSingle/getSingleQuiz";
+import getSingleUser from "@/app/actions/getSingle/getSingleUser";
+import getSingleQuizTake from "@/app/actions/getSingle/getSingleQuizTake";
+import getSingleQuizAnswersTake from "@/app/actions/getSingle/getSingleQuizAnswersTake";
+
 // util
 import { userIsFollowing } from "@/lib/utils";
+import getUserFollowing from "@/app/actions/getUser/getUserFollowing";
 
 // seo
 export const metadata = {
@@ -23,7 +24,7 @@ const CompletedUserQuiz = async ({ params }: any) => {
   // USER TAKING QUIZ
   const currentUser = await getCurrentUser();
   // GET CURRENT USER'S - FOLLOWING
-  const currentUserFollowing = await getCurrentUserFollowing();
+  const currentUserFollowing = await getUserFollowing(currentUser?.id!);
   // GET COMPLETED TAKE
   const take = await getSingleQuizTake(params.id, currentUser?.id!);
   // GET ANSWERS FROM TAKE

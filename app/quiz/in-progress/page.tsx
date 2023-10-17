@@ -1,9 +1,10 @@
 // components
 import PageHeading from "@/components/utility/text/PageHeading";
 import QuizGrid from "@/app/quiz/components/QuizGrid";
-import getCurrentUserQuizzes from "@/app/actions/getCurrentUserQuizzes";
-import getCurrentUserInProgressQuizzes from "@/app/actions/getCurrentUserInProgressQuizzes";
-import getNonCurrentUserQuizzes from "@/app/actions/getNonCurrentUserQuizzes";
+// actions
+import getNotUserQuizzes from "@/app/actions/getNotUser/getNotUserQuizzes";
+import getUserInProgressQuizzes from "@/app/actions/getUser/getUserInProgressQuizzes";
+import getCurrentUser from "@/app/actions/getUser/getCurrentUser";
 
 // seo
 export const metadata = {
@@ -13,8 +14,9 @@ export const metadata = {
 };
 
 const InProgress = async () => {
-  const inProgressQuizzes = await getCurrentUserInProgressQuizzes();
-  const nonUserQuizzes = await getNonCurrentUserQuizzes();
+  const currentUser = await getCurrentUser();
+  const inProgressQuizzes = await getUserInProgressQuizzes(currentUser?.id!);
+  const nonUserQuizzes = await getNotUserQuizzes(currentUser?.id!);
 
   // filters all quizzes NOT by currentUser and returns all completed ones
   const filteredUserInProgressQuizzes = nonUserQuizzes?.filter((userQuiz) => {

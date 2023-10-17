@@ -1,4 +1,4 @@
-import getSingleUser from "@/app/actions/getSingleUser";
+import getSingleUser from "@/app/actions/getSingle/getSingleUser";
 
 import { Quiz } from "@prisma/client";
 import DashboardTakeQuizTableRow from "./DashboardTakeQuizTableRow";

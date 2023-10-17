@@ -2,8 +2,10 @@
 import PageHeading from "@/components/utility/text/PageHeading";
 import QuizGrid from "../components/QuizGrid";
 // actions
-import getCurrentUserCompleteQuizzes from "@/app/actions/getCurrentUserCompleteQuizzes";
-import getNonCurrentUserQuizzes from "@/app/actions/getNonCurrentUserQuizzes";
+import getCurrentUser from "@/app/actions/getUser/getCurrentUser";
+import getUserCompleteQuizzes from "@/app/actions/getUser/getUserCompleteQuizzes";
+import getNotUserQuizzes from "@/app/actions/getNotUser/getNotUserQuizzes";
+import { filterUniqueTakenQuizzes } from "@/lib/utils";
 
 // seo
 export const metadata = {
@@ -13,25 +15,21 @@ export const metadata = {
 };
 
 const Completed = async () => {
-  const completedQuizzes = await getCurrentUserCompleteQuizzes();
-  const nonUserQuizzes = await getNonCurrentUserQuizzes();
+  const currentUser = await getCurrentUser();
+  const userCompletedQuizzes = await getUserCompleteQuizzes(currentUser?.id!);
+  const notUserQuizzes = await getNotUserQuizzes(currentUser?.id!);
 
-  // filters all quizzes NOT by currentUser and returns all completed ones
-  const filteredUserCompletedQuizzes = nonUserQuizzes?.filter((userQuiz) => {
-    return completedQuizzes?.some(
-      (completedQuiz) => completedQuiz.quizId === userQuiz.id
-    );
-  });
+  const completedQuizzes = filterUniqueTakenQuizzes(
+    notUserQuizzes!,
+    userCompletedQuizzes
+  );
 
   return (
     <>
       <div className="pb-10">
         <PageHeading heading={"Completed Quizzes"} />
       </div>
-      <QuizGrid
-        quizzes={filteredUserCompletedQuizzes!}
-        path="/quiz/completed"
-      />
+      <QuizGrid quizzes={completedQuizzes!} path="/quiz/completed" />
     </>
   );
 };

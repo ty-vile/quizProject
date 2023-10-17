@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import Container from "@/components/utility/Container";
 // actions
-import getCurrentUser from "./actions/getCurrentUser";
+import getCurrentUser from "./actions/getUser/getCurrentUser";
 // navigation
 import { redirect } from "next/navigation";
 

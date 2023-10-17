@@ -1,8 +1,8 @@
 // actions
-import getUserQuizzes from "@/app/actions/getCurrentUserQuizzes";
+import getCurrentUser from "@/app/actions/getUser/getCurrentUser";
+import getUserQuizzes from "@/app/actions/getUser/getUserQuizzes";
 // components
 import QuizGrid from "../../quiz/components/QuizGrid";
-// fonts
 import PageHeading from "@/components/utility/text/PageHeading";
 
 // seo
@@ -11,7 +11,8 @@ export const metadata = {
 };
 
 const UserQuiz = async () => {
-  const userQuizzes = await getUserQuizzes();
+  const currentUser = await getCurrentUser();
+  const userQuizzes = await getUserQuizzes(currentUser?.id!);
 
   return (
     <>

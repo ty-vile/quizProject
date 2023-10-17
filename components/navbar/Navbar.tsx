@@ -1,4 +1,4 @@
-import getCurrentUser from "@/app/actions/getCurrentUser";
+import getCurrentUser from "@/app/actions/getUser/getCurrentUser";
 import React from "react";
 import Container from "../utility/Container";
 import Link from "next/link";

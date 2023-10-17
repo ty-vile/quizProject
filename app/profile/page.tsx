@@ -3,54 +3,59 @@ import PageHeading from "@/components/utility/text/PageHeading";
 import QuizGrid from "../quiz/components/QuizGrid";
 import ProfileQuizData from "./components/ProfileQuizData";
 // actions
-import getCurrentUser from "../actions/getCurrentUser";
-import getCurrentUserQuizzes from "../actions/getCurrentUserQuizzes";
-import getNonCurrentUserTakes from "../actions/getNonCurrentUserTakes";
+import getCurrentUser from "../actions/getUser/getCurrentUser";
+import getUserQuizzes from "../actions/getUser/getUserQuizzes";
+import getUserTakes from "../actions/getUser/getUserTakes";
+import getNotUserQuizzes from "../actions/getNotUser/getNotUserQuizzes";
+import getNotCurrentUserTakes from "../actions/getNotUser/getNotUserTakes";
+// utils
 import {
-  calculateAveragePercentage,
+  calculateAverageScorePercentage,
   calculateUniqueUsersLength,
+  filterUniqueTakenQuizzes,
   filterUniqueTakesArr,
 } from "@/lib/utils";
-import getCurrentUserTakes from "../actions/getCurrentUserTakes";
-import getNonCurrentUserQuizzes from "../actions/getNonCurrentUserQuizzes";
+import getUserTakenQuizzes from "../actions/getUser/getUserTakenQuizzes";
+import getUserCompleteQuizzes from "../actions/getUser/getUserCompleteQuizzes";
 
 const CurrentUserProfile = async () => {
   const currentUser = await getCurrentUser();
-  const currentUserQuizzes = await getCurrentUserQuizzes();
-  const currentUserTakes = await getCurrentUserTakes();
-  const nonCurrentUserQuizzes = await getNonCurrentUserQuizzes();
-  const nonCurrentUserTakes = await getNonCurrentUserTakes();
+  const userCompletedQuizzes = await getUserCompleteQuizzes(currentUser?.id!);
+  const userQuizzes = await getUserQuizzes(currentUser?.id!);
+  const userTakes = await getUserTakes(currentUser?.id!);
+  const notUserQuizzes = await getNotUserQuizzes(currentUser?.id!);
+  const notUserTakes = await getNotCurrentUserTakes(currentUser?.id!);
 
-  // CALC DATA FOR MY QUIZZES TAB
-  // E.G HOW MANY TIME NON CURRENT USERS HAVE TAKEN CURRENT USER QUIZZES
+  // GET DATA FOR MY QUIZZES TAB
 
   const filteredTakesNonCurrentUser = filterUniqueTakesArr(
-    nonCurrentUserTakes!,
-    currentUserQuizzes!
+    notUserTakes!,
+    userQuizzes!
   );
 
-  const {
-    filteredTakesArr: ncFilteredTakesArr,
-    filteredTakesLen: ncFilteredTakesArrLen,
-  } = filteredTakesNonCurrentUser;
+  const notUserAverageScorePercentage = calculateAverageScorePercentage(
+    filteredTakesNonCurrentUser
+  );
 
-  const ncAverageScorePercentage =
-    calculateAveragePercentage(ncFilteredTakesArr);
-
-  // CALC DATA FOR QUIZZES TAKEN TAB
-  // E.G HOW MANY TIME CURRENT USERS HAVE TAKEN NON CURRENT USER QUIZZES
+  // GET DATA FOR QUIZZES TAKEN TAB
 
   const filteredTakesCurrentUser = filterUniqueTakesArr(
-    currentUserTakes!,
-    nonCurrentUserQuizzes!
+    userTakes!,
+    notUserQuizzes!
   );
 
-  const { filteredTakesArr: cFilteredTakesArr } = filteredTakesCurrentUser;
+  const userAverageScorePercentage = calculateAverageScorePercentage(
+    filteredTakesCurrentUser
+  );
 
-  const currentUserAverageScorePercentage =
-    calculateAveragePercentage(cFilteredTakesArr);
+  const uniqueUsersLength = calculateUniqueUsersLength(userTakes);
 
-  const uniqueUsersLength = calculateUniqueUsersLength(currentUserTakes);
+  // GET DATA FOR RECENTLY COMPLETED QUIZZES
+
+  const recentlyCompletedQuizzes = filterUniqueTakenQuizzes(
+    notUserQuizzes!,
+    userCompletedQuizzes
+  );
 
   return (
     <>
@@ -60,17 +65,17 @@ const CurrentUserProfile = async () => {
       <div>
         <ProfileQuizData
           user={currentUser!}
-          createdQuizzesLength={currentUserQuizzes?.length!}
-          currentUserTakesLength={currentUserTakes?.length!}
-          currentUserAverageScorePercentage={currentUserAverageScorePercentage}
-          currentUserUniqueUserQuizTakes={uniqueUsersLength}
-          nonCurrentUserTakesLength={ncFilteredTakesArrLen}
-          nonCurrentUserAverageScorePercentage={ncAverageScorePercentage}
+          createdQuizzesLength={userQuizzes?.length!}
+          userTakesLength={userTakes?.length!}
+          userAverageScorePercentage={userAverageScorePercentage}
+          userUniqueUserQuizTakes={uniqueUsersLength}
+          notUserTakesLength={filteredTakesNonCurrentUser.length}
+          notUserAverageScorePercentage={notUserAverageScorePercentage}
         />
       </div>
       <div className="flex flex-col gap-4">
         <h2>Your Quizzes</h2>
-        <QuizGrid quizzes={currentUserQuizzes!} path="/quiz/statistics" />
+        <QuizGrid quizzes={recentlyCompletedQuizzes!} path="/quiz/statistics" />
       </div>
     </>
   );

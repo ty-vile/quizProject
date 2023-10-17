@@ -2,18 +2,14 @@
 
 // components
 import AccordionEl from "@/components/utility/elements/AccordionEl";
-import PageHeading from "@/components/utility/text/PageHeading";
-import useConfirmQuizModal from "@/hooks/useConfirmQuizModal";
+import ProgressBarEl from "@/components/utility/elements/ProgressBarEl";
 import Image from "next/image";
+import PageHeadFollowUser from "@/app/quiz/components/PageHeadFollowUser";
 // utility functions
 import { calculatePercentage, formatDate } from "@/lib/utils";
 // types
 import { Answer, Question, Quiz, Take, TakeAnswer, User } from "@prisma/client";
 // react
-import { useState } from "react";
-import ProgressBarEl from "@/components/utility/elements/ProgressBarEl";
-import { Button } from "@/components/ui/button";
-import PageHeadFollowUser from "@/app/quiz/components/PageHeadFollowUser";
 
 type ExtendedQuestion = Question & {
   answer?: string;

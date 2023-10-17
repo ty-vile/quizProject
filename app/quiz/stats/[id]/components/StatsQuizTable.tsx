@@ -14,11 +14,11 @@ import StatCard from "@/app/quiz/components/StatCard";
 type Props = {
   user: User;
   createdQuizzesLength: number;
-  notUserTakesLength: number;
-  userTakesLength: number;
-  notUserAverageScorePercentage: string;
-  userAverageScorePercentage: string;
-  userUniqueUserQuizTakes: number;
+  nonCurrentUserTakesLength: number;
+  currentUserTakesLength: number;
+  nonCurrentUserAverageScorePercentage: string;
+  currentUserAverageScorePercentage: string;
+  currentUserUniqueUserQuizTakes: number;
 };
 
 enum TABS {
@@ -27,14 +27,14 @@ enum TABS {
   TAKEQUIZDATA = 2,
 }
 
-const ProfileQuizData: React.FC<Props> = ({
+const StatsQuizTable: React.FC<Props> = ({
   user,
   createdQuizzesLength,
-  notUserTakesLength,
-  userTakesLength,
-  notUserAverageScorePercentage,
-  userAverageScorePercentage,
-  userUniqueUserQuizTakes,
+  nonCurrentUserTakesLength,
+  currentUserTakesLength,
+  nonCurrentUserAverageScorePercentage,
+  currentUserAverageScorePercentage,
+  currentUserUniqueUserQuizTakes,
 }) => {
   const [currentTab, setCurrentTab] = useState(TABS.MYDATA);
 
@@ -75,12 +75,12 @@ const ProfileQuizData: React.FC<Props> = ({
           <StatCard
             iconType="Updated"
             title="How many times your quizzes have been taken"
-            content={notUserTakesLength}
+            content={nonCurrentUserTakesLength}
           />
           <StatCard
             iconType="Score"
             title="Average score of users taking your quizzes (%)"
-            content={notUserAverageScorePercentage}
+            content={nonCurrentUserAverageScorePercentage}
           />
         </div>
       </div>
@@ -98,17 +98,17 @@ const ProfileQuizData: React.FC<Props> = ({
           <StatCard
             iconType="Created"
             title="Quizzes taken by you"
-            content={userTakesLength}
+            content={currentUserTakesLength}
           />
           <StatCard
             iconType="Updated"
             title="Unique users quizzes that you have taken"
-            content={userUniqueUserQuizTakes}
+            content={currentUserUniqueUserQuizTakes}
           />
           <StatCard
             iconType="Score"
             title="Average score of quizzes taken by you (%)"
-            content={userAverageScorePercentage}
+            content={currentUserAverageScorePercentage}
           />
         </div>
       </div>
@@ -151,4 +151,4 @@ const ProfileQuizData: React.FC<Props> = ({
   );
 };
 
-export default ProfileQuizData;
+export default StatsQuizTable;

@@ -1,9 +1,9 @@
 // components
-import getCurrentUser from "@/app/actions/getCurrentUser";
+import getCurrentUser from "@/app/actions/getUser/getCurrentUser";
 import TakeQuizTable from "./components/TakeQuizTable";
 // actions
-import getSingleQuiz from "@/app/actions/getSingleQuiz";
-import getSingleUser from "@/app/actions/getSingleUser";
+import getSingleQuiz from "@/app/actions/getSingle/getSingleQuiz";
+import getSingleUser from "@/app/actions/getSingle/getSingleUser";
 import getCurrentUserFollowing from "@/app/actions/getCurrentUserFollowing";
 // utils
 import { userIsFollowing } from "@/lib/utils";

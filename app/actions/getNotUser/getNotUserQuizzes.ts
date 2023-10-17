@@ -1,20 +1,17 @@
 import prisma from "@/lib/prismadb";
-import getCurrentUser from "./getCurrentUser";
 
-// gets all quizzes that were NOT created by current user
+// gets all quizzes that were NOT created by user
 
-export default async function getNonCurrentUserQuizzes() {
+export default async function getNotUserQuizzes(id: string) {
   try {
-    const currentUser = await getCurrentUser();
-
-    if (!currentUser) {
+    if (!id) {
       return null;
     }
 
-    // gets all quizzes NOT created by current user
+    // gets all quizzes NOT created by user
     const nonCurrentUserQuizzes = await prisma.quiz.findMany({
       where: {
-        userId: { not: currentUser.id },
+        userId: { not: id },
       },
       include: { user: true },
     });

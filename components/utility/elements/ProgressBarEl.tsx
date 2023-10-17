@@ -1,7 +1,7 @@
 import React from "react";
 
 type Props = {
-  percentage: number | undefined;
+  percentage: number | string;
 };
 
 const ProgressBarEl: React.FC<Props> = ({ percentage }) => {

@@ -1,7 +1,9 @@
 // components
 import PageHeading from "@/components/utility/text/PageHeading";
 import QuizGrid from "@/app/quiz/components/QuizGrid";
-import getCurrentUserQuizzes from "@/app/actions/getCurrentUserQuizzes";
+// actions
+import getCurrentUser from "@/app/actions/getUser/getCurrentUser";
+import getUserQuizzes from "@/app/actions/getUser/getUserQuizzes";
 
 // seo
 export const metadata = {
@@ -9,14 +11,15 @@ export const metadata = {
 };
 
 const MyQuizzes = async () => {
-  const nonUserQuizzes = await getCurrentUserQuizzes();
+  const currentUser = await getCurrentUser();
+  const userQuizzes = await getUserQuizzes(currentUser?.id!);
 
   return (
     <>
       <div className="pb-10">
         <PageHeading heading={"My Quizzes"} />
       </div>
-      <QuizGrid quizzes={nonUserQuizzes} path="/take" />
+      <QuizGrid quizzes={userQuizzes} path="/quiz/stats/" />
     </>
   );
 };

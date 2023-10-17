@@ -1,4 +1,4 @@
-import getCurrentUser from "@/app/actions/getCurrentUser";
+import getCurrentUser from "@/app/actions/getUser/getCurrentUser";
 import { Button } from "@/components/ui/button";
 import PageHeading from "@/components/utility/text/PageHeading";
 import Image from "next/image";

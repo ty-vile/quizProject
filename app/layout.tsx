@@ -13,7 +13,7 @@ import Navbar from "@/components/navbar/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import getCurrentUser from "./actions/getCurrentUser";
+import getCurrentUser from "./actions/getUser/getCurrentUser";
 import ConfirmQuizModal from "./quiz/components/confirmQuizModal";
 
 // metadata

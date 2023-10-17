@@ -2,8 +2,10 @@
 import PageHeading from "@/components/utility/text/PageHeading";
 import QuizGrid from "@/app/quiz/components/QuizGrid";
 // actions
-import getNonCurrentUserQuizzes from "@/app/actions/getNonCurrentUserQuizzes";
-import getCurrentUserTakenQuizzes from "@/app/actions/getCurrentUserTakenQuizzes";
+import getCurrentUser from "@/app/actions/getUser/getCurrentUser";
+import getNotUserQuizzes from "@/app/actions/getNotUser/getNotUserQuizzes";
+import getUserTakenQuizzes from "@/app/actions/getUser/getUserTakenQuizzes";
+import { filterUniqueTakenQuizzes } from "@/lib/utils";
 
 // seo
 export const metadata = {
@@ -11,21 +13,22 @@ export const metadata = {
 };
 
 const TakeQuiz = async () => {
-  const nonUserQuizzes = await getNonCurrentUserQuizzes();
-  const userTakenQuizzes = await getCurrentUserTakenQuizzes();
+  const currentUser = await getCurrentUser();
+  const userTakenQuizzes = await getUserTakenQuizzes(currentUser?.id!);
+  const notUserQuizzes = await getNotUserQuizzes(currentUser?.id!);
 
   // filters out quizzes already taken by user
-  const filteredUserQuizzes = nonUserQuizzes?.filter((userQuiz) => {
-    return !userTakenQuizzes?.some(
-      (userTakenQuiz) => userTakenQuiz.quizId === userQuiz.id
-    );
-  });
+  const quizzesToTake = filterUniqueTakenQuizzes(
+    notUserQuizzes!,
+    userTakenQuizzes
+  );
+
   return (
     <>
       <div className="pb-10">
         <PageHeading heading={"Take Quiz"} />
       </div>
-      <QuizGrid quizzes={filteredUserQuizzes!} path="/quiz/take" />
+      <QuizGrid quizzes={quizzesToTake!} path="/quiz/take" />
     </>
   );
 };
