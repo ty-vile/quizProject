@@ -28,8 +28,8 @@ type Props = {
 };
 
 const CompletedQuizTable: React.FC<Props> = ({
-  quiz,
   user,
+  quiz,
   questions,
   answers,
   takeAnswers,

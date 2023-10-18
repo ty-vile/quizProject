@@ -2,21 +2,23 @@
 import PageHeading from "@/components/utility/text/PageHeading";
 import QuizGrid from "../quiz/components/QuizGrid";
 import ProfileQuizData from "./components/ProfileQuizData";
+import { Button } from "@/components/ui/button";
 // actions
 import getCurrentUser from "../actions/getUser/getCurrentUser";
 import getUserQuizzes from "../actions/getUser/getUserQuizzes";
 import getUserTakes from "../actions/getUser/getUserTakes";
 import getNotUserQuizzes from "../actions/getNotUser/getNotUserQuizzes";
 import getNotCurrentUserTakes from "../actions/getNotUser/getNotUserTakes";
+import getUserCompleteQuizzes from "../actions/getUser/getUserCompleteQuizzes";
 // utils
 import {
   calculateAverageScorePercentage,
   calculateUniqueUsersLength,
+  filterUniqueCompletedQuizzes,
   filterUniqueTakenQuizzes,
   filterUniqueTakesArr,
 } from "@/lib/utils";
-import getUserTakenQuizzes from "../actions/getUser/getUserTakenQuizzes";
-import getUserCompleteQuizzes from "../actions/getUser/getUserCompleteQuizzes";
+import Link from "next/link";
 
 const CurrentUserProfile = async () => {
   const currentUser = await getCurrentUser();
@@ -52,10 +54,12 @@ const CurrentUserProfile = async () => {
 
   // GET DATA FOR RECENTLY COMPLETED QUIZZES
 
-  const recentlyCompletedQuizzes = filterUniqueTakenQuizzes(
+  const recentlyCompletedQuizzes = filterUniqueCompletedQuizzes(
     notUserQuizzes!,
     userCompletedQuizzes
   );
+
+  const displayRecentlyCompleted = recentlyCompletedQuizzes.slice(0, 5);
 
   return (
     <>
@@ -74,8 +78,15 @@ const CurrentUserProfile = async () => {
         />
       </div>
       <div className="flex flex-col gap-4">
-        <h2>Your Quizzes</h2>
-        <QuizGrid quizzes={recentlyCompletedQuizzes!} path="/quiz/statistics" />
+        <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between lg:gap-0 mt-10 py-10">
+          <PageHeading heading={"Recently Taken Quizzes"} />
+          <Link href="/quiz/completed" className="w-full lg:w-fit">
+            <Button className="w-6/12 lg:w-full" variant="outline">
+              View All
+            </Button>
+          </Link>
+        </div>
+        <QuizGrid quizzes={displayRecentlyCompleted!} path="/quiz/statistics" />
       </div>
     </>
   );

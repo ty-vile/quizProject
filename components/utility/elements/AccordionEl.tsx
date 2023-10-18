@@ -74,11 +74,11 @@ const AccordionEl: React.FC<Props> = ({
             {/* IF ACCORDION IS CALLED FROM /take/[id] */}
             {takeQuiz === true && (
               <>
-                <div className="p-2 lg:p-4 flex items-center gap-2 text-sm md:text-md lg:text-lg xl:text-xl text-left font-josefin  pt-1">
+                <div className="p-2 lg:p-4 flex items-center gap-2 text-sm md:text-md lg:text-lg xl:text-xl text-left font-josefin pt-1 bg-green-500">
                   <span className="text-lg md:text-xl lg:text-2xl xl:text-3xl">
                     Answer:
                   </span>
-                  <p>{question.answer}</p>
+                  <p className="pt-1">{question.answer}</p>
                 </div>
               </>
             )}

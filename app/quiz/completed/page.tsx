@@ -5,7 +5,10 @@ import QuizGrid from "../components/QuizGrid";
 import getCurrentUser from "@/app/actions/getUser/getCurrentUser";
 import getUserCompleteQuizzes from "@/app/actions/getUser/getUserCompleteQuizzes";
 import getNotUserQuizzes from "@/app/actions/getNotUser/getNotUserQuizzes";
-import { filterUniqueTakenQuizzes } from "@/lib/utils";
+import {
+  filterUniqueCompletedQuizzes,
+  filterUniqueTakenQuizzes,
+} from "@/lib/utils";
 
 // seo
 export const metadata = {
@@ -19,7 +22,7 @@ const Completed = async () => {
   const userCompletedQuizzes = await getUserCompleteQuizzes(currentUser?.id!);
   const notUserQuizzes = await getNotUserQuizzes(currentUser?.id!);
 
-  const completedQuizzes = filterUniqueTakenQuizzes(
+  const completedQuizzes = filterUniqueCompletedQuizzes(
     notUserQuizzes!,
     userCompletedQuizzes
   );

@@ -19,7 +19,7 @@ const MyQuizzes = async () => {
       <div className="pb-10">
         <PageHeading heading={"My Quizzes"} />
       </div>
-      <QuizGrid quizzes={userQuizzes} path="/quiz/stats/" />
+      <QuizGrid quizzes={userQuizzes} path="/quiz/my-quizzes/" />
     </>
   );
 };

@@ -2,16 +2,19 @@ import prisma from "@/lib/prismadb";
 
 // gets single quiz based on id passed as param and returns quiz, questions and answers for singular quiz
 
-// if no id gets all takeAnswers
-export default async function getSingleQuizAnswersTake(id?: string) {
+export default async function getNotUserSingleQuizTake(
+  id: string,
+  userId: string
+) {
   try {
-    const takeAnswer = await prisma.takeAnswer.findMany({
+    const take = await prisma.take.findMany({
       where: {
-        takeId: id,
+        quizId: id,
+        userId: { not: userId },
       },
     });
 
-    return takeAnswer;
+    return take;
   } catch (error) {
     return null;
   }

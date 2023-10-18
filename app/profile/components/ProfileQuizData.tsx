@@ -120,7 +120,7 @@ const ProfileQuizData: React.FC<Props> = ({
       <div className="flex-wrap flex flex-col lg:flex-row">
         <div
           className={`grow flex items-center lg:justify-center gap-2 p-2 hover:bg-primary transition-300 cursor-pointer ${
-            currentTab === TABS.MYDATA && "bg-primary"
+            currentTab === TABS.MYDATA && "bg-primary text-white"
           }`}
           onClick={() => setCurrentTab(TABS.MYDATA)}
         >
@@ -129,7 +129,7 @@ const ProfileQuizData: React.FC<Props> = ({
         </div>
         <div
           className={`grow flex items-center lg:justify-center gap-2 p-2 hover:bg-primary transition-300 cursor-pointer ${
-            currentTab === TABS.MYQUIZDATA && "bg-primary"
+            currentTab === TABS.MYQUIZDATA && "bg-primary text-white"
           }`}
           onClick={() => setCurrentTab(TABS.MYQUIZDATA)}
         >
@@ -138,7 +138,7 @@ const ProfileQuizData: React.FC<Props> = ({
         </div>
         <div
           className={`grow flex items-center lg:justify-center gap-2 p-2 hover:bg-primary transition-300 cursor-pointer ${
-            currentTab === TABS.TAKEQUIZDATA && "bg-primary"
+            currentTab === TABS.TAKEQUIZDATA && "bg-primary text-white"
           }`}
           onClick={() => setCurrentTab(TABS.TAKEQUIZDATA)}
         >
