@@ -64,22 +64,22 @@ const ProfileQuizData: React.FC<Props> = ({
       <div className="flex flex-col gap-4 mb-8 font-josefin">
         <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl flex items-center">
           Quiz Data -{" "}
-          <span className="text-sm pt-1 pl-2">{`(Quizzes created by you) `}</span>
+          <span className="text-sm pt-1 pl-2">{`(Quizzes created by ${user?.name}) `}</span>
         </h2>
         <div className="flex flex-col lg:flex-row w-full gap-4">
           <StatCard
             iconType="Created"
-            title="Quizzes created by you"
+            title="Quizzes created"
             content={createdQuizzesLength}
           />
           <StatCard
             iconType="Updated"
-            title="How many times your quizzes have been taken"
+            title="How many times quizzes have been taken"
             content={notUserTakesLength}
           />
           <StatCard
             iconType="Score"
-            title="Average score of users taking your quizzes (%)"
+            title="Average score of users quizzes taken (%)"
             content={notUserAverageScorePercentage}
           />
         </div>
@@ -92,7 +92,7 @@ const ProfileQuizData: React.FC<Props> = ({
       <div className="flex flex-col gap-4 mb-8 font-josefin">
         <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl flex items-center">
           Quiz Data -{" "}
-          <span className="text-sm pt-1 pl-2">{`(Quizzes taken by you) `}</span>
+          <span className="text-sm pt-1 pl-2">{`(Quizzes taken by ${user?.name}) `}</span>
         </h2>
         <div className="flex flex-col lg:flex-row w-full gap-4">
           <StatCard
@@ -125,7 +125,7 @@ const ProfileQuizData: React.FC<Props> = ({
           onClick={() => setCurrentTab(TABS.MYDATA)}
         >
           <HiUser className="text-3xl" />
-          <h5 className="font-josefin">My Profile</h5>
+          <h5 className="font-josefin">User Profile</h5>
         </div>
         <div
           className={`grow flex items-center lg:justify-center gap-2 p-2 hover:bg-primary transition-300 cursor-pointer ${
@@ -134,7 +134,7 @@ const ProfileQuizData: React.FC<Props> = ({
           onClick={() => setCurrentTab(TABS.MYQUIZDATA)}
         >
           <HiUser className="text-3xl" />
-          <h5 className="font-josefin">My Quizzes </h5>
+          <h5 className="font-josefin">User Quizzes </h5>
         </div>
         <div
           className={`grow flex items-center lg:justify-center gap-2 p-2 hover:bg-primary transition-300 cursor-pointer ${
@@ -143,7 +143,7 @@ const ProfileQuizData: React.FC<Props> = ({
           onClick={() => setCurrentTab(TABS.TAKEQUIZDATA)}
         >
           <HiUser className="text-3xl" />
-          <h5 className="font-josefin">Quizzes Taken</h5>
+          <h5 className="font-josefin">User Results</h5>
         </div>
       </div>
       <div className="p-4">{bodyContent}</div>

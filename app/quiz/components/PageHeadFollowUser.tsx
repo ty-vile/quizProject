@@ -10,6 +10,7 @@ import { User } from "@prisma/client";
 import Image from "next/image";
 // icons
 import { FaUserFriends } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 type Props = {
   user: User;
@@ -22,6 +23,8 @@ const PageHeadFollowUser: React.FC<Props> = ({
   currentUser,
   isFollowing,
 }) => {
+  const router = useRouter();
+
   const submitFollow = () => {
     const userData = {
       userId: currentUser.id,
@@ -70,7 +73,11 @@ const PageHeadFollowUser: React.FC<Props> = ({
             <FaUserFriends className="bg-primary text-5xl p-2" />
           </Button>
         )}
-        <Button variant="outline" className="grow">
+        <Button
+          variant="outline"
+          className="grow"
+          onClick={() => router.push(`/profile/${user?.id}`)}
+        >
           View Profile
         </Button>
       </div>

@@ -1,5 +1,6 @@
 // components
 import PageHeading from "@/components/utility/text/PageHeading";
+import UserGrid from "./components/UserGrid";
 // actions
 import StatsQuizTable from "./components/StatsQuizTable";
 import getSingleQuiz from "@/app/actions/getSingle/getSingleQuiz";
@@ -14,9 +15,18 @@ import {
   calculateAverageScorePercentage,
   calculateUniqueUsersLength,
   filterUniqueTakeAnswersArr,
-  filterUniqueTakenQuizzes,
   filterUniqueTakesArr,
+  mapUserQuizData,
 } from "@/lib/utils";
+
+export type ExtendedQuizTakenUser = {
+  score: number;
+  maxScore: number;
+  quizTakenAt: Date;
+  name: string;
+  image: string;
+  id: string;
+};
 
 const StatsSingleQuiz = async ({ params }: any) => {
   const currentUser = await getCurrentUser();
@@ -31,7 +41,8 @@ const StatsSingleQuiz = async ({ params }: any) => {
     quiz?.quiz?.id!,
     currentUser?.id!
   );
-  //
+
+  const mappedUserQuizData = await mapUserQuizData(notUserQuizTakes!);
 
   const takeAnswer = await getSingleQuizAnswersTake();
 
@@ -64,13 +75,16 @@ const StatsSingleQuiz = async ({ params }: any) => {
           quizAverageScore={quizAverageScore}
         />
       </div>
-      <div className="flex flex-col gap-4">
-        <h2>Your Quizzes</h2>
-        {/* <QuizGrid
-          quizzes={recentlyCompletedQuizzes!}
-          path="/quiz/statistics/"
-        /> */}
-      </div>
+      {mappedUserQuizData && (
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2 lg:gap-0 mt-10 pb-10 pt-10">
+            <div className="pb-10">
+              <PageHeading heading={"Users who took quiz"} />
+            </div>
+            <UserGrid users={mappedUserQuizData!} />
+          </div>
+        </div>
+      )}
     </>
   );
 };

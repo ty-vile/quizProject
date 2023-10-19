@@ -1,4 +1,6 @@
+import getSingleUser from "@/app/actions/getSingle/getSingleUser";
 import { ExtendedQuestion } from "@/app/quiz/my-quizzes/[id]/components/StatsQuizTable";
+import { ExtendedQuizTakenUser } from "@/app/quiz/my-quizzes/[id]/page";
 import {
   Question,
   Quiz,
@@ -27,12 +29,12 @@ export function formatDate(inputDate: Date) {
 
 export function calculatePercentage(part: number, whole: number) {
   if (whole === 0) {
-    return 0; // To avoid division by zero
+    return "0%";
   }
 
   let number = (part / whole) * 100;
 
-  return number.toFixed(2);
+  return number.toFixed().toString() + "%";
 }
 
 // calculates the average score of all quizzes taken - which are stored in the scoreArray
@@ -44,13 +46,17 @@ export function calculateAverageScorePercentage(scoreArray: any) {
     percentageArr.push(calculatePercentage(userTake.score, userTake.maxScore));
   });
 
-  averageScore = percentageArr.reduce((a: string, b: string) => {
+  const numericValues = percentageArr.map((item: string) =>
+    item.replace("%", "")
+  );
+
+  averageScore = numericValues.reduce((a: string, b: string) => {
     return Number(a) + Number(b);
   }, []);
 
   averageScore = averageScore / scoreArray.length;
 
-  const finalAverage = averageScore.toFixed();
+  const finalAverage = averageScore.toFixed() + "%";
 
   return finalAverage;
 }
@@ -109,12 +115,14 @@ export function filterUniqueCompletedQuizzes(
   return filteredQuizzesArr;
 }
 
+// returns a number which represents unique users
 export function calculateUniqueUsersLength(arr: any) {
   const uniqueUsers = new Set(arr?.map((item: any) => item.userId));
 
   return Array.from(uniqueUsers).length;
 }
 
+// returns array of objects which contain question name, amount of times question has been answered, and amount of times question has been answered correctly
 export function getQuestionTotalScores(
   questions: ExtendedQuestion[],
   takeAnswers: TakeAnswer[]
@@ -153,4 +161,31 @@ export function getQuestionTotalScores(
   }
 
   return NewArray;
+}
+
+export async function mapUserQuizData(quizTakes: Take[]) {
+  const userTakeQuizData: ExtendedQuizTakenUser[] = [];
+
+  quizTakes?.map(async (user: any) => {
+    let userObject = {
+      score: user.score,
+      maxScore: user.maxScore,
+      quizTakenAt: user.createdAt,
+      id: user.userId,
+      name: "",
+      image: "",
+    };
+
+    let userData = await getSingleUser(user?.userId);
+
+    userObject = {
+      ...userObject,
+      name: userData?.name!,
+      image: userData?.image!,
+    };
+
+    return userTakeQuizData.push(userObject);
+  });
+
+  return userTakeQuizData;
 }

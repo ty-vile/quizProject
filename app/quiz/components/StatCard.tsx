@@ -9,7 +9,7 @@ import { PiMathOperationsFill } from "react-icons/pi";
 import Image from "next/image";
 
 type Props = {
-  iconType: string;
+  iconType?: string;
   title: string;
   content?: string | number | null;
   image?: string | null;
@@ -46,7 +46,7 @@ const StatCard: React.FC<Props> = ({ iconType, title, content, image }) => {
   return (
     <div className="w-full flex flex-col gap-2 items-center justify-between p-4 border-2 border-gray-600 dark:border-gray-300 ">
       <div className="flex flex-col items-center justify-center text-center gap-2">
-        {genIcon(iconType)}
+        {iconType && genIcon(iconType)}
         <h5>{title}</h5>
       </div>
       <h2

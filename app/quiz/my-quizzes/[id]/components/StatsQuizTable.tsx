@@ -7,12 +7,7 @@ import { HiUser } from "react-icons/hi";
 // react
 import { useState } from "react";
 // utils
-import {
-  calculateAverageScorePercentage,
-  calculatePercentage,
-  formatDate,
-  getQuestionTotalScores,
-} from "@/lib/utils";
+import { calculatePercentage, getQuestionTotalScores } from "@/lib/utils";
 // components
 import StatCard from "@/app/quiz/components/StatCard";
 import AccordionEl from "@/components/utility/elements/AccordionEl";
@@ -62,8 +57,6 @@ const StatsQuizTable: React.FC<Props> = ({
 
   const questionScores = getQuestionTotalScores(questions, takeAnswers!);
 
-  console.log(questionScores);
-
   let bodyContent;
 
   if (currentTab === TABS.QUIZINFO) {
@@ -94,8 +87,7 @@ const StatsQuizTable: React.FC<Props> = ({
     bodyContent = (
       <div className="flex flex-col gap-4 mb-8 font-josefin">
         <h2 className="bg-primary text-white w-fit font-josefin p-4 text-md md:text-xl lg:text-4xl flex items-center">
-          Quiz Data -{" "}
-          <span className="text-sm pt-1 pl-2">{`(Quizzes created by you) `}</span>
+          Quiz Data
         </h2>
         <div className="flex flex-col lg:flex-row w-full gap-4">
           <StatCard
@@ -128,13 +120,10 @@ const StatsQuizTable: React.FC<Props> = ({
           {questionScores.map((questionScore, index) => {
             return (
               <StatCard
-                iconType="Created"
                 title={questionScore.title}
-                content={Number(
-                  calculatePercentage(
-                    questionScore.count,
-                    questionScore.correct
-                  )
+                content={calculatePercentage(
+                  questionScore.count,
+                  questionScore.correct
                 )}
               />
             );

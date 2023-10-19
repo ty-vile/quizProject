@@ -78,15 +78,15 @@ const CurrentUserProfile = async () => {
         />
       </div>
       <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between lg:gap-0 mt-10 py-10">
+        <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between lg:gap-0 mt-10 pb-10 pt-10">
           <PageHeading heading={"Recently Taken Quizzes"} />
           <Link href="/quiz/completed" className="w-full lg:w-fit">
-            <Button className="w-6/12 lg:w-full" variant="outline">
+            <Button className="w-full" variant="outline">
               View All
             </Button>
           </Link>
         </div>
-        <QuizGrid quizzes={displayRecentlyCompleted!} path="/quiz/statistics" />
+        <QuizGrid quizzes={displayRecentlyCompleted!} path="/quiz/completed/" />
       </div>
     </>
   );

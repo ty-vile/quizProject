@@ -98,7 +98,7 @@ const CompletedQuizTable: React.FC<Props> = ({
                   Score:
                   <span className="text-lg font-normal">
                     {" "}
-                    {calculatePercentage(take?.score, quiz?.score!) + "%"}
+                    {calculatePercentage(take?.score, quiz?.score!)}
                   </span>
                 </h5>
               </div>
@@ -107,7 +107,10 @@ const CompletedQuizTable: React.FC<Props> = ({
               </span>
             </div>
             <ProgressBarEl
-              percentage={calculatePercentage(take?.score, quiz?.score!)}
+              percentage={calculatePercentage(
+                take?.score,
+                quiz?.score!
+              ).replace("%", "")}
             />
             <div className="flex items-center gap-4"></div>
           </div>
