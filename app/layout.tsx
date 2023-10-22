@@ -10,10 +10,10 @@ import { Bungee, Josefin_Sans } from "next/font/google";
 
 // components
 import Navbar from "@/app/components/navbar/Navbar";
-import ConfirmQuizModal from "./quiz/components/ConfirmQuizModal";
+import ConfirmQuizModal from "./components/modal/ConfirmQuizModal";
 
 // toast
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // actions
