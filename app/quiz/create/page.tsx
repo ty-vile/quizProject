@@ -4,18 +4,18 @@
 import { useMemo, useState } from "react";
 // components
 import { toast } from "react-toastify";
-import PageHeading from "@/components/utility/text/PageHeading";
-import AccordionEl from "@/components/utility/elements/AccordionEl";
+import PageHeading from "@/app/components/utility/text/PageHeading";
+import AccordionEl from "@/app/components/utility/elements/AccordionEl";
 // types
 import { Answer, Question } from "@prisma/client";
 // hooks
 import useConfirmQuizModal from "@/hooks/useConfirmQuizModal";
 // inputs
-import { Button } from "@/components/ui/button";
-import Input from "@/components/utility/inputs/Input";
-import Select from "@/components/utility/inputs/Select";
-import Textarea from "@/components/utility/inputs/Textarea";
-import Checkbox from "@/components/utility/inputs/Checkbox";
+import { Button } from "@/app/components/ui/button";
+import Input from "@/app/components/utility/inputs/Input";
+import Select from "@/app/components/utility/inputs/Select";
+import Textarea from "@/app/components/utility/inputs/Textarea";
+import Checkbox from "@/app/components/utility/inputs/Checkbox";
 
 // types
 enum STEPS {

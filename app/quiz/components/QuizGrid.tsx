@@ -2,7 +2,7 @@
 
 import { Quiz, User } from "@prisma/client";
 import QuizCard from "./QuizCard";
-import CategoryFilter from "@/components/filter/CategoryFilter";
+import CategoryFilter from "@/app/components/filter/CategoryFilter";
 import { useMemo, useState } from "react";
 
 type ExtendedQuiz = {

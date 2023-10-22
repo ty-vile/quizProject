@@ -10,7 +10,7 @@ import { useState } from "react";
 import { calculatePercentage, getQuestionTotalScores } from "@/lib/utils";
 // components
 import StatCard from "@/app/quiz/components/StatCard";
-import AccordionEl from "@/components/utility/elements/AccordionEl";
+import AccordionEl from "@/app/components/utility/elements/AccordionEl";
 
 export type ExtendedQuestion = Question & {
   answer?: string;

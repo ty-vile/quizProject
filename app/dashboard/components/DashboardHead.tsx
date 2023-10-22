@@ -1,6 +1,6 @@
 import getCurrentUser from "@/app/actions/getUser/getCurrentUser";
-import { Button } from "@/components/ui/button";
-import PageHeading from "@/components/utility/text/PageHeading";
+import { Button } from "@/app/components/ui/button";
+import PageHeading from "@/app/components/utility/text/PageHeading";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

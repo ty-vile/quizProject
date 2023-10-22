@@ -1,8 +1,8 @@
 // components
-import PageHeading from "@/components/utility/text/PageHeading";
+import PageHeading from "@/app/components/utility/text/PageHeading";
 import QuizGrid from "../quiz/components/QuizGrid";
 import ProfileQuizData from "./components/ProfileQuizData";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 // actions
 import getCurrentUser from "../actions/getUser/getCurrentUser";
 import getUserQuizzes from "../actions/getUser/getUserQuizzes";

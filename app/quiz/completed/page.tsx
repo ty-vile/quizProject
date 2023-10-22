@@ -1,5 +1,5 @@
 // components
-import PageHeading from "@/components/utility/text/PageHeading";
+import PageHeading from "@/app/components/utility/text/PageHeading";
 import QuizGrid from "../components/QuizGrid";
 // actions
 import getCurrentUser from "@/app/actions/getUser/getCurrentUser";
@@ -9,7 +9,7 @@ import {
   filterUniqueCompletedQuizzes,
   filterUniqueTakenQuizzes,
 } from "@/lib/utils";
-import EmptyComponent from "@/components/empty/EmptyComponent";
+import EmptyComponent from "@/app/components/empty/EmptyComponent";
 
 // seo
 export const metadata = {

@@ -2,7 +2,7 @@ import React from "react";
 
 import DashboardTakeQuizTable from "./takequiz/DashboardTakeQuizTable";
 import DashboardUserQuizTable from "./userquiz/DashboardUserQuizTable";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 
 const DashboardTables = () => {
   return (

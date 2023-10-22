@@ -1,8 +1,8 @@
 "use client";
 
 // components
-import { Button } from "@/components/ui/button";
-import PageHeading from "@/components/utility/text/PageHeading";
+import { Button } from "@/app/components/ui/button";
+import PageHeading from "@/app/components/utility/text/PageHeading";
 import { toast } from "react-toastify";
 // types
 import { User } from "@prisma/client";

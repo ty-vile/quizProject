@@ -15,8 +15,6 @@ interface InputProps {
 const Checkbox: React.FC<InputProps> = ({
   id,
   name,
-  label,
-  type,
   disabled,
   value,
   required,

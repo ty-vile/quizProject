@@ -1,4 +1,4 @@
-import Container from "@/components/utility/Container";
+import Container from "@/app/components/utility/Container";
 
 export default async function DashboardLayout({
   children,

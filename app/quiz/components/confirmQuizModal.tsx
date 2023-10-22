@@ -1,8 +1,8 @@
 "use client";
 
 // components
-import Modal from "@/components/modal/Modal";
-import { Button } from "@/components/ui/button";
+import Modal from "@/app/components/modal/Modal";
+import { Button } from "@/app/components/ui/button";
 // hooks
 import useConfirmQuizModal from "@/hooks/useConfirmQuizModal";
 import { usePathname } from "next/navigation";

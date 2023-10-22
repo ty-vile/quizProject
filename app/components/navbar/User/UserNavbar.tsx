@@ -11,7 +11,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/app/components/ui/dropdown-menu";
 import { signOut } from "next-auth/react";
 // toast
 import { toast } from "react-toastify";

@@ -1,8 +1,8 @@
 "use client";
 
 // components
-import AccordionEl from "@/components/utility/elements/AccordionEl";
-import ProgressBarEl from "@/components/utility/elements/ProgressBarEl";
+import AccordionEl from "@/app/components/utility/elements/AccordionEl";
+import ProgressBarEl from "@/app/components/utility/elements/ProgressBarEl";
 import Image from "next/image";
 import PageHeadFollowUser from "@/app/quiz/components/PageHeadFollowUser";
 // utility functions

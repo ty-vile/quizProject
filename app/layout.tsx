@@ -9,7 +9,7 @@ import { ThemeProvider } from "@/app/provider/Theme-provider";
 import { Bungee, Josefin_Sans } from "next/font/google";
 
 // components
-import Navbar from "@/components/navbar/Navbar";
+import Navbar from "@/app/components/navbar/Navbar";
 import ConfirmQuizModal from "./quiz/components/ConfirmQuizModal";
 
 // toast

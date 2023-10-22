@@ -1,5 +1,5 @@
 // components
-import PageHeading from "@/components/utility/text/PageHeading";
+import PageHeading from "@/app/components/utility/text/PageHeading";
 import UserGrid from "./components/UserGrid";
 // actions
 import StatsQuizTable from "./components/StatsQuizTable";

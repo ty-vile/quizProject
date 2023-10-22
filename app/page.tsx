@@ -1,14 +1,14 @@
 // ui
-import { Button } from "@/components/ui/button";
-import Container from "@/components/utility/Container";
+import { Button } from "@/app/components/ui/button";
+import Container from "@/app/components/utility/Container";
 // actions
 import getCurrentUser from "./actions/getUser/getCurrentUser";
 // navigation
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import PageHeading from "@/components/utility/text/PageHeading";
+import PageHeading from "@/app/components/utility/text/PageHeading";
 import Link from "next/link";
-import HomepageCard from "@/components/ui/homepage-card";
+import HomepageCard from "@/app/components/ui/homepage-card";
 
 export default async function Home() {
   const currentUser = await getCurrentUser();

@@ -1,11 +1,11 @@
 "use client";
 
 // components
-import AccordionEl from "@/components/utility/elements/AccordionEl";
-import { Button } from "@/components/ui/button";
+import AccordionEl from "@/app/components/utility/elements/AccordionEl";
+import { Button } from "@/app/components/ui/button";
 import PageHeadFollowUser from "@/app/quiz/components/PageHeadFollowUser";
 
-import Textarea from "@/components/utility/inputs/Textarea";
+import Textarea from "@/app/components/utility/inputs/Textarea";
 // hooks
 import useConfirmQuizModal from "@/hooks/useConfirmQuizModal";
 // utils
@@ -16,7 +16,7 @@ import { Answer, Question, Quiz, User } from "@prisma/client";
 import { useState } from "react";
 // toast notifications
 import { toast } from "react-toastify";
-import SquareCheckbox from "@/components/utility/inputs/SquareCheckbox";
+import SquareCheckbox from "@/app/components/utility/inputs/SquareCheckbox";
 
 // enum
 enum STEPS {
