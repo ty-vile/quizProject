@@ -12,11 +12,11 @@ import { formatDate } from "@/lib/utils";
 import StatCard from "@/app/quiz/components/StatCard";
 
 type Props = {
-  user: User;
-  createdQuizzesLength: number;
-  notUserTakesLength: number;
-  userTakesLength: number;
-  notUserAverageScorePercentage: string;
+  user: User | undefined | null;
+  createdQuizzesLength: number | null | undefined;
+  notUserTakesLength: number | null | undefined;
+  userTakesLength: number | null | undefined;
+  notUserAverageScorePercentage?: string;
   userAverageScorePercentage: string;
   userUniqueUserQuizTakes: number;
 };
@@ -47,12 +47,16 @@ const ProfileQuizData: React.FC<Props> = ({
           Profile Data
         </h2>
         <div className="flex flex-col lg:flex-row w-full gap-4">
-          <StatCard iconType="Image" title="Profile Image" image={user.image} />
-          <StatCard iconType="Email" title="Email" content={user.email} />
+          <StatCard
+            iconType="Image"
+            title="Profile Image"
+            image={user?.image}
+          />
+          <StatCard iconType="Email" title="Email" content={user?.email} />
           <StatCard
             iconType="Created"
             title="Created At"
-            content={formatDate(user.createdAt)}
+            content={formatDate(user?.createdAt)}
           />
         </div>
       </div>

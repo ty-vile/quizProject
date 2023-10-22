@@ -24,6 +24,10 @@ const TakeQuiz = async () => {
     userTakenQuizzes
   );
 
+  if (quizzesToTake === undefined || quizzesToTake === null) {
+    return <EmptyComponent title="You have not completed any quizzes!" />;
+  }
+
   if (quizzesToTake.length === 0) {
     return <EmptyComponent title="Currently no quizzes to take" />;
   }

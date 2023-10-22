@@ -15,6 +15,10 @@ const MyQuizzes = async () => {
   const currentUser = await getCurrentUser();
   const userQuizzes = await getUserQuizzes(currentUser?.id!);
 
+  if (userQuizzes === undefined || userQuizzes === null) {
+    return <EmptyComponent title="You have not completed any quizzes!" />;
+  }
+
   if (userQuizzes?.length === 0) {
     return <EmptyComponent title="You haven't created any Quizzes" />;
   }

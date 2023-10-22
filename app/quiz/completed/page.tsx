@@ -24,9 +24,13 @@ const Completed = async () => {
   const notUserQuizzes = await getNotUserQuizzes(currentUser?.id!);
 
   const completedQuizzes = filterUniqueCompletedQuizzes(
-    notUserQuizzes!,
+    notUserQuizzes,
     userCompletedQuizzes
   );
+
+  if (completedQuizzes === undefined || completedQuizzes === null) {
+    return <EmptyComponent title="You have not completed any quizzes!" />;
+  }
 
   if (completedQuizzes?.length === 0) {
     return <EmptyComponent title="You have not completed any quizzes!" />;

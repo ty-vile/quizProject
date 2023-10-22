@@ -21,43 +21,59 @@ import {
 import Link from "next/link";
 
 const CurrentUserProfile = async () => {
-  const currentUser = await getCurrentUser();
-  const userCompletedQuizzes = await getUserCompleteQuizzes(currentUser?.id!);
-  const userQuizzes = await getUserQuizzes(currentUser?.id!);
-  const userTakes = await getUserTakes(currentUser?.id!);
-  const notUserQuizzes = await getNotUserQuizzes(currentUser?.id!);
-  const notUserTakes = await getNotCurrentUserTakes(currentUser?.id!);
+  let currentUser = await getCurrentUser();
+  let userCompletedQuizzes = await getUserCompleteQuizzes(currentUser?.id!);
+  let userQuizzes = await getUserQuizzes(currentUser?.id!);
+  let userTakes = await getUserTakes(currentUser?.id!);
+  let notUserQuizzes = await getNotUserQuizzes(currentUser?.id!);
+  let notUserTakes = await getNotCurrentUserTakes(currentUser?.id!);
 
   // GET DATA FOR MY QUIZZES TAB
 
-  const filteredTakesNonCurrentUser = filterUniqueTakesArr(
+  let filteredTakesNonCurrentUser = filterUniqueTakesArr(
     notUserTakes!,
     userQuizzes!
   );
 
-  const notUserAverageScorePercentage = calculateAverageScorePercentage(
+  let notUserAverageScorePercentage = calculateAverageScorePercentage(
     filteredTakesNonCurrentUser
   );
 
   // GET DATA FOR QUIZZES TAKEN TAB
 
-  const filteredTakesCurrentUser = filterUniqueTakesArr(
+  let filteredTakesCurrentUser = filterUniqueTakesArr(
     userTakes!,
     notUserQuizzes!
   );
 
-  const userAverageScorePercentage = calculateAverageScorePercentage(
+  let userAverageScorePercentage = calculateAverageScorePercentage(
     filteredTakesCurrentUser
   );
 
-  const uniqueUsersLength = calculateUniqueUsersLength(userTakes);
+  let uniqueUsersLength = calculateUniqueUsersLength(userTakes);
 
   // GET DATA FOR RECENTLY COMPLETED QUIZZES
 
-  const recentlyCompletedQuizzes = filterUniqueCompletedQuizzes(
+  let recentlyCompletedQuizzes = filterUniqueCompletedQuizzes(
     notUserQuizzes!,
     userCompletedQuizzes
   );
+
+  if (recentlyCompletedQuizzes === undefined) {
+    recentlyCompletedQuizzes = [];
+  }
+
+  if (userQuizzes === undefined) {
+    userQuizzes = [];
+  }
+
+  if (userTakes === undefined) {
+    userTakes = [];
+  }
+
+  if (filteredTakesNonCurrentUser === undefined) {
+    filteredTakesNonCurrentUser = [];
+  }
 
   const displayRecentlyCompleted = recentlyCompletedQuizzes.slice(0, 5);
 
@@ -68,9 +84,9 @@ const CurrentUserProfile = async () => {
       </div>
       <div>
         <ProfileQuizData
-          user={currentUser!}
-          createdQuizzesLength={userQuizzes?.length!}
-          userTakesLength={userTakes?.length!}
+          user={currentUser}
+          createdQuizzesLength={userQuizzes?.length}
+          userTakesLength={userTakes?.length}
           userAverageScorePercentage={userAverageScorePercentage}
           userUniqueUserQuizTakes={uniqueUsersLength}
           notUserTakesLength={filteredTakesNonCurrentUser.length}
@@ -86,7 +102,7 @@ const CurrentUserProfile = async () => {
             </Button>
           </Link>
         </div>
-        <QuizGrid quizzes={displayRecentlyCompleted!} path="/quiz/completed/" />
+        <QuizGrid quizzes={displayRecentlyCompleted} path="/quiz/completed/" />
       </div>
     </>
   );

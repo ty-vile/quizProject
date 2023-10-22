@@ -16,7 +16,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatDate(inputDate: Date) {
+export function formatDate(inputDate: Date | null | undefined) {
   if (inputDate instanceof Date) {
     const day = inputDate.getDate().toString().padStart(2, "0");
     const month = (inputDate.getMonth() + 1).toString().padStart(2, "0"); // Adding 1 because months are zero-based
@@ -41,6 +41,10 @@ export function calculatePercentage(part: number, whole: number) {
 export function calculateAverageScorePercentage(scoreArray: any) {
   const percentageArr: any = [];
   let averageScore: number = 0;
+
+  if (scoreArray === undefined || scoreArray === null) {
+    return "0%";
+  }
 
   scoreArray?.map((userTake: Take) => {
     percentageArr.push(calculatePercentage(userTake.score, userTake.maxScore));
