@@ -42,7 +42,7 @@ export function calculateAverageScorePercentage(scoreArray: any) {
   const percentageArr: any = [];
   let averageScore: number = 0;
 
-  scoreArray.map((userTake: Take) => {
+  scoreArray?.map((userTake: Take) => {
     percentageArr.push(calculatePercentage(userTake.score, userTake.maxScore));
   });
 

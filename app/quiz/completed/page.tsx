@@ -28,7 +28,7 @@ const Completed = async () => {
     userCompletedQuizzes
   );
 
-  if (completedQuizzes.length === 0) {
+  if (completedQuizzes?.length === 0) {
     return <EmptyComponent title="You have not completed any quizzes!" />;
   }
 

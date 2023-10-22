@@ -30,7 +30,7 @@ const QuizGrid: React.FC<Props> = ({ quizzes, path }) => {
   );
 
   const displayQuizzes = useMemo(() => {
-    if (selectedCategory.length === 0) {
+    if (selectedCategory?.length === 0) {
       return quizzes;
     }
 
