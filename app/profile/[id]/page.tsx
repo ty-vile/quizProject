@@ -53,15 +53,6 @@ const UserProfile = async ({ params }: any) => {
 
   const uniqueUsersLength = calculateUniqueUsersLength(userTakes);
 
-  // GET DATA FOR RECENTLY COMPLETED QUIZZES
-
-  const recentlyCompletedQuizzes = filterUniqueCompletedQuizzes(
-    notUserQuizzes!,
-    userCompletedQuizzes
-  );
-
-  const displayRecentlyCompleted = recentlyCompletedQuizzes.slice(0, 5);
-
   return (
     <>
       <div className="pb-10">
@@ -80,14 +71,14 @@ const UserProfile = async ({ params }: any) => {
       </div>
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between lg:gap-0 mt-10 pb-10 pt-10">
-          <PageHeading heading={"Recently Taken Quizzes"} />
+          <PageHeading heading={"All user quizzes"} />
           <Link href="/quiz/completed" className="w-full lg:w-fit">
             <Button className="w-full" variant="outline">
               View All
             </Button>
           </Link>
         </div>
-        <QuizGrid quizzes={displayRecentlyCompleted!} path="/quiz/completed/" />
+        <QuizGrid quizzes={userQuizzes} path="/quiz/completed/" />
       </div>
     </>
   );

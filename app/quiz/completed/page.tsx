@@ -9,6 +9,7 @@ import {
   filterUniqueCompletedQuizzes,
   filterUniqueTakenQuizzes,
 } from "@/lib/utils";
+import EmptyComponent from "@/components/empty/EmptyComponent";
 
 // seo
 export const metadata = {
@@ -26,6 +27,10 @@ const Completed = async () => {
     notUserQuizzes!,
     userCompletedQuizzes
   );
+
+  if (completedQuizzes.length === 0) {
+    return <EmptyComponent title="You have not completed any quizzes!" />;
+  }
 
   return (
     <>

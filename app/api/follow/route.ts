@@ -14,6 +14,17 @@ export async function POST(req: NextRequest) {
 
   const { userId, followingId } = body;
 
+  const isAlreadyFollowing = await prisma.userFollow.findMany({
+    where: {
+      userId: userId,
+      followingId: followingId,
+    },
+  });
+
+  if (isAlreadyFollowing.length > 0) {
+    return NextResponse.json({ msg: "Already following user" });
+  }
+
   const followUser = await prisma.userFollow.create({
     data: {
       userId: userId,

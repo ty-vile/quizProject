@@ -6,6 +6,7 @@ import getCurrentUser from "@/app/actions/getUser/getCurrentUser";
 import getNotUserQuizzes from "@/app/actions/getNotUser/getNotUserQuizzes";
 import getUserTakenQuizzes from "@/app/actions/getUser/getUserTakenQuizzes";
 import { filterUniqueTakenQuizzes } from "@/lib/utils";
+import EmptyComponent from "@/components/empty/EmptyComponent";
 
 // seo
 export const metadata = {
@@ -22,6 +23,10 @@ const TakeQuiz = async () => {
     notUserQuizzes!,
     userTakenQuizzes
   );
+
+  if (quizzesToTake.length === 0) {
+    return <EmptyComponent title="Currently no quizzes to take" />;
+  }
 
   return (
     <>

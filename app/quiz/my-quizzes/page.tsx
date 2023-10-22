@@ -4,6 +4,7 @@ import QuizGrid from "@/app/quiz/components/QuizGrid";
 // actions
 import getCurrentUser from "@/app/actions/getUser/getCurrentUser";
 import getUserQuizzes from "@/app/actions/getUser/getUserQuizzes";
+import EmptyComponent from "@/components/empty/EmptyComponent";
 
 // seo
 export const metadata = {
@@ -13,6 +14,10 @@ export const metadata = {
 const MyQuizzes = async () => {
   const currentUser = await getCurrentUser();
   const userQuizzes = await getUserQuizzes(currentUser?.id!);
+
+  if (userQuizzes?.length === 0) {
+    return <EmptyComponent title="You haven't created any Quizzes" />;
+  }
 
   return (
     <>

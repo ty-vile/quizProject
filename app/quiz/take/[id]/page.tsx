@@ -4,9 +4,10 @@ import TakeQuizTable from "./components/TakeQuizTable";
 // actions
 import getSingleQuiz from "@/app/actions/getSingle/getSingleQuiz";
 import getSingleUser from "@/app/actions/getSingle/getSingleUser";
-import getCurrentUserFollowing from "@/app/actions/getCurrentUserFollowing";
+
 // utils
 import { userIsFollowing } from "@/lib/utils";
+import getUserFollowing from "@/app/actions/getUser/getUserFollowing";
 
 // seo
 export const metadata = {
@@ -20,9 +21,13 @@ const TakeSingleUserQuiz = async ({ params }: any) => {
   // USER TAKING QUIZ
   const currentUser = await getCurrentUser();
   // GET CURRENT USER FOLLOWING LIST
-  const currentUserFollowing = await getCurrentUserFollowing();
+  const currentUserFollowing = await getUserFollowing(currentUser?.id!);
+
+  // console.log("CUF", currentUserFollowing);
 
   const isFollowing = userIsFollowing(currentUserFollowing!, createQuizUser!);
+
+  console.log("IFCL", isFollowing);
 
   return (
     <>

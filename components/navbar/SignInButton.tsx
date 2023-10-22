@@ -14,11 +14,10 @@ type Props = {
 const SignInButton: React.FC<Props> = ({ text }) => {
   const handleSignIn = () => {
     signIn("google");
-    toast.success("Sucessfully signed in");
   };
 
   return (
-    <Button variant="outline" onClick={handleSignIn} className="w-40">
+    <Button variant="outline" onClick={handleSignIn} className="w-40 p-0">
       {text}
     </Button>
   );

@@ -15,15 +15,18 @@ import {
 import { signOut } from "next-auth/react";
 // toast
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 type Props = {
   user: User;
 };
 
 const UserNavbar: React.FC<Props> = ({ user }) => {
+  const router = useRouter();
+
   const handleSignOut = () => {
+    router.push("/dashboard");
     signOut();
-    toast.success("Signed out");
   };
 
   return (

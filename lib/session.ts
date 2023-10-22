@@ -2,6 +2,7 @@ import { NextAuthOptions, AuthOptions, DefaultSession } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prismadb";
 import GoogleProvider from "next-auth/providers/google";
+import { toast } from "react-toastify";
 
 declare module "next-auth" {
   interface Session {

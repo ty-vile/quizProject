@@ -1,11 +1,3 @@
-import {
-  MdEmail,
-  MdImage,
-  MdPermContactCalendar,
-  MdOutlineTipsAndUpdates,
-} from "react-icons/md";
-import { IoMdCreate } from "react-icons/io";
-import { PiMathOperationsFill } from "react-icons/pi";
 import Image from "next/image";
 
 type Props = {
@@ -16,37 +8,9 @@ type Props = {
 };
 
 const StatCard: React.FC<Props> = ({ iconType, title, content, image }) => {
-  const genIcon = (title: String) => {
-    if (title === "Email") {
-      return <MdEmail className="h-10 w-10 lg:h-12 lg:w-12 text-white" />;
-    }
-    if (title === "Image") {
-      return <MdImage className="h-10 w-10 lg:h-12 lg:w-12 text-white" />;
-    }
-    if (title === "Calendar") {
-      return (
-        <MdPermContactCalendar className="h-10 w-10 lg:h-12 lg:w-12 text-white" />
-      );
-    }
-    if (title === "Created") {
-      return <IoMdCreate className="h-10 w-10 lg:h-12 lg:w-12 text-white" />;
-    }
-    if (title === "Updated") {
-      return (
-        <MdOutlineTipsAndUpdates className="h-10 w-10 lg:h-12 lg:w-12 text-white" />
-      );
-    }
-    if (title === "Score") {
-      return (
-        <PiMathOperationsFill className="h-10 w-10 lg:h-12 lg:w-12 text-white" />
-      );
-    }
-  };
-
   return (
     <div className="w-full flex flex-col gap-2 items-center justify-between p-4 border-2 border-gray-600 dark:border-gray-300 ">
       <div className="flex flex-col items-center justify-center text-center gap-2">
-        {iconType && genIcon(iconType)}
         <h5>{title}</h5>
       </div>
       <h2

@@ -91,17 +91,14 @@ const StatsQuizTable: React.FC<Props> = ({
         </h2>
         <div className="flex flex-col lg:flex-row w-full gap-4">
           <StatCard
-            iconType="Created"
             title="Unique users that have taken this quiz"
             content={quizTakenUniqueUsers}
           />
           <StatCard
-            iconType="Updated"
             title="How many times this quiz has been taken"
             content={quizTakenTotal}
           />
           <StatCard
-            iconType="Score"
             title="Average score of users taking this quiz (%)"
             content={quizAverageScore}
           />

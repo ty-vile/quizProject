@@ -95,18 +95,12 @@ const ProfileQuizData: React.FC<Props> = ({
           <span className="text-sm pt-1 pl-2">{`(Quizzes taken by ${user?.name}) `}</span>
         </h2>
         <div className="flex flex-col lg:flex-row w-full gap-4">
+          <StatCard title="Quizzes taken by you" content={userTakesLength} />
           <StatCard
-            iconType="Created"
-            title="Quizzes taken by you"
-            content={userTakesLength}
-          />
-          <StatCard
-            iconType="Updated"
             title="Unique users quizzes that you have taken"
             content={userUniqueUserQuizTakes}
           />
           <StatCard
-            iconType="Score"
             title="Average score of quizzes taken by you (%)"
             content={userAverageScorePercentage}
           />

@@ -45,6 +45,8 @@ const PageHeadFollowUser: React.FC<Props> = ({
         .catch((error) => {
           console.log(error);
         });
+
+      router.refresh();
     } catch (error) {
       console.log(error);
     }
@@ -69,7 +71,7 @@ const PageHeadFollowUser: React.FC<Props> = ({
           </Button>
         ) : (
           <Button className="grow w-fit flex items-center justify-center gap-4 cursor-default">
-            <h2>Friends</h2>
+            <h2>Following</h2>
             <FaUserFriends className="bg-primary text-5xl p-2" />
           </Button>
         )}
