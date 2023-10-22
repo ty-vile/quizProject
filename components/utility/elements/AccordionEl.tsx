@@ -55,7 +55,10 @@ const AccordionEl: React.FC<Props> = ({
                   <div className="flex flex-col gap-2 ">
                     {question?.answers?.map((answer, index) => {
                       return (
-                        <div className="p-2 lg:p-4 flex items-center gap-2 text-sm md:text-md lg:text-lg xl:text-xl text-left font-josefin  pt-1">
+                        <div
+                          className="p-2 lg:p-4 flex items-center gap-2 text-sm md:text-md lg:text-lg xl:text-xl text-left font-josefin  pt-1"
+                          key={index}
+                        >
                           <span
                             className={`text-xl md:text-2xl lg:text-3xl xl:text-4xl ${
                               answer.isCorrect

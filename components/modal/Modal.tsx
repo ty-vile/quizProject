@@ -59,9 +59,7 @@ const Modal: React.FC<ModalProps> = ({
           ${showModal ? "translate-y-0" : "translate-y-full"}
           ${showModal ? "opacity-100" : "opacity-0"}`}
         >
-          {percentage && (
-            <ProgressBar percentage={percentage} showModal={showModal} />
-          )}
+          {percentage && <ProgressBar percentage={percentage} />}
           {/* CONTENT */}
           <div
             className={`

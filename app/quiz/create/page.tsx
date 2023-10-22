@@ -244,20 +244,6 @@ const CreateQuiz = () => {
     return closestDivisibleBy12;
   }
 
-  const progress = useMemo(() => {
-    if (!quizData.score) {
-      return 0;
-    }
-
-    if (step === STEPS.CREATE) {
-      return 0;
-    }
-
-    if (quizData.score) {
-      return calcStepPercentage(quizData.score, currentQuestion + 1);
-    }
-  }, [quizData.score, currentQuestion, step, STEPS]);
-
   const handleSubmit = async () => {
     setIsLoading(true);
 

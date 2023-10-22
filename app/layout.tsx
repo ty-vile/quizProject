@@ -1,6 +1,8 @@
 // react
 import "./globals.css";
 import type { Metadata } from "next";
+
+// providers
 import { ThemeProvider } from "@/app/provider/Theme-provider";
 
 // fonts
@@ -8,13 +10,14 @@ import { Bungee, Josefin_Sans } from "next/font/google";
 
 // components
 import Navbar from "@/components/navbar/Navbar";
+import ConfirmQuizModal from "./quiz/components/ConfirmQuizModal";
 
 // toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+// actions
 import getCurrentUser from "./actions/getUser/getCurrentUser";
-import ConfirmQuizModal from "./quiz/components/confirmQuizModal";
 
 // metadata
 export const metadata: Metadata = {

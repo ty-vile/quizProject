@@ -41,7 +41,7 @@ const QuizGrid: React.FC<Props> = ({ quizzes, path }) => {
     );
 
     return filteredQuizzes;
-  }, [selectedCategory]);
+  }, [selectedCategory, quizzes]);
 
   return (
     <div className="flex flex-col flex-wrap w-full relative md:flex-row md:gap-x-8">

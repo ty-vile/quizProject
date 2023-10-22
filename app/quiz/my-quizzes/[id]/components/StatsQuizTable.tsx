@@ -117,6 +117,7 @@ const StatsQuizTable: React.FC<Props> = ({
           {questionScores.map((questionScore, index) => {
             return (
               <StatCard
+                key={index}
                 title={questionScore.title}
                 content={calculatePercentage(
                   questionScore.count,
