@@ -4,7 +4,7 @@
 import AccordionEl from "@/components/utility/elements/AccordionEl";
 import { Button } from "@/components/ui/button";
 import PageHeadFollowUser from "@/app/quiz/components/PageHeadFollowUser";
-import SquareCheckbox from "@/components/utility/inputs/SquareCheckbox";
+
 import Textarea from "@/components/utility/inputs/Textarea";
 // hooks
 import useConfirmQuizModal from "@/hooks/useConfirmQuizModal";
@@ -16,6 +16,7 @@ import { Answer, Question, Quiz, User } from "@prisma/client";
 import { useState } from "react";
 // toast notifications
 import { toast } from "react-toastify";
+import SquareCheckbox from "@/components/utility/inputs/SquareCheckbox";
 
 // enum
 enum STEPS {
